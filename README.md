@@ -1,4 +1,5 @@
 # Pretty Jupyter
+![Build](https://github.com/JanPalasek/pretty-jupyter/actions/workflows/ci.yml/badge.svg)
 
 Are you tired of everyone saying that the reports from R are prettier? Fear no more!
 
