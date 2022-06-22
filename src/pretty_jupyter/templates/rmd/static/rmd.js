@@ -19,7 +19,7 @@ $(document).ready(function () {
       };
 
       // if next element is p and it has span with class __tabset => make it a tabset
-      if ($(this).next("p").length > 0 && $(this).next("p").find("span.__tabset").length > 0) {
+      if ($(this).next("p").length > 0 && $(this).next("p").find("span.tabset").length > 0) {
         d["class"].push("tabset");
         d["class"].push("tabset-fade");
         d["class"].push("tabset-pills");

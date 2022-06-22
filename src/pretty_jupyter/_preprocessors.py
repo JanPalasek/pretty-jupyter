@@ -9,7 +9,20 @@ import re
 from nbconvert.preprocessors import Preprocessor
 
 
+TOKEN_REGEX = r"\s*\[.+\]:\s*<>\s*\(-.-\s+(.*)\)"
+"""
+Regex to match tokens. The tokens are special sequences in markdown that invoke special behaviour, e.g. tabsets. Example of some tokens:
+
+```
+[//]: <> (-.- token1 token2 token3)
+```
+"""
+
 HTML_TOKEN_FORMAT = "<span class='{token}' style='display: none;'></span>"
+"""
+What markdown Token gets translated to.
+"""
+
 
 class TokenPreprocessor(Preprocessor):
     """
@@ -24,33 +37,28 @@ class TokenPreprocessor(Preprocessor):
     Source:
     ```markdown
     ## Chapter
-    [//]: <> (__some_token)
+    [//]: <> (-.- token1 token2)
     ```
 
     Generated HTML:
     ```html
     <h2>Chapter</h2>
-    <span class='__some_token' style='display: none;'></span>
+    <span class='token1 token2' style='display: none;'></span>
     ```
     """
     def preprocess_cell(self, cell, resources, index):
         if cell.cell_type != "markdown":
             return cell, resources
 
-        # matches markdown comments, e.g.:
-        # [//]: <> (...)
-        REGEX = r"\s*\[.+\]:\s*<>\s*\((.*)\)"
-
         all_lines = []
         for line in cell.source.splitlines():
-            result = re.search(REGEX, line)
+            result = re.search(TOKEN_REGEX, line)
             if not result:
                 all_lines.append(line)
                 continue
 
             for gr in result.groups():
-                tokens = gr.split(" ")
-                tokens = [m for m in tokens if m.startswith("__")]
+                tokens = [m.strip() for m in gr.split(" ")]
 
                 new = ""
                 for token in tokens:
