@@ -1,0 +1,1 @@
+recursive-include src/pretty_jupyter/templates *

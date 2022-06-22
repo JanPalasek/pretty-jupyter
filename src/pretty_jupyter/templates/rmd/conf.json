@@ -1,0 +1,12 @@
+{
+  "base_template": "base",
+  "mimetypes": {
+    "text/html": true
+  },
+  "preprocessors": {
+    "token-preprocessor": {
+      "type": "pretty_jupyter.TokenPreprocessor",
+      "enabled": true
+    }
+  }
+}
