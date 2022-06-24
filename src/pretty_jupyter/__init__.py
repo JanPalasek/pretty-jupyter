@@ -1,5 +1,5 @@
 from pretty_jupyter._preprocessors import TokenPreprocessor
-from pretty_jupyter.__magics import JinjaMagics
+from pretty_jupyter._magics import JinjaMagics
 
 __all__ = [
     "TokenPreprocessor",

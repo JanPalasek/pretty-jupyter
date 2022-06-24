@@ -18,9 +18,9 @@ Regex to match tokens. The tokens are special sequences in markdown that invoke 
 ```
 """
 
-HTML_TOKEN_FORMAT = "<span class='{token}' style='display: none;'></span>"
+HTML_TOKEN_FORMAT = "<span class='pretty-jupyter-token {tokens}' style='display: none;'></span>"
 """
-What markdown Token gets translated to.
+What markdown tokens get translated to.
 """
 
 
@@ -43,7 +43,7 @@ class TokenPreprocessor(Preprocessor):
     Generated HTML:
     ```html
     <h2>Chapter</h2>
-    <span class='token1 token2' style='display: none;'></span>
+    <span class='pretty-jupyter-token token1 token2' style='display: none;'></span>
     ```
     """
     def preprocess_cell(self, cell, resources, index):
@@ -60,11 +60,10 @@ class TokenPreprocessor(Preprocessor):
             for gr in result.groups():
                 tokens = [m.strip() for m in gr.split(" ")]
 
-                new = ""
-                for token in tokens:
-                    new += HTML_TOKEN_FORMAT.format(token=token)
-                old = line[result.span()[0]:result.span()[1]]
-                line = line.replace(old, new)
+                html = HTML_TOKEN_FORMAT.format(tokens=" ".join(tokens))
+
+                markdown = line[result.span()[0]:result.span()[1]]
+                line = line.replace(markdown, html)
             all_lines.append(line)
 
         # overwrite source
