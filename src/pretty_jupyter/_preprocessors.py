@@ -5,7 +5,6 @@ ipynb look more pretty.
 """
 
 
-from hashlib import md5
 import re
 from nbconvert.preprocessors import Preprocessor
 
