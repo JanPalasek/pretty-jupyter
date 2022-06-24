@@ -17,13 +17,6 @@ $(document).ready(function () {
         "id": tabNumber + "",
         "class": ["section", `level${x}`],
       };
-
-      // if next element is p and it has span with class __tabset => make it a tabset
-      if ($(this).next("p").length > 0 && $(this).next("p").find("span.tabset").length > 0) {
-        d["class"].push("tabset");
-        d["class"].push("tabset-fade");
-        d["class"].push("tabset-pills");
-      }
       
       // add the computed classes and attributes
       class_attr = d["class"].join(" ");
@@ -33,6 +26,18 @@ $(document).ready(function () {
       tabNumber += 1;
     });
   }
+
+    // process all pretty-jupyter-token elements
+    $(".pretty-jupyter-token").each(function (i, e) {
+      // if it has tabset, add tabset class to the section
+      if ($(this).hasClass("tabset")) {
+        $(this).parent().closest(".section").addClass("tabset");
+      }
+      // if the element has tabset-pills => add tabset-pills to the section
+      if ($(this).hasClass("tabset-pills")) {
+        $(this).parent().closest(".section").addClass("tabset-pills");
+      }
+    });
 
 });
 

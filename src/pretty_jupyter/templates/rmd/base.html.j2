@@ -24,7 +24,9 @@
 {% endblock output_prompt %}
 
 {% block input %}
-{{ cell.source | highlight_code(metadata=cell.metadata) }}
+<pre>
+{{ cell.source }}
+</pre>
 {%- endblock input %}
 
 {% block output_area_prompt %}
@@ -66,17 +68,14 @@ unknown type  {{ cell.type }}
 {%- endblock stream_stderr %}
 
 {% block data_svg scoped -%}
-<div class="output_svg output_subarea {{ extra_class }}">
 {%- if output.svg_filename %}
 <img src="{{ output.svg_filename | posix_path }}">
 {%- else %}
 {{ output.data['image/svg+xml'] }}
 {%- endif %}
-</div>
 {%- endblock data_svg %}
 
 {% block data_html scoped -%}
-<div class="output_html rendered_html output_subarea {{ extra_class }}">
 {%- if output.get('metadata', {}).get('text/html', {}).get('isolated') -%}
 <iframe
     class="isolated-iframe"
@@ -88,17 +87,13 @@ unknown type  {{ cell.type }}
 {%- else -%}
 {{ output.data['text/html'] }}
 {%- endif -%}
-</div>
 {%- endblock data_html %}
 
 {% block data_markdown scoped -%}
-<div class="output_markdown rendered_html output_subarea {{ extra_class }}">
 {{ output.data['text/markdown'] | markdown2html }}
-</div>
 {%- endblock data_markdown %}
 
 {% block data_png scoped %}
-<div class="output_png output_subarea {{ extra_class }}">
 {%- if 'image/png' in output.metadata.get('filenames', {}) %}
 <img src="{{ output.metadata.filenames['image/png'] | posix_path }}"
 {%- else %}
@@ -120,11 +115,9 @@ class="unconfined"
 alt="{{ alttext }}"
 {%- endif %}
 >
-</div>
 {%- endblock data_png %}
 
 {% block data_jpg scoped %}
-<div class="output_jpeg output_subarea {{ extra_class }}">
 {%- if 'image/jpeg' in output.metadata.get('filenames', {}) %}
 <img src="{{ output.metadata.filenames['image/jpeg'] | posix_path }}"
 {%- else %}
@@ -146,21 +139,16 @@ class="unconfined"
 alt="{{ alttext }}"
 {%- endif %}
 >
-</div>
 {%- endblock data_jpg %}
 
 {% block data_latex scoped %}
-<div class="output_latex output_subarea {{ extra_class }}">
 {{ output.data['text/latex'] | e }}
-</div>
 {%- endblock data_latex %}
 
 {% block error -%}
-<div class="output_subarea output_text output_error">
 <pre>
 {{- super() -}}
 </pre>
-</div>
 {%- endblock error %}
 
 {%- block traceback_line %}
@@ -168,11 +156,9 @@ alt="{{ alttext }}"
 {%- endblock traceback_line %}
 
 {%- block data_text scoped %}
-<div class="output_text output_subarea {{ extra_class }}">
 <pre>
 {{- output.data['text/plain'] | ansi2html -}}
 </pre>
-</div>
 {%- endblock -%}
 
 {%- block data_javascript scoped %}
