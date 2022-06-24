@@ -95,12 +95,12 @@ a = 10
 ```
 
 ```jinja
-%%jinja markdown
+%%jmarkdown
 
 We can write markdown like this and print the value in variable a as simply as this: {{ a }}.
 ```
 
-Note that currently we do not support hiding individual cells' inputs, so we recommend using `--no-input` when using this functionality.
+Note that its output will be automatically hidden. This can be overidden by specifying using parameter when calling nbconvert: `--RemoveInputPreprocessor.jmarkdown=0`.
 
 
 ## Credits
