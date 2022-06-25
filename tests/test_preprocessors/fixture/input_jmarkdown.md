@@ -1,4 +1,4 @@
-%%jmarkdown
+%%jinja markdown
 
 ## Header
-Some content in jmarkdown cell with possibility of template usage: {{ a }}.
+Some content in jinja markdown cell with possibility of template usage: {{ a }}.

@@ -1,4 +1,4 @@
-%%jmarkdown
+%%jinja markdown
 ## Header
 
 [//]: <> (-.- token1 token2)

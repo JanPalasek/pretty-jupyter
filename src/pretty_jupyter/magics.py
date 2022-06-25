@@ -6,7 +6,7 @@ from pretty_jupyter.tokens import convert_markdown_tokens_to_html
 
 
 @magics_class
-class JMarkdownMagics(Magics):
+class JinjaMagics(Magics):
     def __init__(self, shell):
         super().__init__(shell)
         
@@ -14,8 +14,22 @@ class JMarkdownMagics(Magics):
         # this can be modified for desired effects (ie: using different variable syntax)
         self.env = jinja2.Environment(loader=jinja2.FileSystemLoader('.'))
 
+        # possible output types
+        self.display_functions = dict(html=display.HTML, 
+                                      latex=display.Latex,
+                                      json=display.JSON,
+                                      pretty=display.Pretty,
+                                      display=display.display,
+                                      markdown=display.Markdown)
+
     @cell_magic
-    def jmarkdown(self, line, cell):
+    def jinja(self, line, cell):
+        display_fn_name = line.lower().strip()
+        if display_fn_name not in self.display_functions:
+            raise ValueError(f"Unknown parameter {display_fn_name}.")
+
+        display_fn = self.display_functions.get(display_fn_name)
+
         # render the cell with jinja (substitutes variables,...)
         tmp = self.env.from_string(cell)
         rend = tmp.render(dict((k,v) for (k,v) in self.shell.user_ns.items() 
@@ -25,4 +39,4 @@ class JMarkdownMagics(Magics):
         rend = convert_markdown_tokens_to_html(rend)
 
         # display markdown
-        return display.Markdown(rend)
+        return display_fn(rend)

@@ -95,7 +95,7 @@ a = 10
 ```
 
 ```jinja
-%%jmarkdown
+%%jinja markdown
 
 We can write markdown like this and print the value in variable a as simply as this: {{ a }}.
 ```
