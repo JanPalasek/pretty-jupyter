@@ -2,7 +2,7 @@ from IPython import display
 from IPython.core.magic import Magics, magics_class, cell_magic
 import jinja2
 
-from pretty_jupyter.tokens import process_markdown
+from pretty_jupyter.tokens import convert_markdown_tokens_to_html
 
 
 @magics_class
@@ -22,7 +22,7 @@ class JMarkdownMagics(Magics):
                                         if not k.startswith('_') and k not in self.shell.user_ns_hidden))
         
         # convert tokens to html
-        rend = process_markdown(rend)
+        rend = convert_markdown_tokens_to_html(rend)
 
         # display markdown
         return display.Markdown(rend)

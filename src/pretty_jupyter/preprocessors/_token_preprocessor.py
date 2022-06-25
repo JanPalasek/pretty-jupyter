@@ -6,7 +6,7 @@ ipynb look more pretty.
 
 
 from nbconvert.preprocessors import Preprocessor
-from pretty_jupyter.tokens import process_markdown
+from pretty_jupyter.tokens import convert_markdown_tokens_to_html
 
 
 class TokenPreprocessor(Preprocessor):
@@ -33,5 +33,5 @@ class TokenPreprocessor(Preprocessor):
     """
     def preprocess_cell(self, cell, resources, index):
         if cell.cell_type == "markdown":
-            cell.source = process_markdown(cell.source)
+            cell.source = convert_markdown_tokens_to_html(cell.source)
         return cell, resources
