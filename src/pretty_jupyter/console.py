@@ -12,7 +12,7 @@ from pathlib import Path
 @click.command()
 @click.argument("input", type=click.Path())
 @click.option("--out", default=None, type=click.Path())
-@click.option("--include-input/--exclude-input", default=False)
+@click.option("--include-input/--exclude-input", default=True)
 def nbconvert(input, out, include_input):
     """
     Takes the .ipynb notebook from the INPUT and transforms it into HTML.

@@ -4,6 +4,10 @@
     "text/html": true
   },
   "preprocessors": {
+    "auto-hide-preprocessor": {
+      "type": "pretty_jupyter.RemoveInputPreprocessor",
+      "enabled": true
+    },
     "token-preprocessor": {
       "type": "pretty_jupyter.TokenPreprocessor",
       "enabled": true
