@@ -129,7 +129,7 @@ $(document).ready(function () {
   // prettify tables
   $("table").addClass("table");
   $("table").addClass("table-striped");
-  $("table").addClass("table-word-wrapped");
+  // $("table").addClass("table-word-wrapped");
   $("table.dataframe").removeAttr("border");
 
   // remove useless anchor with useless anchor-link

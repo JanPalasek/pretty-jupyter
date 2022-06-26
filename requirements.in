@@ -4,4 +4,5 @@ tox==3.24.5
 jupyter==1.0.0
 pandas==1.4.2
 matplotlib==3.5.2
+seaborn
 nbconvert==6.5.0

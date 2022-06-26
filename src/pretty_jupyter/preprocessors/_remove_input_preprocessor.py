@@ -15,6 +15,7 @@ class RemoveInputPreprocessor(Preprocessor):
         # if cell has code type and it starts with %%jinja => hide it
         if (self.jinja
             and cell.cell_type == "code"
+            and len(cell.source.splitlines()) > 0
             and cell.source.splitlines()[0].startswith("%%jinja")):
             cell.transient = {"remove_source": True}
 

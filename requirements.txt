@@ -114,7 +114,9 @@ markupsafe==2.1.1
     #   jinja2
     #   nbconvert
 matplotlib==3.5.2
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   seaborn
 matplotlib-inline==0.1.3
     # via
     #   ipykernel
@@ -148,6 +150,8 @@ numpy==1.22.4
     # via
     #   matplotlib
     #   pandas
+    #   scipy
+    #   seaborn
 packaging==20.9
     # via
     #   ipykernel
@@ -157,7 +161,9 @@ packaging==20.9
     #   qtpy
     #   tox
 pandas==1.4.2
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   seaborn
 pandocfilters==1.5.0
     # via nbconvert
 parso==0.8.3
@@ -223,6 +229,10 @@ qtconsole==5.3.1
     # via jupyter
 qtpy==2.1.0
     # via qtconsole
+scipy==1.8.1
+    # via seaborn
+seaborn==0.11.2
+    # via -r requirements.in
 send2trash==1.8.0
     # via notebook
 six==1.16.0
