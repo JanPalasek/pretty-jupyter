@@ -22,7 +22,7 @@ def nbconvert(input, out, include_input):
         out = os.path.join(os.path.dirname(input), f"{Path(input).stem}.html")
 
     config =  Config()
-    config.HTMLExporter.template_name = "rmd"
+    config.HTMLExporter.template_name = "pj"
     config.HTMLExporter.extra_template_basedirs = pkg_resources.resource_filename("pretty_jupyter", "templates")
     config.HTMLExporter.exclude_input = not include_input
 
