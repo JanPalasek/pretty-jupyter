@@ -36,4 +36,4 @@ jupyter nbconvert --to html --template pj ${PATH_TO_IPYNB}
 
 ## Credits
 
-All credits for styles, toc, tabs etc. go to developers of RMarkdown and its packages. This project partially applies their incredible work to Jupyter.
+Credits for styles, toc, tabs etc. go to developers of RMarkdown and its packages. A big part of this project is applying their incredible work to Jupyter.
