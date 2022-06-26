@@ -24,9 +24,7 @@
 {% endblock output_prompt %}
 
 {% block input %}
-<pre>
-{{ cell.source }}
-</pre>
+{{ cell.source | highlight_code(metadata=cell.metadata)}}
 {%- endblock input %}
 
 {% block output_area_prompt %}

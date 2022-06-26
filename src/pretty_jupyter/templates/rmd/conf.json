@@ -4,11 +4,16 @@
     "text/html": true
   },
   "preprocessors": {
-    "auto-hide-preprocessor": {
+    "100-pygments": {
+      "type": "nbconvert.preprocessors.CSSHTMLHeaderPreprocessor",
+      "enabled": true,
+      "style": "default"
+    },
+    "200-auto-hide-preprocessor": {
       "type": "pretty_jupyter.RemoveInputPreprocessor",
       "enabled": true
     },
-    "token-preprocessor": {
+    "300-token-preprocessor": {
       "type": "pretty_jupyter.TokenPreprocessor",
       "enabled": true
     }
