@@ -28,12 +28,12 @@ See yourself:
 
 ## Usage
 
-Use [nbconvert](https://github.com/jupyter/nbconvert) with template rmd to generate the html report with new styles.
+Use [nbconvert](https://github.com/jupyter/nbconvert) with template pj (pretty-jupyter) to generate the html report with new styles.
 
 ```powershell
-jupyter nbconvert --to html --template rmd ${PATH_TO_IPYNB}
+jupyter nbconvert --to html --template pj ${PATH_TO_IPYNB}
 ```
 
 ## Credits
 
-All credits for styles, toc, tabs etc. go to developers of RMarkdown and its packages. This project just applies their incredible work to Jupyter.
+All credits for styles, toc, tabs etc. go to developers of RMarkdown and its packages. This project partially applies their incredible work to Jupyter.
