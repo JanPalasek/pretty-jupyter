@@ -36,7 +36,8 @@ class JinjaMagics(Magics):
                                         if not k.startswith('_') and k not in self.shell.user_ns_hidden))
         
         # convert tokens to html
-        rend = convert_markdown_tokens_to_html(rend)
+        if display_fn_name == "markdown":
+            rend = convert_markdown_tokens_to_html(rend)
 
         # display markdown
         return display_fn(rend)
