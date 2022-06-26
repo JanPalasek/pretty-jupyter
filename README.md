@@ -3,7 +3,7 @@
 
 Are you tired of your peers saying that the reports from R are prettier? Fear no more!
 
-Pretty jupyter package takes the input ipynb notebook, transforms it into html and additionally:
+Pretty jupyter package takes the input ipynb notebook, transforms it into html and additionally handles:
 
 - Automatic advanced table of content's generating.
 - Simple utilization of tabsets.
@@ -12,7 +12,7 @@ Pretty jupyter package takes the input ipynb notebook, transforms it into html a
 
 See yourself:
 
-[Classic jupyter](http://janpalasek.com/classic-jupyter-example.html) versus [Pretty Jupyter](http://janpalasek.com/pretty-jupyter-example.html)
+[Classic Jupyter](http://janpalasek.com/classic-jupyter-example.html) versus [Pretty Jupyter](http://janpalasek.com/pretty-jupyter-example.html)
 
 ## Installation
 
