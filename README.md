@@ -1,9 +1,9 @@
 # Pretty Jupyter
 ![Build](https://github.com/JanPalasek/pretty-jupyter/actions/workflows/ci.yml/badge.svg)
 
-Are you tired of your peers saying that the reports from R are prettier? Fear no more!
+Pretty Jupyter generates beautifully styled and dynamic html from ipynb notebook.
 
-Pretty jupyter package takes the input ipynb notebook, transforms it into html and additionally handles:
+It takes the input ipynb notebook, transforms it into html and additionally handles:
 
 - Automatic advanced table of content's generating.
 - Simple utilization of tabsets.
