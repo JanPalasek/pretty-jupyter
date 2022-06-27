@@ -23,7 +23,7 @@ def nbconvert(input, out, include_input):
 
     config =  Config()
     config.HTMLExporter.template_name = "pj"
-    config.HTMLExporter.extra_template_basedirs = pkg_resources.resource_filename("pretty_jupyter", "templates")
+    config.HTMLExporter.extra_template_basedirs = [pkg_resources.resource_filename("pretty_jupyter", "templates")]
     config.HTMLExporter.exclude_input = not include_input
 
     exporter = HTMLExporter(config)
@@ -38,9 +38,13 @@ def install():
     """
     Installs this package and makes it callable by `jupyter nbconvert` without the need to specify extra_template_basedirs.
     """
-    src_folder = pkg_resources.resource_filename("pretty_jupyter", "templates")
-    target_folder = os.path.join(sys.prefix, "share/jupyter/nbconvert/templates")
-    shutil.copytree(src_folder, target_folder, dirs_exist_ok=True)
+    src_folder = os.path.join(pkg_resources.resource_filename("pretty_jupyter", "templates"), "pj")
+    target_folder = os.path.join(sys.prefix, "share/jupyter/nbconvert/templates/pj")
+
+    # for backward compatibility, otherwise copytree has dirs_exist_ok param
+    if os.path.exists(target_folder):
+        shutil.rmtree(target_folder)
+    shutil.copytree(src_folder, target_folder)
 
 
 @click.version_option()

@@ -16,13 +16,12 @@ setuptools.setup(
     },
     install_requires=[
         "click",
-        "jupyter",
+        "ipython",
         "nbconvert"
     ],
     packages=setuptools.find_packages("src"),
     include_package_data=True,
     entry_points={
         "console_scripts": ["pretty-jupyter = pretty_jupyter.__main__:cli"]
-    },
-    python_requires=">=3.6"
+    }
 )

@@ -15,7 +15,7 @@ def params(request):
 
 def test_remove_input_preprocessor(params):
     input_str, is_transient = params
-    preprocessor = RemoveInputPreprocessor(jmarkdown=1)
+    preprocessor = RemoveInputPreprocessor(jinja=1)
 
     cell = MagicMock(name="cell")
     type(cell).source = PropertyMock(name="source", return_value=input_str)

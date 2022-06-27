@@ -15,6 +15,8 @@ See yourself:
 [Classic Jupyter](http://janpalasek.com/classic-jupyter-example.html) versus [Pretty Jupyter](http://janpalasek.com/pretty-jupyter-example.html)
 
 ## Installation
+Requires:
+- Python 3: it's been tested for versions 3.6, 3.7, 3.8, 3.9, but it most likely works for many more.
 
 1. Install the package from GitHub
     ```powershell
