@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name='pretty-jupyter',
     author="Jan Palasek",
-    version='0.1a',
+    version='0.1b',
     description="",
     long_description=long_description,
     long_description_content_type="text/markdown",
