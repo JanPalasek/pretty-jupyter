@@ -20,7 +20,7 @@ Requires:
 
 1. Install the package from GitHub
     ```powershell
-    python -m pip install git+https://github.com/JanPalasek/pretty-jupyter
+    python -m pip install pretty-jupyter
     ```
 
 2. Run the install command.
