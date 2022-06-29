@@ -33,19 +33,6 @@ def nbconvert(input, out, include_input):
     with open(out, "w", encoding="utf-8") as file:
         file.write(res[0])
 
-@click.command()
-def install():
-    """
-    Installs this package and makes it callable by `jupyter nbconvert` without the need to specify extra_template_basedirs.
-    """
-    src_folder = os.path.join(pkg_resources.resource_filename("pretty_jupyter", "templates"), "pj")
-    target_folder = os.path.join(sys.prefix, "share/jupyter/nbconvert/templates/pj")
-
-    # for backward compatibility, otherwise copytree has dirs_exist_ok param
-    if os.path.exists(target_folder):
-        shutil.rmtree(target_folder)
-    shutil.copytree(src_folder, target_folder)
-
 
 @click.version_option()
 @click.group()
@@ -53,4 +40,3 @@ def cli():
     pass
 
 cli.add_command(nbconvert)
-cli.add_command(install)
