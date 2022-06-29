@@ -24,7 +24,7 @@ data_files.append(
 setuptools.setup(
     name='pretty-jupyter',
     author="Jan Palasek",
-    version='0.2a0',
+    version='1.0a0',
     description="",
     long_description=long_description,
     long_description_content_type="text/markdown",
