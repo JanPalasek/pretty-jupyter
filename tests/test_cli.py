@@ -1,4 +1,3 @@
-import subprocess
 from click.testing import CliRunner
 import pytest
 from pretty_jupyter.console import cli
@@ -8,11 +7,8 @@ import os
 def input_path():
     return "tests/fixture/basic.ipynb"
 
-@pytest.fixture
-def expected_path():
-    return "tests/fixture/basic.html"
 
-def test_nbconvert(input_path, expected_path, tmpdir):
+def test_nbconvert(input_path, tmpdir):
     out_path = os.path.join(tmpdir, "actual.html")
 
     runner = CliRunner()

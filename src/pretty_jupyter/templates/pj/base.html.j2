@@ -25,6 +25,9 @@
 {{ super() }}
 {% endblock output %}
 
+{% block empty_in_prompt -%}
+{%- endblock empty_in_prompt %}
+
 {% block markdowncell scoped %}
 {%- if resources.global_content_filter.include_input_prompt-%}
     {{ self.empty_in_prompt() }}
