@@ -6,7 +6,7 @@ import functools
 
 class RemoveOutputPreprocessor(Preprocessor):
     """
-    Remove all stderr cells if turned on.
+    Removes specified outputs based on its parameters.
     """
 
     stream_stdout = CInt(default_value=0)
