@@ -278,6 +278,11 @@ header#pageHeader {
   page-break-before: always;
 }
 
+/* background color for errors */
+.error {
+  background-color: #fdd;
+}
+
 /*
 color customization
 
