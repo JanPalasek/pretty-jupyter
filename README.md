@@ -37,6 +37,11 @@ cd pretty-jupyter
 ./env/install.ps1 # Or ./env/install.sh on linux
 ```
 
+## Documentation
+
+- [Documentation for Pretty Jupyter](https://github.com/JanPalasek/pretty-jupyter/wiki).
+- Examples on GitHub: Can be found in the directory `examples`.
+
 ## Credits
 
 Credits for styles, toc, tabs etc. go to developers of RMarkdown and its packages. A big part of this project is applying their incredible work to Jupyter.

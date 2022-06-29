@@ -10,18 +10,6 @@
 {{ super() }}
 {% endblock output_group %}
 
-{% block in_prompt -%}
-{%- endblock in_prompt %}
-
-{% block empty_in_prompt -%}
-{%- endblock empty_in_prompt %}
-
-{#
-  output_prompt doesn't do anything in HTML,
-  because there is a prompt div in each output area (see output block)
-#}
-{% block output_prompt %}
-{% endblock output_prompt %}
 
 {% block input %}
 {{ cell.source | highlight_code(metadata=cell.metadata)}}
@@ -36,6 +24,9 @@
 {% endif %}
 {{ super() }}
 {% endblock output %}
+
+{% block empty_in_prompt -%}
+{%- endblock empty_in_prompt %}
 
 {% block markdowncell scoped %}
 {%- if resources.global_content_filter.include_input_prompt-%}
@@ -62,7 +53,11 @@ unknown type  {{ cell.type }}
 </pre>
 {%- endblock stream_stdout %}
 
+{# Hide stderr #}
 {% block stream_stderr -%}
+<pre class="error">
+{{- output.text | ansi2html -}}
+</pre>
 {%- endblock stream_stderr %}
 
 {% block data_svg scoped -%}
@@ -144,7 +139,7 @@ alt="{{ alttext }}"
 {%- endblock data_latex %}
 
 {% block error -%}
-<pre>
+<pre class="error">
 {{- super() -}}
 </pre>
 {%- endblock error %}
