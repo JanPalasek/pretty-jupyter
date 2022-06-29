@@ -30,6 +30,13 @@ Use [nbconvert](https://github.com/jupyter/nbconvert) with template pj (pretty-j
 jupyter nbconvert --to html --template pj ${PATH_TO_IPYNB}
 ```
 
+## Dev Installation
+```sh
+git clone https://github.com/JanPalasek/pretty-jupyter.git
+cd pretty-jupyter
+./env/install.ps1 # Or ./env/install.sh on linux
+```
+
 ## Credits
 
 Credits for styles, toc, tabs etc. go to developers of RMarkdown and its packages. A big part of this project is applying their incredible work to Jupyter.

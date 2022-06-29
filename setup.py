@@ -5,21 +5,26 @@ import glob
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+# this is done only to copy to the nbconvert's expected target directory
+# so 'jupyter nbconvert' recognizes our new template
 data_files = []
 data_files.append(
-    ("share/jupyter/nbconvert/templates/pj",
-        list(glob.glob('src/pretty_jupyter/templates/pj/*.j2'))
-        + ["src/pretty_jupyter/templates/pj/conf.json"])
+    ("share/jupyter/nbconvert/templates/pj", [
+        "src/pretty_jupyter/templates/pj/conf.json",
+        "src/pretty_jupyter/templates/pj/index.html.j2",
+        "src/pretty_jupyter/templates/pj/base.html.j2"])
 )
 data_files.append(
-    ("share/jupyter/nbconvert/templates/pj/static",
-        list(glob.glob("src/pretty_jupyter/templates/static/*")))
+    ("share/jupyter/nbconvert/templates/pj/static", [
+        "src/pretty_jupyter/templates/pj/static/pj.js",
+        "src/pretty_jupyter/templates/pj/static/pj.css"
+    ])
 )
 
 setuptools.setup(
     name='pretty-jupyter',
     author="Jan Palasek",
-    version='0.1b1',
+    version='0.2a0',
     description="",
     long_description=long_description,
     long_description_content_type="text/markdown",
