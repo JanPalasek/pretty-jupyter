@@ -3,11 +3,12 @@
 
 Pretty Jupyter generates beautifully styled and dynamic html from ipynb notebook.
 
-It takes the input ipynb notebook, transforms it into html and additionally handles:
+It takes an ipynb notebook as an input and transforms it into html and additionally handles:
 
 - Automatic advanced table of content's generating.
 - Simple utilization of tabsets.
 - Applies prettier styling.
+- Code folding.
 - And more in the future.
 
 See yourself:
