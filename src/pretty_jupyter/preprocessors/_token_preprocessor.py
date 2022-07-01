@@ -31,6 +31,8 @@ class TokenPreprocessor(Preprocessor):
     <span class='pretty-jupyter-token token1 token2' style='display: none;'></span>
     ```
     """
+    def preprocess(self, nb, resources):
+        return super().preprocess(nb, resources)
     def preprocess_cell(self, cell, resources, index):
         if cell.cell_type == "markdown":
             cell.source = convert_markdown_tokens_to_html(cell.source)

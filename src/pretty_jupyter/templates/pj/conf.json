@@ -11,7 +11,8 @@
     },
     "200-remove-input-preprocessor": {
       "type": "pretty_jupyter.RemoveInputPreprocessor",
-      "enabled": true
+      "enabled": true,
+      "jinja": 1
     },
     "300-remove-stdout-preprocessor": {
       "type": "pretty_jupyter.RemoveOutputPreprocessor",
