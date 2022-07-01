@@ -24,8 +24,8 @@ data_files.append(
 setuptools.setup(
     name='pretty-jupyter',
     author="Jan Palasek",
-    version='1.0a0',
-    description="",
+    version='1.0',
+    description="Export Jupyter notebook into a pretty and dynamic HTML report.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     package_dir={
@@ -41,5 +41,20 @@ setuptools.setup(
     data_files=data_files,
     entry_points={
         "console_scripts": ["pretty-jupyter = pretty_jupyter.__main__:cli"]
-    }
+    },
+      classifiers=[
+          'Development Status :: 5 - Production/Stable',
+          'Framework :: Jupyter',
+          'Intended Audience :: Developers',
+          'Intended Audience :: Science/Research',
+          'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+          'Operating System :: MacOS :: MacOS X',
+          'Operating System :: Microsoft :: Windows',
+          'Operating System :: POSIX',
+          'Programming Language :: Python :: 3',
+          'Programming Language :: Python :: 3.6',
+          'Programming Language :: Python :: 3.7',
+          'Programming Language :: Python :: 3.8',
+          'Programming Language :: Python :: 3.9'
+          ],
 )
