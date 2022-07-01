@@ -1,6 +1,6 @@
 /* a lot of this code was taken from rmd styles directly included in the output html page, license was not present there but it is GPL3 */
 
-code {
+pre {
   white-space: pre-wrap;
   color: inherit;
 }
@@ -286,6 +286,10 @@ header#pageHeader {
 /* hide horizontal scrollbars */
 body {
   overflow-x: hidden;
+}
+
+#jup-show-hide-all-menu {
+  margin-right: 15px;
 }
 
 /*
