@@ -12,7 +12,9 @@
 
 
 {% block input %}
+<div class="pretty-jupyter-input">
 {{ cell.source | highlight_code(metadata=cell.metadata)}}
+</div>
 {%- endblock input %}
 
 {% block output_area_prompt %}

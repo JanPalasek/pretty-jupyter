@@ -283,6 +283,11 @@ header#pageHeader {
   background-color: #fdd;
 }
 
+/* hide horizontal scrollbars */
+body {
+  overflow-x: hidden;
+}
+
 /*
 color customization
 

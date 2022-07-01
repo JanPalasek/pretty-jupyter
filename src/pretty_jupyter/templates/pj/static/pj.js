@@ -59,7 +59,7 @@ window.initializeCodeFolding = function(show) {
   var currentIndex = 1;
 
   // select all jupyter code blocks
-  var jupyterCodeBlocks = $('div.hl-ipython3');
+  var jupyterCodeBlocks = $('div.pretty-jupyter-input');
   jupyterCodeBlocks.each(function() {
 
     // create a collapsable div to wrap the code in
