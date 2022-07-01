@@ -34,7 +34,7 @@ jupyter nbconvert --to html --template pj ${PATH_TO_IPYNB}
 ```sh
 git clone https://github.com/JanPalasek/pretty-jupyter.git
 cd pretty-jupyter
-./env/install.ps1 # Or ./env/install.sh on linux
+./env/install.ps1 # Or sh env/install.sh on linux
 ```
 
 ## Documentation

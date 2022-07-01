@@ -6,4 +6,4 @@ source venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install --upgrade wheel setuptools pip-tools
 # install everything in requirements.txt
-./env/sync.sh
+sh env/sync.sh
