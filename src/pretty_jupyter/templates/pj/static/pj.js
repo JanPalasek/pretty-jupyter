@@ -165,15 +165,6 @@ $(document).ready(function () {
 });
 
 
-// dynamically load mathjax for compatibility with self-contained 
-(function () {
-  var script = document.createElement("script");
-  script.type = "text/javascript";
-  script.src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-  document.getElementsByTagName("head")[0].appendChild(script);
-})();
-
-
 // custom post-processing: remove some ugly styles etc 
 $(document).ready(function () {
   // prettify tables
