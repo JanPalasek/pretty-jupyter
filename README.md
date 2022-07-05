@@ -1,31 +1,27 @@
 # Pretty Jupyter
 ![Build](https://github.com/JanPalasek/pretty-jupyter/actions/workflows/ci.yml/badge.svg)
 
-Pretty Jupyter is a package that creates beautifully styled and dynamic html webpage from Jupyter notebook. Check it yourself in our [demo page](http://janpalasek.com/pretty-jupyter-example.html) and compare it with the [default jupyter styles](http://janpalasek.com/classic-jupyter-example.html).
+Pretty Jupyter is a package that creates beautifully styled and dynamic html webpage from Jupyter notebook. Check it yourself in our [demo](http://janpalasek.com/pretty-jupyter-example.html) and compare it with the [default jupyter](http://janpalasek.com/classic-jupyter-example.html).
 
 All it takes to generate the output webpage are two simple commands: [installation](https://github.com/JanPalasek/pretty-jupyter#installation) and [usage](https://github.com/JanPalasek/pretty-jupyter#usage).
 
 ## Main Features
 
-- Visually appealing styles.
-- Automatic table of content's generation.
-- Tabsets.
-- Using variables intertwined with Markdown.
-- Code folding.
+- :point_right: Visually appealing styles.
+- :point_right: Automatic table of content's generation.
+- :point_right: Tabsets.
+- :point_right: Using variables intertwined with Markdown.
+- :point_right: Code folding.
 
 ## Installation
-Requires:
-- Python 3: it's been tested for versions 3.6, 3.7, 3.8, 3.9, but it most likely works for many more.
 
-```powershell
+```sh
 python -m pip install pretty-jupyter
 ```
 
 ## Usage
 
-Use [nbconvert](https://github.com/jupyter/nbconvert) with template pj (pretty-jupyter) to generate the html report with new styles.
-
-```powershell
+```sh
 jupyter nbconvert --to html --template pj ${PATH_TO_IPYNB}
 ```
 
