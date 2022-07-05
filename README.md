@@ -5,6 +5,8 @@ Pretty Jupyter is a package that creates beautifully styled and dynamic html web
 
 All it takes to generate the output webpage are two simple commands: [installation](https://github.com/JanPalasek/pretty-jupyter#installation) and [usage](https://github.com/JanPalasek/pretty-jupyter#usage).
 
+![demo](docs/demo.gif)
+
 ## Main Features
 
 - :point_right: Visually appealing styles.
