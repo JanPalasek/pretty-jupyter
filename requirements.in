@@ -2,8 +2,9 @@ pytest==6.2.3
 click==8.0.4
 tox==3.24.5
 jupyter==1.0.0
-ipykernel
+ipykernel==6.15.0
 pandas==1.4.2
 matplotlib==3.5.2
 seaborn==0.11.2
 nbconvert==6.5.0
+jinja2==3.1.2
