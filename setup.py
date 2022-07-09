@@ -24,7 +24,7 @@ data_files.append(
 setuptools.setup(
     name='pretty-jupyter',
     author="Jan Palasek",
-    version='1.1',
+    version='1.2.0',
     description="Export Jupyter notebook into a pretty and dynamic HTML report.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -33,8 +33,10 @@ setuptools.setup(
     },
     install_requires=[
         "click",
-        "ipython",
-        "nbconvert"
+        "ipython>=7.1",
+        "nbconvert>=6.0",
+        "jinja2>=3.0",
+        "ipython-genutils>=0.1"
     ],
     packages=setuptools.find_packages("src"),
     include_package_data=True,
