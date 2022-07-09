@@ -168,9 +168,8 @@ $(document).ready(function () {
 // custom post-processing: remove some ugly styles etc 
 $(document).ready(function () {
   // prettify tables
-  $("table").addClass("table");
-  $("table").addClass("table-striped");
-  // $("table").addClass("table-word-wrapped");
+  $(".main-container table").addClass("table");
+  $(".main-container table").addClass("table-striped");
   $("table.dataframe").removeAttr("border");
 
   // remove useless anchor with useless anchor-link

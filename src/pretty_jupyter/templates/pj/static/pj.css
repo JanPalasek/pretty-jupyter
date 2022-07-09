@@ -251,7 +251,7 @@ th {
 header#pageHeader {
   width: 100%;
   text-align: center;
-  margin: 25px 10px 50px;
+  margin: 25px 10px 25px 10px;
 }
 
 @media print {
@@ -283,10 +283,6 @@ header#pageHeader {
   background-color: #fdd;
 }
 
-/* hide horizontal scrollbars */
-body {
-  overflow-x: hidden;
-}
 
 #jup-show-hide-all-menu {
   margin-right: 15px;
