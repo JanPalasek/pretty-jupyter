@@ -12,7 +12,7 @@ All it takes to generate the output webpage are two simple commands, see [instal
 - :point_right: Visually appealing styles.
 - :point_right: Automatic table of content's generation.
 - :point_right: Tabsets.
-- :point_right: Using variables intertwined with Markdown.
+- :point_right: Using Python variables in Markdown.
 - :point_right: Code folding.
 
 ## Installation
