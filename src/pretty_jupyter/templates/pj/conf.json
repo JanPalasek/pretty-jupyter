@@ -4,16 +4,21 @@
     "text/html": true
   },
   "preprocessors": {
-    "100-remove-input-preprocessor": {
+    "100-pygments": {
+      "type": "nbconvert.preprocessors.CSSHTMLHeaderPreprocessor",
+      "enabled": true,
+      "style": "default"
+    },
+    "200-remove-input-preprocessor": {
       "type": "pretty_jupyter.RemoveInputPreprocessor",
       "enabled": true,
       "jinja": 1
     },
-    "200-remove-stdout-preprocessor": {
+    "300-remove-stdout-preprocessor": {
       "type": "pretty_jupyter.RemoveOutputPreprocessor",
       "enabled": true
     },
-    "300-token-preprocessor": {
+    "400-token-preprocessor": {
       "type": "pretty_jupyter.TokenPreprocessor",
       "enabled": true
     }

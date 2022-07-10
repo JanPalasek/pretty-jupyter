@@ -30,6 +30,7 @@ ul.task-list {
 
 code {
   white-space: pre;
+  color: inherit;
 }
 
 .main-container {
