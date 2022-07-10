@@ -1,5 +1,25 @@
 /* a lot of this code was taken from rmd styles directly included in the output html page, license was not present there but it is GPL3 */
 
+// nextUntilWithTextNodes does the same as nextUntil but it doesn't ignore text nodes
+// credits: https://stackoverflow.com/questions/25873650/jquery-nextuntil-include-text-nodes
+$.fn.nextUntilWithTextNodes = function (until) {
+  var matched = $.map(this, function (elem, i, until) {
+      var matched = [];
+      while ((elem = elem.nextSibling) && elem.nodeType !== 9) {
+          if (elem.nodeType === 1 || elem.nodeType === 3) {
+              if (until && jQuery(elem).is(until)) {
+                  break;
+              }
+              matched.push(elem);
+          }
+      }
+      return matched;
+  }, until);
+
+  return this.pushStack(matched);
+};
+
+
 // custom preprocessing
 
 $(document).ready(function () {
@@ -23,7 +43,7 @@ $(document).ready(function () {
       // add the computed classes and attributes
       class_attr = d["class"].join(" ");
       id_attr = d["id"];
-      $(this).nextUntil(this.tagName).addBack().wrapAll(`<div id='${id_attr}' class='${class_attr}' />`);
+      $(this).nextUntilWithTextNodes(this.tagName).addBack().wrapAll(`<div id='${id_attr}' class='${class_attr}' />`);
 
       tabNumber += 1;
     });
