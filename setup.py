@@ -1,5 +1,4 @@
 import setuptools
-import glob
 
 
 with open("README.md", "r") as fh:
