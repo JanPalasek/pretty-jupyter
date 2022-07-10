@@ -1,11 +1,24 @@
-# Pretty Jupyter
-![Build](https://github.com/JanPalasek/pretty-jupyter/actions/workflows/ci.yml/badge.svg)
+<h1 align="center">
+  <br>
+  Pretty Jupyter
+  </br>
+</h1>
+<h4 align="center">Simple package for beautiful & dynamic reports</h4>
+
+<p align="center">
+  <a href="https://github.com/JanPalasek/pretty-jupyter/actions/workflows/ci.yml/badge.svg"><img src="https://github.com/JanPalasek/pretty-jupyter/actions/workflows/ci.yml/badge.svg" /></a>
+  <a href="https://img.shields.io/github/v/release/JanPalasek/pretty-jupyter"><img src="https://img.shields.io/github/v/release/JanPalasek/pretty-jupyter" /></a>
+</p>
+
+<p align="center">
+  <img src="docs/demo.gif" alt="demo preview" width="600" />
+</p>
+
+## Introduction
 
 Pretty Jupyter is a package that creates beautifully styled and dynamic html webpage from Jupyter notebook. Check it yourself in our [demo](http://janpalasek.com/pretty-jupyter-example.html) and compare it with the [default jupyter](http://janpalasek.com/classic-jupyter-example.html).
 
 All it takes to generate the output webpage are two simple commands, see [installation](https://github.com/JanPalasek/pretty-jupyter#installation) and [usage](https://github.com/JanPalasek/pretty-jupyter#usage).
-
-<img src="docs/demo.gif" alt="demo preview" width=70% />
 
 ## Main Features
 
@@ -31,8 +44,8 @@ To unlock the full potential of Pretty Jupyter, see [the customization section](
 
 ## Documentation
 
-- [Documentation for Pretty Jupyter](https://github.com/JanPalasek/pretty-jupyter/wiki).
-- [Examples](https://github.com/JanPalasek/pretty-jupyter-examples).
+- [Documentation for Pretty Jupyter](https://github.com/JanPalasek/pretty-jupyter/wiki)
+- [Examples](https://github.com/JanPalasek/pretty-jupyter-examples)
 
 ## Dev Installation
 ```sh
