@@ -5,7 +5,7 @@ import os
 
 @pytest.fixture
 def input_path():
-    return "tests/fixture/basic.ipynb"
+    return "tests/fixture/notebook.ipynb"
 
 
 def test_nbconvert(input_path, tmpdir):

@@ -32,7 +32,7 @@ To unlock the full potential of Pretty Jupyter, see [the customization section](
 ## Documentation
 
 - [Documentation for Pretty Jupyter](https://github.com/JanPalasek/pretty-jupyter/wiki).
-- Examples on GitHub: Can be found in the directory `examples`.
+- [Examples](https://github.com/JanPalasek/pretty-jupyter-examples).
 
 ## Dev Installation
 ```sh
