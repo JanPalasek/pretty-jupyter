@@ -194,9 +194,9 @@ $(document).ready(function () {
 // custom post-processing: remove some ugly styles etc 
 $(document).ready(function () {
   // prettify tables (that aren't ignored)
-  $("table:not(.pj-ignore)").addClass("table");
-  $("table:not(.pj-ignore)").addClass("table-striped");
-  $("table.dataframe:not(.pj-ignore)").removeAttr("border");
+  $("table:not(.pj-tab-ignore)").addClass("table");
+  $("table:not(.pj-tab-ignore)").addClass("table-striped");
+  $("table.dataframe:not(.pj-tab-ignore)").removeAttr("border");
 
   // remove useless anchor with useless anchor-link
   $("a.anchor-link").remove();
