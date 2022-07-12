@@ -2,7 +2,7 @@
 from nbconvert.preprocessors import Preprocessor
 from traitlets import CInt
 
-from pretty_jupyter.utils import is_jinja_cell
+from pretty_jupyter.magics import is_jinja_cell
 
 class RemoveInputPreprocessor(Preprocessor):
     """
