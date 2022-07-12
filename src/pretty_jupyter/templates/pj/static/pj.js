@@ -55,8 +55,8 @@ $(document).ready(function () {
     });
   }
 
-    // process all pj-token elements
-    $(".pj-token").each(function (i, e) {
+    // process all pj-token elements (pretty-jupyter-token for backwards compatibility)
+    $(".pj-token,.pretty-jupyter-token").each(function (i, e) {
       // if it has tabset, add tabset class to the section
       if ($(this).hasClass("tabset")) {
         $(this).parent().closest(".section").addClass("tabset");
