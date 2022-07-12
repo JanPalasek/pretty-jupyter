@@ -43,7 +43,13 @@ $(document).ready(function () {
       // add the computed classes and attributes
       class_attr = d["class"].join(" ");
       id_attr = d["id"];
-      $(this).nextUntilWithTextNodes(this.tagName).addBack().wrapAll(`<div id='${id_attr}' class='${class_attr}' />`);
+      
+      untilNodes = `${this.tagName}`
+      for (let hPrev = 1; hPrev < x; hPrev++) {
+        untilNodes += `,.level${hPrev}`
+      }
+
+      $(this).nextUntilWithTextNodes(untilNodes).addBack().wrapAll(`<div id='${id_attr}' class='${class_attr}' />`);
 
       tabNumber += 1;
     });
