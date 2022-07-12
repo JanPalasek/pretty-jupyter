@@ -28,7 +28,7 @@ class TokenPreprocessor(Preprocessor):
     Generated HTML:
     ```html
     <h2>Chapter</h2>
-    <span class='pretty-jupyter-token token1 token2' style='display: none;'></span>
+    <span class='pj-token token1 token2' style='display: none;'></span>
     ```
     """
     def preprocess(self, nb, resources):

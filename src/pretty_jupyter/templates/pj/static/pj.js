@@ -49,8 +49,8 @@ $(document).ready(function () {
     });
   }
 
-    // process all pretty-jupyter-token elements
-    $(".pretty-jupyter-token").each(function (i, e) {
+    // process all pj-token elements
+    $(".pj-token").each(function (i, e) {
       // if it has tabset, add tabset class to the section
       if ($(this).hasClass("tabset")) {
         $(this).parent().closest(".section").addClass("tabset");
@@ -79,7 +79,7 @@ window.initializeCodeFolding = function(show) {
   var currentIndex = 1;
 
   // select all jupyter code blocks
-  var jupyterCodeBlocks = $('div.pretty-jupyter-input');
+  var jupyterCodeBlocks = $('div.pj-input');
   jupyterCodeBlocks.each(function() {
 
     // create a collapsable div to wrap the code in
@@ -187,10 +187,10 @@ $(document).ready(function () {
 
 // custom post-processing: remove some ugly styles etc 
 $(document).ready(function () {
-  // prettify tables
-  $(".main-container table").addClass("table");
-  $(".main-container table").addClass("table-striped");
-  $("table.dataframe").removeAttr("border");
+  // prettify tables (that aren't ignored)
+  $("table:not(.pj-ignore)").addClass("table");
+  $("table:not(.pj-ignore)").addClass("table-striped");
+  $("table.dataframe:not(.pj-ignore)").removeAttr("border");
 
   // remove useless anchor with useless anchor-link
   $("a.anchor-link").remove();

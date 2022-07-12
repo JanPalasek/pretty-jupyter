@@ -9,7 +9,7 @@ Regex to match tokens. The tokens are special sequences in markdown that invoke 
 ```
 """
 
-_HTML_TOKEN_FORMAT = "<span class='pretty-jupyter-token {tokens}' style='display: none;'></span>"
+_HTML_TOKEN_FORMAT = "<span class='pj-token {tokens}' style='display: none;'></span>"
 """
 What markdown tokens get translated to.
 """
