@@ -41,3 +41,9 @@ class JinjaMagics(Magics):
 
         # display markdown
         return display_fn(rend)
+
+    @cell_magic
+    def jmd(self, line, cell):
+        if len(line.strip()) > 0:
+            raise ValueError(r"%%jmd does not accept any arguments.")
+        return self.jinja(line="markdown", cell=cell)
