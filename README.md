@@ -23,10 +23,10 @@ All it takes to generate the output webpage are two simple commands.
 ## Main Features
 
 - :point_right: Visually appealing styles.
-- :point_right: Automatic table of content's generation.
+- :point_right: Automatic Table of Contents generation.
 - :point_right: Tabsets.
 - :point_right: Using Python variables in Markdown.
-- :point_right: Code folding.
+- :point_right: Code Folding.
 
 ## Installation
 
