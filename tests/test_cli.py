@@ -19,7 +19,8 @@ def test_nbconvert(input_path, tmpdir, driver):
 
     assert os.path.exists(out_path), "The expected file does not exist."
 
-    driver.get("https://www.google.com")
+    url = os.path.normpath(f"file:/{os.path.abspath(out_path)}")
+    driver.get(url)
 
     # go to page
     # driver.get(os.path.abspath(out_path))
