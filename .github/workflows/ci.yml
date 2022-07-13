@@ -23,5 +23,6 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install tox tox-gh-actions
         python -m pip install pytest requests webdriver-manager selenium
+        python -m pip install .
     - name: Test with tox
       run: python -m pytest tests/
