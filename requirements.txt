@@ -39,8 +39,6 @@ cffi==1.15.0
     #   trio
 charset-normalizer==2.1.0
     # via requests
-chromedriver-binary==104.0.5112.29.0
-    # via -r requirements.in
 click==8.0.4
     # via -r requirements.in
 colorama==0.4.4

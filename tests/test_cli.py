@@ -32,7 +32,9 @@ def test_nbconvert(input_path, tmpdir, driver):
     h1_xpath = "//div[contains(@class, 'level1') and contains(@class, 'section')]/h1"
     assert len(driver.find_elements(By.XPATH, h1_xpath)) == 4
 
-    # check the tabset more in-depth
+    ##########
+    # TABSET #
+    ##########
     assert driver.find_elements(By.XPATH, h1_xpath)[2].text == "Chapter 1: Tabs"
 
     tab_section = driver.find_elements(By.XPATH, "//div[contains(@class, 'section') and contains(@class, 'level1')]")[2]
@@ -62,13 +64,17 @@ def test_nbconvert(input_path, tmpdir, driver):
     math_text = tab_contents[1].find_element(By.XPATH, "script[contains(@type, 'math/tex')]").get_attribute("innerHTML")
     assert math_text == r"a \cdot a^2 = \frac{a^5}{a^2} = a^3 = 125"
     
-    # code folding
+    ################
+    # CODE FOLDING #
+    ################
     jmd_section = driver.find_elements(By.XPATH, "//div[contains(@class, 'section') and contains(@class, 'level1')]")[3]
 
     code_div = jmd_section.find_elements(By.XPATH, "div[contains(@class, 'py-code-collapse') and contains(@class, 'collapse')]")[0]
     assert len(code_div.find_elements(By.XPATH, "div[contains(@class, 'pj-input')]//pre/span")) > 0, "Code highlighting does not work."
 
-    # table of contents
+    #####################
+    # TABLE OF CONTENTS #
+    #####################
     def get_y_location(driver):
         scroll_position_script = """
                 var pageY;
