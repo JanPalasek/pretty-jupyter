@@ -5,11 +5,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.core.utils import ChromeType
 import selenium.webdriver
 
-import chromedriver_binary
 
 @pytest.fixture()
 def driver():
-    chrome_service = Service(ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install())
+    chrome_service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
 
     chrome_options = Options()
     options = [
