@@ -22,5 +22,6 @@ jobs:
         sudo apt-get install -y chromium-browser
         python -m pip install --upgrade pip
         python -m pip install tox tox-gh-actions
+        python -m pip install pytest requests webdriver-manager selenium
     - name: Test with tox
-      run: pytest tests/
+      run: python -m pytest tests/
