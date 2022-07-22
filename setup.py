@@ -24,7 +24,7 @@ setuptools.setup(
     name='pretty-jupyter',
     author="Jan Palasek",
     version='1.2.3',
-    description="Export Jupyter notebook into a pretty and dynamic HTML report.",
+    description="Export Jupyter notebook into beautiful and dynamic HTML report.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     package_dir={
