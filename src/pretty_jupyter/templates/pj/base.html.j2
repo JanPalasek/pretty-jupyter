@@ -56,7 +56,7 @@ unknown type  {{ cell.type }}
 {%- endblock stream_stdout %}
 
 {% block stream_stderr -%}
-<pre class="danger">
+<pre class="bg-danger">
 {{- output.text | ansi2html -}}
 </pre>
 {%- endblock stream_stderr %}
