@@ -2,7 +2,6 @@
 
 pre {
   white-space: pre-wrap;
-  color: inherit;
 }
 
 span.smallcaps {
@@ -30,7 +29,6 @@ ul.task-list {
 
 code {
   white-space: pre;
-  color: inherit;
 }
 
 .main-container {
@@ -223,14 +221,7 @@ h6 {
 }
 
 
-h2,
-h3,
-h4 {
-  color: #444444;
-}
-
 h4 em {
-  color: black;
   font-style: normal;
 }
 
@@ -277,11 +268,6 @@ header#pageHeader {
 
 .pagebreak {
   page-break-before: always;
-}
-
-/* background color for errors */
-.error {
-  background-color: #fdd;
 }
 
 
