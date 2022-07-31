@@ -39,7 +39,31 @@ setuptools.setup(
     ],
     packages=setuptools.find_packages("src"),
     include_package_data=True,
-    data_files=data_files,
+    data_files=[
+        (
+            "share/jupyter/nbconvert/templates/pj",
+            [
+                "src/pretty_jupyter/templates/pj/conf.json",
+                "src/pretty_jupyter/templates/pj/index.html.j2",
+                "src/pretty_jupyter/templates/pj/base.html.j2"
+            ]
+        ),
+        (
+            "share/jupyter/nbconvert/templates/pj/static",
+            [
+                "src/pretty_jupyter/templates/pj/static/pj.js",
+                "src/pretty_jupyter/templates/pj/static/pj.css"
+            ]
+        ),
+        (
+            "share/jupyter/nbconvert/templates/pj/static/themes",
+            [
+                "src/pretty_jupyter/templates/pj/static/themes/paper.css",
+                "src/pretty_jupyter/templates/pj/static/themes/slate.css",
+                "src/pretty_jupyter/templates/pj/static/themes/journal.css"
+            ]
+        )
+    ],
     entry_points={
         "console_scripts": ["pretty-jupyter = pretty_jupyter.__main__:cli"]
     },
