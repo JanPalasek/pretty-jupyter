@@ -8,6 +8,8 @@
 <p align="center">
   <a href="https://github.com/JanPalasek/pretty-jupyter/actions/workflows/ci.yml/badge.svg"><img src="https://github.com/JanPalasek/pretty-jupyter/actions/workflows/ci.yml/badge.svg" /></a>
   <a href="https://img.shields.io/github/v/release/JanPalasek/pretty-jupyter"><img src="https://img.shields.io/github/v/release/JanPalasek/pretty-jupyter" /></a>
+  <!-- <a href='https://pretty-jupyter.readthedocs.io/en/latest/?badge=latest'><img src='https://readthedocs.org/projects/pretty-jupyter/badge/?version=latest' alt='Documentation Status' /> -->
+</a>
 </p>
 
 <p align="center">

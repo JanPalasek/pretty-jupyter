@@ -4,11 +4,20 @@
    contain the root `toctree` directive.
 
 Welcome to Pretty Jupyter's documentation!
+
+The site is still a work in progress. Please use wiki of the repository: https://github.com/JanPalasek/pretty-jupyter/wiki.
+
 ==========================================
+
+**Contents:**
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: User Documentation
+
+   source/install
+   source/usage
+
 
 
 
