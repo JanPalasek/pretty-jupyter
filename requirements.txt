@@ -4,6 +4,8 @@
 #
 #    pip-compile
 #
+alabaster==0.7.12
+    # via sphinx
 argon2-cffi==21.3.0
     # via notebook
 argon2-cffi-bindings==21.2.0
@@ -22,6 +24,8 @@ attrs==21.2.0
     #   outcome
     #   pytest
     #   trio
+babel==2.10.3
+    # via sphinx
 backcall==0.2.0
     # via ipython
 beautifulsoup4==4.11.1
@@ -46,6 +50,7 @@ colorama==0.4.4
     #   click
     #   ipython
     #   pytest
+    #   sphinx
     #   tox
 cryptography==37.0.4
     # via
@@ -61,6 +66,8 @@ defusedxml==0.7.1
     # via nbconvert
 distlib==0.3.4
     # via virtualenv
+docutils==0.19
+    # via sphinx
 entrypoints==0.4
     # via
     #   jupyter-client
@@ -82,6 +89,10 @@ idna==3.3
     #   requests
     #   trio
     #   urllib3
+imagesize==1.4.1
+    # via sphinx
+importlib-metadata==4.12.0
+    # via sphinx
 iniconfig==1.1.1
     # via pytest
 ipykernel==6.15.0
@@ -111,6 +122,7 @@ jinja2==3.1.2
     #   -r requirements.in
     #   nbconvert
     #   notebook
+    #   sphinx
 jsonschema==4.6.0
     # via nbformat
 jupyter==1.0.0
@@ -189,6 +201,7 @@ packaging==20.9
     #   nbconvert
     #   pytest
     #   qtpy
+    #   sphinx
     #   tox
 pandas==1.4.2
     # via
@@ -230,6 +243,7 @@ pygments==2.12.0
     #   jupyter-console
     #   nbconvert
     #   qtconsole
+    #   sphinx
 pyopenssl==22.0.0
     # via urllib3
 pyparsing==2.4.7
@@ -250,7 +264,9 @@ python-dateutil==2.8.2
 python-dotenv==0.20.0
     # via webdriver-manager
 pytz==2022.1
-    # via pandas
+    # via
+    #   babel
+    #   pandas
 pywin32==304
     # via jupyter-core
 pywinpty==2.0.5
@@ -268,6 +284,7 @@ qtpy==2.1.0
 requests==2.28.1
     # via
     #   -r requirements.in
+    #   sphinx
     #   webdriver-manager
 scipy==1.8.1
     # via seaborn
@@ -286,10 +303,26 @@ six==1.16.0
     #   virtualenv
 sniffio==1.2.0
     # via trio
+snowballstemmer==2.2.0
+    # via sphinx
 sortedcontainers==2.4.0
     # via trio
 soupsieve==2.3.2.post1
     # via beautifulsoup4
+sphinx==5.1.1
+    # via -r requirements.in
+sphinxcontrib-applehelp==1.0.2
+    # via sphinx
+sphinxcontrib-devhelp==1.0.2
+    # via sphinx
+sphinxcontrib-htmlhelp==2.0.0
+    # via sphinx
+sphinxcontrib-jsmath==1.0.1
+    # via sphinx
+sphinxcontrib-qthelp==1.0.3
+    # via sphinx
+sphinxcontrib-serializinghtml==1.1.5
+    # via sphinx
 stack-data==0.3.0
     # via ipython
 terminado==0.15.0
@@ -345,6 +378,8 @@ widgetsnbextension==3.6.0
     # via ipywidgets
 wsproto==1.1.0
     # via trio-websocket
+zipp==3.8.1
+    # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
