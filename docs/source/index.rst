@@ -15,8 +15,8 @@ The site is still a work in progress. Please use wiki of the repository: https:/
    :maxdepth: 2
    :caption: User Documentation
 
-   source/install
-   source/usage
+   install
+   usage
 
 
 

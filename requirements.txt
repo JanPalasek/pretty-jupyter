@@ -66,8 +66,10 @@ defusedxml==0.7.1
     # via nbconvert
 distlib==0.3.4
     # via virtualenv
-docutils==0.19
-    # via sphinx
+docutils==0.17.1
+    # via
+    #   sphinx
+    #   sphinx-rtd-theme
 entrypoints==0.4
     # via
     #   jupyter-client
@@ -310,6 +312,10 @@ sortedcontainers==2.4.0
 soupsieve==2.3.2.post1
     # via beautifulsoup4
 sphinx==5.1.1
+    # via
+    #   -r requirements.in
+    #   sphinx-rtd-theme
+sphinx-rtd-theme==1.0.0
     # via -r requirements.in
 sphinxcontrib-applehelp==1.0.2
     # via sphinx
