@@ -15,8 +15,13 @@ The site is still a work in progress. Please use wiki of the repository: https:/
    :maxdepth: 2
    :caption: User Documentation
 
-   install
-   usage
+   quickstart
+   jinja_markdown
+   tabset
+   toc
+   code_folding
+   styling
+   custom_template
 
 
 
