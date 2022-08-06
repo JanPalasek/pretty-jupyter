@@ -27,7 +27,6 @@ Check out the **[demo](http://janpalasek.com/pretty-jupyter-example.html)** and 
 - :point_right: Using Python variables in Markdown.
 - :point_right: Tabsets: Tabs that hold section content inside them.
 - :point_right: Code Folding: Show/Hide code to filter out unnecessary content.
-- :point_right: Multiple themes.
 
 All these features are integrated directly in the output html page. Therefore there is no need for an interpreter running in the backend.
 
