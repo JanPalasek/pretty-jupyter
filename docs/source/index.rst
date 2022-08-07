@@ -22,7 +22,7 @@ To use Pretty Jupyter, all we need are two commands: install and export.
    # install
    pip install pretty-jupyter
    # export
-   jupyter nbconvert --to html --template /path/to/ipynb/file
+   jupyter nbconvert --to html --template pj /path/to/ipynb/file
 
 Contents
 ============
