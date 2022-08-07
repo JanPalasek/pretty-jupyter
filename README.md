@@ -8,6 +8,8 @@
 <p align="center">
   <a href="https://github.com/JanPalasek/pretty-jupyter/actions/workflows/ci.yml/badge.svg"><img src="https://github.com/JanPalasek/pretty-jupyter/actions/workflows/ci.yml/badge.svg" /></a>
   <a href="https://img.shields.io/github/v/release/JanPalasek/pretty-jupyter"><img src="https://img.shields.io/github/v/release/JanPalasek/pretty-jupyter" /></a>
+  <a href='https://pretty-jupyter.readthedocs.io/en/latest/?badge=latest'><img src='https://readthedocs.org/projects/pretty-jupyter/badge/?version=latest' alt='Documentation Status' />
+</a>
 </p>
 
 <p align="center">
@@ -46,16 +48,10 @@ To unlock the full potential of Pretty Jupyter, see [the customization section](
 
 ## Documentation
 
-- [Documentation for Pretty Jupyter](https://github.com/JanPalasek/pretty-jupyter/wiki)
+- [Documentation](https://pretty-jupyter.readthedocs.io/)
 - [Examples](https://github.com/JanPalasek/pretty-jupyter-examples)
-
-## Dev Installation
-```sh
-git clone https://github.com/JanPalasek/pretty-jupyter.git
-cd pretty-jupyter
-./env/install.ps1 # Or sh env/install.sh on linux
-```
 
 ## Credits
 
-Credits for styles, toc, tabs etc. go to developers of RMarkdown and its packages. A big part of this project is applying their incredible work to Jupyter. Credits also belong to `nbconvert` project.
+* **nbconvert**: Pretty Jupyter uses nbconvert underhood. Its great extendability allowed this project to be created.
+* **RMarkdown**: RMarkdown served as a great inspiration when making this package.
