@@ -75,7 +75,7 @@ pre code {
 }
 
 .tabset-dropdown>.nav-tabs>li.active:before {
-  content: "";
+  content: "▼";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -83,12 +83,12 @@ pre code {
 }
 
 .tabset-dropdown>.nav-tabs.nav-tabs-open>li.active:before {
-  content: "";
+  content: "➤";
   border: none;
 }
 
 .tabset-dropdown>.nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "▼";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;

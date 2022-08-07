@@ -180,33 +180,20 @@ window.initializeTOC = function () {
   var toc = $("#TOC").tocify(options).data("toc-tocify");
 }
 
-// add bootstrap table styles to pandoc tables
-function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
-}
-
-$(document).ready(function () {
-  bootstrapStylePandocTables();
-});
-
-
 // tabsets 
 $(document).ready(function () {
   window.buildTabsets("TOC");
-});
 
-$(document).ready(function () {
+  // open tabset-dropdown
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
     $(this).parent().toggleClass('nav-tabs-open')
   });
 });
 
-
 // custom post-processing: remove some ugly styles etc 
 $(document).ready(function () {
   // prettify tables (that aren't ignored)
-  $("table:not(.pj-table-ignore)").addClass("table");
-  $("table:not(.pj-table-ignore)").addClass("table-striped");
+  $("table:not(.pj-table-ignore)").addClass("table").addClass("table-striped").addClass("table-hover");
   $("table.dataframe:not(.pj-table-ignore)").removeAttr("border");
 
   // remove useless anchor with useless anchor-link
