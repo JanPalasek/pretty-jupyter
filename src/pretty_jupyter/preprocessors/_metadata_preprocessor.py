@@ -1,5 +1,6 @@
 from nbconvert.preprocessors import Preprocessor
-from traitlets import CBool, CUnicode
+from traitlets import Bool, Dict, CUnicode
+import ast
 
 from pretty_jupyter.magics import is_jinja_cell
 
@@ -10,67 +11,59 @@ class NbMetadataPreprocessor(Preprocessor):
 
     This dictionary is then used for further processing.
     """
-    # BASIC
 
-    title = CUnicode(default_value="Untitled")
-    """Title of the notebook."""
+    defaults = {
+        "title": "Untitled",
+        "toc": True,
+        "code_folding": True,
+        "theme": "paper",
+        "output_stream_stderr": False,
+        "output_stream_stdout": True,
+        "input_jinja_markdown": False,
+        "include_plotlyjs": True
+    }
 
-    toc = CBool(default_value=True)
-    """If True, then TOC is generated."""
-
-    code_folding = CUnicode(default_value="hide")
-    """Settings for code folding."""
-
-    theme = CUnicode(default_value="paper")
-    """Name of the theme."""
-
-    # OUTPUT
-
-    output_stream_stderr = CBool(default_value=False)
-    """If False, then stream stderr is omitted from the result report."""
-    output_stream_stdout = CBool(default_value=True)
-    """If False, then stream stdout is omitted from the result report."""
-    input_jinja_markdown = CBool(default_value=False)
-    """If False, then input of Jinja Markdown cells is omitted from the result report."""
-
-    # INCLUDES
-
-    include_plotlyjs = CBool(default_value=True)
-    """If False, then the plotly.js isn't included offline in the output."""
-
+    overrides = Dict(default_value={},
+        per_key_traits={
+            "title": CUnicode(),
+            "toc": Bool(),
+            "code_folding": Bool(),
+            "theme": CUnicode(),
+            "output_stream_stderr": Bool(),
+            "output_stream_stdout": Bool(),
+            "input_jinja_markdown": Bool(),
+            "include_plotlyjs": Bool()
+        })
+    """
+    Dictionary with all values to override the defaults. Note that per_key_trait is not an exhaustive list, you can define your own new override.
+    """
 
     def __init__(self, **kw):
-        # get keys that were passed: this helps to differentiate defaults and user-specified value
-        self.keys_passed = set(kw)
+        if "overrides" in kw:
+            # convert to dictionary
+            kw["overrides"] = ast.literal_eval(kw["overrides"])
+
         super().__init__(**kw)
 
     def preprocess(self, nb, resources):
-        metadata = {
-            "title": self.title,
-            "toc": self.toc,
-            "code_folding": self.code_folding,
-
-            "output_stream_stderr": self.output_stream_stderr,
-            "output_stream_stdout": self.output_stream_stdout,
-            "input_jinja_markdown": self.input_jinja_markdown,
-
-            "theme": self.theme
-        }
+        metadata = {}
+        metadata.update(**self.defaults)
+        metadata.update(**self.overrides)
 
         # merge specified in NbMetadataProcessor with notebook metadata
         # priority:
-        # 1. Values specified by user in NbMetadataProcessor
+        # 1. Values specified by user in NbMetadataProcessor.overrides
         # 2. Values specified by user in notebook metadata
-        # 3. Default values from NbMetadataProcessor
+        # 3. Default values from NbMetadataProcessor.defaults
 
         nb_metadata = nb.metadata.copy()
         for k, v in metadata.items():
-            # in class specified by user
-            if k in self.keys_passed:
+            # if specified by user
+            if k in self.overrides:
                 nb_metadata[k] = v
                 continue
 
-            # in notebook
+            # if specified in notebook
             if k in nb_metadata:
                 continue
 
