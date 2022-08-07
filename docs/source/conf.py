@@ -10,12 +10,9 @@ from datetime import date
 
 project = 'Pretty Jupyter'
 year = date.today().year
-copyright = "2015-%s, Jan Palasek" % year
+copyright = "2022-%s, Jan Palasek" % year
 author = 'Jan Palasek'
-try:
-    import importlib.metadata as imeta
-finally:
-    version = imeta.version('pretty_jupyter')
+version = '1.2.5'
 release = version
 
 # -- General configuration ---------------------------------------------------
