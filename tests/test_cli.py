@@ -26,7 +26,7 @@ def test_nbconvert(input_path, tmpdir, driver):
 
     # check the title
     title_xpath = "//h1[@class='title']"
-    assert driver.find_element(By.XPATH, title_xpath).text == "Notebook"
+    assert driver.find_element(By.XPATH, title_xpath).text == "Test Notebook"
 
     # test whether there is expected number of headers of level 1
     h1_xpath = "//div[contains(@class, 'level1') and contains(@class, 'section')]/h1"
