@@ -44,8 +44,6 @@ python -m pip install pretty-jupyter
 jupyter nbconvert --to html --template pj ${PATH_TO_IPYNB}
 ```
 
-To unlock the full potential of Pretty Jupyter, see [the customization section](https://github.com/JanPalasek/pretty-jupyter/wiki/2.-Customization) in the documentation.
-
 ## Documentation
 
 - [Documentation](https://pretty-jupyter.readthedocs.io/)
