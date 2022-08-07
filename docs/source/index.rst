@@ -44,5 +44,6 @@ Contents
 Credits
 ==========
 
-* **nbconvert**: Pretty Jupyter uses nbconvert underhood. Its extension capabilities allowed for the creation of this project.
+* **nbconvert**: Pretty Jupyter uses nbconvert underhood. Its great extendability allowed this project to be created.
 * **RMarkdown**: RMarkdown served as a great inspiration when making this package.
+* **ReadTheDocs**: This awesome project that allows you to host your documentation for free, improving the repo quality worldwide.
