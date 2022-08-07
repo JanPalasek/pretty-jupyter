@@ -7,7 +7,7 @@ It allows readers to view the content of different sections by clicking the tab 
 We can generate a tabset by adding the following line under a header that we want to be a tabset root: ``[//]: <> (-.- tabset)``. We call this line a tabset specifier.
 
 .. _simple-tabset-code:
-.. code-block::
+.. code-block:: markdown
     :caption: Code: Tabset input
 
     ## Tabset
@@ -40,7 +40,7 @@ The output of the tabset is demonstrated in the figure below.
 
 We can also provide an alternative look to the tabset. We can specify ``[//]: <> (-.- tabset tabset-pills)``, which causes Pretty Jupyter to output tabset below.
 
-.. _tabset-pils-figure:
+.. _tabset-pills-figure:
 .. figure:: _static/tabset-pills.png
     :class: no-scaled-link
     :scale: 50 %
@@ -55,7 +55,7 @@ The tabset ends if we specify a section that has same or higher level as the tab
 We can use this behaviour to our advantage and use an empty header element just to end the tab section and write a text further below.
 
 .. _tabset-trick:
-.. code-block::
+.. code-block:: markdown
     :caption: Code: Tabset trick
 
     ## Tabset

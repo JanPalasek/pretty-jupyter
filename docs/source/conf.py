@@ -6,10 +6,17 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+from datetime import date
+
 project = 'Pretty Jupyter'
-copyright = '2022, Jan Palasek'
+year = date.today().year
+copyright = "2015-%s, Jan Palasek" % year
 author = 'Jan Palasek'
-release = '1.2.4'
+try:
+    import importlib.metadata as imeta
+finally:
+    version = imeta.version('pretty_jupyter')
+release = version
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -26,3 +33,4 @@ exclude_patterns = []
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+
