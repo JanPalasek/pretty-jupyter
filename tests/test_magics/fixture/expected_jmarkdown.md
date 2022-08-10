@@ -1,7 +1,7 @@
 ## Header
 
-<span class='pj-token token1 token2' style='display: none;'></span>
+<span class='pj-token' style='display: none;'>token1|O_O|token2</span>
 
 Some value to be replaced 15.
 
-<span class='pj-token token3' style='display: none;'></span>
+<span class='pj-token' style='display: none;'>token3</span>

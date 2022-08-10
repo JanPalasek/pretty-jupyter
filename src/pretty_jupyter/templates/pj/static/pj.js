@@ -4,16 +4,16 @@
 // credits: https://stackoverflow.com/questions/25873650/jquery-nextuntil-include-text-nodes
 $.fn.nextUntilWithTextNodes = function (until) {
   var matched = $.map(this, function (elem, i, until) {
-      var matched = [];
-      while ((elem = elem.nextSibling) && elem.nodeType !== 9) {
-          if (elem.nodeType === 1 || elem.nodeType === 3) {
-              if (until && jQuery(elem).is(until)) {
-                  break;
-              }
-              matched.push(elem);
-          }
+    var matched = [];
+    while ((elem = elem.nextSibling) && elem.nodeType !== 9) {
+      if (elem.nodeType === 1 || elem.nodeType === 3) {
+        if (until && jQuery(elem).is(until)) {
+          break;
+        }
+        matched.push(elem);
       }
-      return matched;
+    }
+    return matched;
   }, until);
 
   return this.pushStack(matched);
@@ -22,7 +22,23 @@ $.fn.nextUntilWithTextNodes = function (until) {
 
 // custom preprocessing
 
-$(document).ready(function () {
+function processToken(tokenElement, targetElement, tokenSep) {
+  // Process tokens
+  // For each class in token element, it either sets target element ID by it, or adds it to the list of classes
+  $.each(tokenElement.text().split(tokenSep), function (tokenIndex, tokenValue) {
+    if (tokenValue.startsWith("#")) {
+      targetElement.attr("id", tokenValue.substring(1));
+    }
+    else if (tokenValue.startsWith(".")) {
+      targetElement.addClass(tokenValue.substring(1));
+    }
+    else {
+      targetElement.addClass(tokenValue);
+    }
+  });
+}
+
+window.initializeSections = function() {
   let tabNumber = 1;
 
   // create nested structure:
@@ -32,18 +48,18 @@ $(document).ready(function () {
   // same level and not hidden in the nested divs
 
   for (let h = 1; h <= 8; h++) {
-    $(`h${h}`).each(function(i,e) {
+    $(`h${h}`).each(function (i, e) {
       let x = h;
 
       d = {
         "id": tabNumber + "",
         "class": ["section", `level${x}`],
       };
-      
+
       // add the computed classes and attributes
       class_attr = d["class"].join(" ");
       id_attr = d["id"];
-      
+
       untilNodes = `${this.tagName}`
       for (let hPrev = 1; hPrev < x; hPrev++) {
         untilNodes += `,.level${hPrev}`
@@ -54,29 +70,38 @@ $(document).ready(function () {
       tabNumber += 1;
     });
   }
+}
 
-    // process all pj-token elements (pretty-jupyter-token for backwards compatibility)
-    $(".pj-token,.pretty-jupyter-token").each(function (i, e) {
-      // if it has tabset, add tabset class to the section
-      if ($(this).hasClass("tabset")) {
-        $(this).parent().closest(".section").addClass("tabset");
-      }
-      // if the element has tabset-pills => add tabset-pills to the section
-      if ($(this).hasClass("tabset-pills")) {
-        $(this).parent().closest(".section").addClass("tabset-pills");
-      }
-    });
+window.processTokens = function(tokenSep) {
+  // process all pj-token elements
+  $(".pj-token").each(function (i, e) {
+    prevSibling = $(this).prev()
 
-});
+    // if we don't have a previous sibling => the element is probably wrapped in paragraph due to markdown compiler
+    if (prevSibling.length == 0) {
+      prevSibling = $(this).parent().prev()
+    }
 
-window.initializeCodeFolding = function(show) {
-  $("#jup-show-all-code").click(function() {
-    $('div.py-code-collapse').each(function() {
+    // if previous sibling is header => apply tokens to the wrapping section
+    if (prevSibling.is(':header')) {
+      sectionElement = $(this).parent().closest(".section");
+
+      processToken(tokenElement=$(this), targetElement=sectionElement, tokenSep=tokenSep);
+    }
+    else {
+      processToken(tokenElement=$(this), targetElement=prevSibling, tokenSep=tokenSep)
+    }
+  });
+}
+
+window.initializeCodeFolding = function (show) {
+  $("#jup-show-all-code").click(function () {
+    $('div.py-code-collapse').each(function () {
       $(this).collapse('show');
     });
   });
-  $("#jup-hide-all-code").click(function() {
-    $('div.py-code-collapse').each(function() {
+  $("#jup-hide-all-code").click(function () {
+    $('div.py-code-collapse').each(function () {
       $(this).collapse('hide');
     });
   });
@@ -86,7 +111,7 @@ window.initializeCodeFolding = function(show) {
 
   // select all jupyter code blocks
   var jupyterCodeBlocks = $('div.pj-input');
-  jupyterCodeBlocks.each(function() {
+  jupyterCodeBlocks.each(function () {
 
     // create a collapsable div to wrap the code in
     var div = $('<div class="collapse py-code-collapse"></div>');
@@ -102,10 +127,10 @@ window.initializeCodeFolding = function(show) {
     var showCodeButton = $('<button type="button" class="btn btn-default btn-xs code-folding-btn pull-right"></button>');
     showCodeButton.append(showCodeText);
     showCodeButton
-        .attr('data-toggle', 'collapse')
-        .attr('data-target', '#' + id)
-        .attr('aria-expanded', showThis)
-        .attr('aria-controls', id);
+      .attr('data-toggle', 'collapse')
+      .attr('data-target', '#' + id)
+      .attr('aria-expanded', showThis)
+      .attr('aria-controls', id);
 
     var buttonRow = $('<div class="row"></div>');
     var buttonCol = $('<div class="col-md-12"></div>');
@@ -125,7 +150,7 @@ window.initializeCodeFolding = function(show) {
   });
 }
 
-window.initializeTOC = function() {
+window.initializeTOC = function () {
   // temporarily add toc-ignore selector to headers for the consistency with Pandoc
   $('.unlisted.unnumbered').addClass('toc-ignore')
 
@@ -151,53 +176,3 @@ window.initializeTOC = function() {
   // tocify
   var toc = $("#TOC").tocify(options).data("toc-tocify");
 }
-
-
-if (window.hljs) {
-    hljs.configure({
-        languages: []
-    });
-    hljs.initHighlightingOnLoad();
-
-    if (document.readyState && document.readyState === "complete") {
-        window.setTimeout(function () {
-            hljs.initHighlighting();
-        }
-
-            , 0);
-    }
-}
-
-// add bootstrap table styles to pandoc tables
-function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
-}
-$(document).ready(function () {
-  bootstrapStylePandocTables();
-});
-
-
-
-
-// tabsets 
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-
-
-// custom post-processing: remove some ugly styles etc 
-$(document).ready(function () {
-  // prettify tables (that aren't ignored)
-  $("table:not(.pj-tab-ignore)").addClass("table");
-  $("table:not(.pj-tab-ignore)").addClass("table-striped");
-  $("table.dataframe:not(.pj-tab-ignore)").removeAttr("border");
-
-  // remove useless anchor with useless anchor-link
-  $("a.anchor-link").remove();
-});
