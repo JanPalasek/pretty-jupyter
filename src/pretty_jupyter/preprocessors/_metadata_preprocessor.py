@@ -18,6 +18,10 @@ class NbMetadataPreprocessor(Preprocessor):
         "title": "Untitled",
         "html": {
             "toc": True,
+            "toc_depth": 3,
+            "toc_collapsed": True,
+            "toc_smooth_scroll": True,
+            "number_sections": False,
             "code_folding": "hide",
             "theme": "paper",
             "include_plotlyjs": True

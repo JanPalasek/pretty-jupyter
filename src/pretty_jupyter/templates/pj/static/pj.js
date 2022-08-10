@@ -150,18 +150,57 @@ window.initializeCodeFolding = function (show) {
   });
 }
 
-window.initializeTOC = function () {
-  // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-  $('.unlisted.unnumbered').addClass('toc-ignore')
 
-  // move toc-ignore selectors from section div to header
-  $('div.section.toc-ignore')
-    .removeClass('toc-ignore')
-    .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+window.numberSections = function() {
+  // holds current index for each header
+  let levels = []
+  let firstLevel = null;
+
+  $(".main-container>div:not(#pageHeader) :header:not(.toc-ignore)").each(function(idx, el) {
+    // get current level
+    let level = parseInt(this.nodeName.substring(1));
+
+    if (firstLevel === null) {
+      firstLevel = level;
+    }
+    level = level - firstLevel + 1;
+
+    // current level appeared again => just increment
+    if (level == levels.length) {
+      levels[level - 1]++;
+    }
+    // new level appeared => add the new levels and increment
+    // e.g.
+    // we have h2 and we discovered next new is h4
+    // we need to fill in levels for h3 and h4, and then increment h4
+    else if (level > levels.length ) {
+      for (let i = 0; i < (level - levels.length); i++) {
+        levels.push(0);
+      }
+
+      levels[level - 1]++;
+    }
+    // previous level appeared => we need to shrink
+    else if (level < levels.length) {
+      levels = levels.slice(0, level);
+      levels[level - 1]++;
+    }
+
+    numberedText = levels.join(".") + ". " + $(this).text();
+    $(this).text(numberedText);
+  })
+}
+
+window.initializeTOC = function (tocDepth, tocCollapsed, tocSmoothScroll) {
+  selectors = []
+  for (var i = 0; i < tocDepth; i++) {
+    selectors.push(`h${i + 1}`)
+  }
+  selectors = selectors.join(",");
 
   // establish options
   var options = {
-    selectors: "h1,h2,h3",
+    selectors: selectors,
     theme: "bootstrap3",
     context: '.toc-content',
     hashGenerator: function (text) {
@@ -170,9 +209,23 @@ window.initializeTOC = function () {
     ignoreSelector: ".toc-ignore",
     scrollTo: 0
   };
-  options.showAndHide = true;
-  options.smoothScroll = true;
+  options.showAndHide = tocCollapsed;
+  options.smoothScroll = tocSmoothScroll;
 
   // tocify
   var toc = $("#TOC").tocify(options).data("toc-tocify");
 }
+
+window.initializeTabsets = function() {
+  // move tabset classes from header to sections
+  $(':header.tabset')
+    .removeClass('tabset')
+    .parent('.section').addClass('tabset');
+
+  window.buildTabsets("TOC");
+
+  // open tabset-dropdown
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+};
