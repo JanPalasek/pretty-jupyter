@@ -217,11 +217,6 @@ window.initializeTOC = function (tocDepth, tocCollapsed, tocSmoothScroll) {
 }
 
 window.initializeTabsets = function() {
-  // move tabset classes from header to sections
-  $(':header.tabset')
-    .removeClass('tabset')
-    .parent('.section').addClass('tabset');
-
   window.buildTabsets("TOC");
 
   // open tabset-dropdown
