@@ -26,7 +26,7 @@ def test_nbconvert(input_path, tmpdir, driver):
 
     # check the title
     title_xpath = "//h1[@class='title']"
-    assert driver.find_element(By.XPATH, title_xpath).text == "Notebook"
+    assert driver.find_element(By.XPATH, title_xpath).text == "Test Notebook"
 
     # test whether there is expected number of headers of level 1
     h1_xpath = "//div[contains(@class, 'level1') and contains(@class, 'section')]/h1"
@@ -96,6 +96,8 @@ def test_nbconvert(input_path, tmpdir, driver):
     # click on the Chapter 2: Jinja Markdown
     toc_first_level[2].find_element(By.XPATH, "li").click()
     import time
+    time.sleep(2)
+    toc_first_level[2].find_element(By.XPATH, "li").click()
     time.sleep(2)
 
     jmd_title = jmd_section.find_element(By.XPATH, "h1")
