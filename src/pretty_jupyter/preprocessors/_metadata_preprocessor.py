@@ -1,5 +1,6 @@
 from nbconvert.preprocessors import Preprocessor
 from traitlets import Bool, Dict, CUnicode
+from pretty_jupyter.utils import merge_dict
 import ast
 
 from pretty_jupyter.magics import is_jinja_cell
@@ -8,47 +9,38 @@ from pretty_jupyter.magics import is_jinja_cell
 class NbMetadataPreprocessor(Preprocessor):
     """
     This preprocessor merges user-defined metadata with the ones seen in notebook into one dictionary.
+    The result metadata will be located in `resources["metadata"]`.
 
     This dictionary is then used for further processing.
     """
 
     defaults = {
         "title": "Untitled",
-        "toc": True,
-        "code_folding": True,
-        "theme": "paper",
+        "html": {
+            "toc": True,
+            "code_folding": True,
+            "theme": "paper",
+            "include_plotlyjs": True
+        },
         "output_stream_stderr": False,
         "output_stream_stdout": True,
         "input_jinja_markdown": False,
-        "include_plotlyjs": True
     }
 
-    overrides = Dict(default_value={},
-        per_key_traits={
-            "title": CUnicode(),
-            "toc": Bool(),
-            "code_folding": Bool(),
-            "theme": CUnicode(),
-            "output_stream_stderr": Bool(),
-            "output_stream_stdout": Bool(),
-            "input_jinja_markdown": Bool(),
-            "include_plotlyjs": Bool()
-        })
+    overrides = Dict(default_value={})
     """
     Dictionary with all values to override the defaults. Note that per_key_trait is not an exhaustive list, you can define your own new override.
     """
 
     def __init__(self, **kw):
-        if "overrides" in kw:
+        if "overrides" in kw and isinstance(kw["overrides"], str):
             # convert to dictionary
             kw["overrides"] = ast.literal_eval(kw["overrides"])
 
         super().__init__(**kw)
 
     def preprocess(self, nb, resources):
-        metadata = {}
-        metadata.update(**self.defaults)
-        metadata.update(**self.overrides)
+        metadata = merge_dict(self.overrides, self.defaults)
 
         # merge specified in NbMetadataProcessor with notebook metadata
         # priority:
