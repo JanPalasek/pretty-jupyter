@@ -97,6 +97,8 @@ def test_nbconvert(input_path, tmpdir, driver):
     toc_first_level[2].find_element(By.XPATH, "li").click()
     import time
     time.sleep(2)
+    toc_first_level[2].find_element(By.XPATH, "li").click()
+    time.sleep(2)
 
     jmd_title = jmd_section.find_element(By.XPATH, "h1")
     tab_section_title = tab_section.find_element(By.XPATH, "h1")

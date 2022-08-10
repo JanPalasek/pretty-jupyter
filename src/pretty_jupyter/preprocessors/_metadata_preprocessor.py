@@ -18,7 +18,7 @@ class NbMetadataPreprocessor(Preprocessor):
         "title": "Untitled",
         "html": {
             "toc": True,
-            "code_folding": True,
+            "code_folding": "hide",
             "theme": "paper",
             "include_plotlyjs": True
         },
@@ -40,29 +40,15 @@ class NbMetadataPreprocessor(Preprocessor):
         super().__init__(**kw)
 
     def preprocess(self, nb, resources):
-        metadata = merge_dict(self.overrides, self.defaults)
-
         # merge specified in NbMetadataProcessor with notebook metadata
         # priority:
         # 1. Values specified by user in NbMetadataProcessor.overrides
         # 2. Values specified by user in notebook metadata
         # 3. Default values from NbMetadataProcessor.defaults
+        metadata = merge_dict(self.overrides, nb.metadata.copy())
+        metadata = merge_dict(metadata, self.defaults)
 
-        nb_metadata = nb.metadata.copy()
-        for k, v in metadata.items():
-            # if specified by user
-            if k in self.overrides:
-                nb_metadata[k] = v
-                continue
-
-            # if specified in notebook
-            if k in nb_metadata:
-                continue
-
-            # only in defaults
-            nb_metadata[k] = v
-
-        resources["nb_metadata"] = nb_metadata
+        resources["nb_metadata"] = metadata
 
         return super().preprocess(nb, resources)
 
