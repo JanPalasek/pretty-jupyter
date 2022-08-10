@@ -22,14 +22,10 @@ $.fn.nextUntilWithTextNodes = function (until) {
 
 // custom preprocessing
 
-function processTokens(tokenElement, targetElement) {
+function processToken(tokenElement, targetElement, tokenSep) {
   // Process tokens
   // For each class in token element, it either sets target element ID by it, or adds it to the list of classes
-  $.each(tokenElement.attr('class').split(/\s+/), function (tokenIndex, tokenValue) {
-    if (tokenValue == "pj-token") {
-      return;
-    }
-
+  $.each(tokenElement.text().split(tokenSep), function (tokenIndex, tokenValue) {
     if (tokenValue.startsWith("#")) {
       targetElement.attr("id", tokenValue.substring(1));
     }
@@ -42,7 +38,7 @@ function processTokens(tokenElement, targetElement) {
   });
 }
 
-$(document).ready(function () {
+window.initializeSections = function() {
   let tabNumber = 1;
 
   // create nested structure:
@@ -74,7 +70,9 @@ $(document).ready(function () {
       tabNumber += 1;
     });
   }
+}
 
+window.processTokens = function(tokenSep) {
   // process all pj-token elements
   $(".pj-token").each(function (i, e) {
     prevSibling = $(this).prev()
@@ -88,14 +86,13 @@ $(document).ready(function () {
     if (prevSibling.is(':header')) {
       sectionElement = $(this).parent().closest(".section");
 
-      processTokens(tokenElement=$(this), targetElement=sectionElement);
+      processToken(tokenElement=$(this), targetElement=sectionElement, tokenSep=tokenSep);
     }
     else {
-      processTokens(tokenElement=$(this), targetElement=prevSibling)
+      processToken(tokenElement=$(this), targetElement=prevSibling, tokenSep=tokenSep)
     }
   });
-
-});
+}
 
 window.initializeCodeFolding = function (show) {
   $("#jup-show-all-code").click(function () {
@@ -179,23 +176,3 @@ window.initializeTOC = function () {
   // tocify
   var toc = $("#TOC").tocify(options).data("toc-tocify");
 }
-
-// tabsets 
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-
-  // open tabset-dropdown
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-
-// custom post-processing: remove some ugly styles etc 
-$(document).ready(function () {
-  // prettify tables (that aren't ignored)
-  $("table:not(.pj-table-ignore)").addClass("table").addClass("table-striped").addClass("table-hover");
-  $("table.dataframe:not(.pj-table-ignore)").removeAttr("border");
-
-  // remove useless anchor with useless anchor-link
-  $("a.anchor-link").remove();
-});
