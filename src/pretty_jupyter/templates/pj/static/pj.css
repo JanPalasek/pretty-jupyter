@@ -138,11 +138,6 @@ pre code {
   }
 }
 
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
 div.main-container {
   max-width: 1200px;
 }
@@ -240,11 +235,6 @@ th {
   text-align: left;
 }
 
-header#pageHeader {
-  width: 100%;
-  text-align: center;
-  margin: 25px 10px 25px 10px;
-}
 
 @media print {
 
