@@ -9,10 +9,21 @@ from pathlib import Path
 
 
 @click.command()
+@click.argument("out_path", type=click.Path())
+@click.option("--empty", default=False)
+def quickstart(out_path, empty):
+    in_path = pkg_resources.resource_filename("pretty_jupyter", os.path.join("notebooks", "empty.ipynb"))
+
+    with open(in_path, "r") as file_r, open(out_path, "w") as file_w:
+        in_text = file_r.read()
+        file_w.write(in_text)
+
+
+@click.command("nbconvert-dev")
 @click.argument("input", type=click.Path())
 @click.option("--out", default=None, type=click.Path())
 @click.option("--include-input/--exclude-input", default=True)
-def nbconvert(input, out, include_input):
+def nbconvert_dev(input, out, include_input):
     """
     Takes the .ipynb notebook from the INPUT and transforms it into HTML.
     Note that after installing you can also use jupyter nbconvert directly.
@@ -54,5 +65,6 @@ def cli():
     pass
 
 
-cli.add_command(nbconvert)
+cli.add_command(quickstart)
+cli.add_command(nbconvert_dev)
 cli.add_command(install_dev)
