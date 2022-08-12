@@ -1,7 +1,11 @@
+import copy
+from datetime import date, datetime
 from nbconvert.preprocessors import Preprocessor
 from traitlets import Bool, Dict, CUnicode
 from pretty_jupyter.utils import merge_dict
 import ast
+
+import jinja2
 
 from pretty_jupyter.magics import is_jinja_cell
 
@@ -45,6 +49,8 @@ class NbMetadataPreprocessor(Preprocessor):
 
         super().__init__(**kw)
 
+        self.env = jinja2.Environment(loader=jinja2.FileSystemLoader('.'))
+
     def preprocess(self, nb, resources):
         # merge specified in NbMetadataProcessor with notebook metadata
         # priority:
@@ -53,6 +59,11 @@ class NbMetadataPreprocessor(Preprocessor):
         # 3. Default values from NbMetadataProcessor.defaults
         metadata = merge_dict(self.pj_metadata, nb.metadata.get("pj", {}).copy())
         metadata = merge_dict(metadata, self.defaults)
+
+        # run metadata rhgouth jinja templating
+        metadata_copy = copy.deepcopy(metadata)
+        for m_key, m_val in filter(lambda x: x[1] is not None and isinstance(x[1], str), metadata_copy.items()):
+            metadata[m_key] = self.env.from_string(m_val).render(datetime=datetime, date=date, pj_metadata=metadata_copy)
 
         resources["pj_metadata"] = metadata
 
