@@ -48,7 +48,7 @@ window.initializeSections = function() {
   // same level and not hidden in the nested divs
 
   for (let h = 1; h <= 8; h++) {
-    $(`h${h}`).each(function (i, e) {
+    $(`#main-content h${h}`).each(function (i, e) {
       let x = h;
 
       d = {
@@ -152,17 +152,23 @@ window.initializeCodeFolding = function (show) {
 
 
 window.numberSections = function() {
+  let headerSelector = "#main-content div.section:not(.unnumbered)>:header"
+
+  let firstLevel = 1000;
+  $(headerSelector).each(function (idx, el) {
+    let level = parseInt(el.nodeName.substring(1));
+
+    if (level < firstLevel) {
+      firstLevel = level;
+    }
+  });
+
   // holds current index for each header
   let levels = []
-  let firstLevel = null;
-
-  $(".main-container>div:not(#pageHeader) :header:not(.toc-ignore)").each(function(idx, el) {
+  $(headerSelector).each(function(idx, el) {
     // get current level
     let level = parseInt(this.nodeName.substring(1));
 
-    if (firstLevel === null) {
-      firstLevel = level;
-    }
     level = level - firstLevel + 1;
 
     // current level appeared again => just increment
@@ -174,7 +180,8 @@ window.numberSections = function() {
     // we have h2 and we discovered next new is h4
     // we need to fill in levels for h3 and h4, and then increment h4
     else if (level > levels.length ) {
-      for (let i = 0; i < (level - levels.length); i++) {
+      let levelsLength = levels.length
+      for (let i = 0; i < (level - levelsLength); i++) {
         levels.push(0);
       }
 
@@ -192,6 +199,14 @@ window.numberSections = function() {
 }
 
 window.initializeTOC = function (tocDepth, tocCollapsed, tocSmoothScroll) {
+  // consistency with pandoc
+  $('.unlisted.unnumbered').addClass('toc-ignore')
+
+  // move toc-ignore selectors from section div to header
+  $('div.section.toc-ignore')
+    .removeClass('toc-ignore')
+    .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
   selectors = []
   for (var i = 0; i < tocDepth; i++) {
     selectors.push(`h${i + 1}`)
