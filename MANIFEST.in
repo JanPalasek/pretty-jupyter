@@ -1,2 +1,2 @@
-recursive-include src/pretty_jupyter/notebooks *
-include src/pretty_jupyter/files empty.ipynb
+recursive-include src/pretty_jupyter/templates *
+recursive-include src/pretty_jupyter/files *

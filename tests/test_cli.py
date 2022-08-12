@@ -10,7 +10,7 @@ def input_path():
     return "tests/fixture/notebook.ipynb"
 
 
-def test_nbconvert(input_path, tmpdir, driver):
+def test_nbconvert_dev(input_path, tmpdir, driver):
     out_path = os.path.normpath(os.path.join(tmpdir, "actual.html"))
 
     runner = CliRunner()

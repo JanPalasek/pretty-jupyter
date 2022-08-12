@@ -21,9 +21,12 @@ class NbMetadataPreprocessor(Preprocessor):
     defaults = {
         "title": "Untitled",
         "output": {
-            "output_stream_stderr": False,
-            "output_stream_stdout": True,
-            "input_jinja_markdown": False,
+            "general": {
+                "input": True,
+                "input_jmd": False,
+                "output": True,
+                "output_error": False,
+            },
             "html": {
                 "toc": True,
                 "toc_depth": 3,
@@ -33,7 +36,7 @@ class NbMetadataPreprocessor(Preprocessor):
                 "code_folding": "hide",
                 "theme": "paper",
                 "include_plotlyjs": True
-            }
+            },
         },
     }
 
@@ -57,7 +60,7 @@ class NbMetadataPreprocessor(Preprocessor):
         # 1. Values specified by user in NbMetadataProcessor.overrides
         # 2. Values specified by user in notebook metadata
         # 3. Default values from NbMetadataProcessor.defaults
-        metadata = merge_dict(self.pj_metadata, nb.metadata.get("pj", {}).copy())
+        metadata = merge_dict(self.pj_metadata, nb.metadata.get("pj_metadata", {}).copy())
         metadata = merge_dict(metadata, self.defaults)
 
         # run metadata rhgouth jinja templating
@@ -76,20 +79,44 @@ class NbMetadataPreprocessor(Preprocessor):
         if cell.cell_type != "code":
             return cell, resources
 
-        output_metadata = resources["pj_metadata"]["output"]
+        # PRIORITIES
+        # generally more specific > less specific
+        # e.g. cell-level > notebook level
+        # or even cell-level output_error > cell-level output, because output_error is more specific than output generally
 
-        # process jinja markdown
-        if not output_metadata["input_jinja_markdown"] and is_jinja_cell(cell.source):
+        general_metadata = resources["pj_metadata"]["output"]["general"]
+        cell_metadata = cell.metadata.get("pj_metadata", {})
+
+        input_enabled = general_metadata["input"]
+        # if this cell is jinja markdown and metadata specify to turn it off => set it as turn off
+        if is_jinja_cell(cell.source):
+            input_enabled = general_metadata["input_jmd"]
+
+        # if value was specified in cell metadata => use that
+        if "input" in cell_metadata:
+            input_enabled = cell_metadata["input"]
+
+        # if input is not enabled => remove 
+        if not input_enabled:
             cell.transient = {"remove_source": True}
 
+        output_enabled = general_metadata["output"]
         # process stderr, stdout
         if len(cell.outputs) > 0:
             for i, output in enumerate(cell.outputs):
-                # stderr
-                if not output_metadata["output_stream_stderr"] and output.output_type == "stream" and output.name == "stderr":
-                    cell.outputs.pop(i)
-                # stdout
-                elif not output_metadata["output_stream_stdout"] and output.output_type == "stream" and output.name == "stdout":
+                ith_output_enabled = output_enabled
+
+                # if this output is an error output => write out output is output error is true
+                if output.output_type == "stream" and output.name == "stderr":
+                    ith_output_enabled = general_metadata["output_error"]
+
+                # if value was specified in cell metadata => use that
+                if "output" in cell_metadata:
+                    ith_output_enabled = cell_metadata["output"]
+                if "output_error" in cell_metadata and output.output_type == "stream" and output.name == "stderr":
+                    ith_output_enabled = cell_metadata["output_error"]
+
+                if not ith_output_enabled:
                     cell.outputs.pop(i)
         
         return cell, resources

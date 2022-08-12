@@ -10,8 +10,7 @@ from pathlib import Path
 
 @click.command()
 @click.argument("out_path", type=click.Path())
-@click.option("--empty", default=False)
-def quickstart(out_path, empty):
+def quickstart(out_path):
     in_path = pkg_resources.resource_filename("pretty_jupyter", os.path.join("notebooks", "empty.ipynb"))
 
     with open(in_path, "r") as file_r, open(out_path, "w") as file_w:
