@@ -154,14 +154,15 @@ window.initializeCodeFolding = function (show) {
 window.numberSections = function() {
   let headerSelector = "#main-content div.section:not(.unnumbered)>:header"
 
-  let firstLevel = 1000;
-  $(headerSelector).each(function (idx, el) {
-    let level = parseInt(el.nodeName.substring(1));
+  let firstLevel = 1;
 
-    if (level < firstLevel) {
-      firstLevel = level;
-    }
-  });
+  // $(headerSelector).each(function (idx, el) {
+  //   let level = parseInt(el.nodeName.substring(1));
+
+  //   if (level < firstLevel) {
+  //     firstLevel = level;
+  //   }
+  // });
 
   // holds current index for each header
   let levels = []

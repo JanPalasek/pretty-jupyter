@@ -7,6 +7,8 @@ Regex to match markdown tokens. The tokens are special sequences in markdown tha
 ```
 """
 
+HTML_TOKEN_REGEX = "<span class='pj-token' style='display: none;'>.*<\/span>"
+
 HTML_TOKEN_FORMAT = "<span class='pj-token' style='display: none;'>{tokens}</span>"
 """
 What markdown tokens get translated to.
