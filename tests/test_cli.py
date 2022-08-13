@@ -14,7 +14,7 @@ def test_nbconvert_dev(input_path, tmpdir, driver):
     out_path = os.path.normpath(os.path.join(tmpdir, "actual.html"))
 
     runner = CliRunner()
-    result = runner.invoke(cli, ["nbconvert-dev", input_path, "--out", out_path])
+    result = runner.invoke(cli, ["nbconvert-dev", input_path, "--out", out_path, "--to", "html"])
     
     assert result.exit_code == 0
 
@@ -61,6 +61,8 @@ def test_nbconvert_dev(input_path, tmpdir, driver):
     assert "active" in tab_contents[1].get_attribute("class"), "Second tab should be active after clicking on it."
 
     # check that the maths rendered properly
+    # math needs time to render
+    time.sleep(2)
     assert len(tab_contents[1].find_elements(By.XPATH, "span[contains(@class, 'MJXc-display')]")) > 0, "Math didn't render."
 
     # check that the maths rendered properly

@@ -1,0 +1,19 @@
+{
+    "base_template": "latex",
+    "mimetypes": {
+        "text/latex": true,
+        "text/tex": true,
+        "application/pdf": true
+    },
+    "preprocessors": {
+      "100-metadata": {
+        "type": "pretty_jupyter.NbMetadataPreprocessor",
+        "enabled": true
+      },
+      "200-token-cleaning": {
+        "type": "pretty_jupyter.TokenCleaningPreprocessor",
+        "enabled": true
+      }
+    }
+  }
+  

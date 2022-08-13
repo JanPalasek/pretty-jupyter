@@ -39,6 +39,11 @@ class NbMetadataPreprocessor(Preprocessor):
                 "theme": "paper",
                 "include_plotlyjs": True
             },
+            "pdf": {
+                "toc": True,
+                "toc_depth": 3,
+                "language": "english"
+            }
         },
     }
 
@@ -89,7 +94,7 @@ class NbMetadataPreprocessor(Preprocessor):
         metadata = merge_dict(self.pj_metadata, pj_metadata)
         metadata = merge_dict(metadata, self.defaults)
 
-        # run metadata rhgouth jinja templating
+        # run metadata through jinja templating
         metadata_copy = copy.deepcopy(metadata)
         for m_key, m_val in filter(lambda x: x[1] is not None and isinstance(x[1], str), metadata_copy.items()):
             metadata[m_key] = self.env.from_string(m_val).render(datetime=datetime, date=date, pj_metadata=metadata_copy)
@@ -119,7 +124,6 @@ class NbMetadataPreprocessor(Preprocessor):
             cell_metadata = cell.metadata.get("pj_metadata", {})
 
         return cell_metadata
-
 
     def _preprocess_markdown_cell(self, cell, resources, index):
         return cell, resources

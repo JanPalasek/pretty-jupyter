@@ -1,0 +1,47 @@
+((* set d2 = resources.global_content_filter.update({"include_input_prompt": false}) *))
+
+((* extends "latex/index.tex.j2" *))
+
+((* block packages *))
+((( super() )))
+\usepackage[((( resources.pj_metadata.output.pdf.language | escape_latex)))]{babel}
+((* endblock packages *))
+
+((* block definitions *))
+((( super() )))
+% set internal link (TOC) as black instead of the default red
+\definecolor{linkcolor}{rgb}{0, 0, 0}
+((* endblock definitions *))
+
+((* block title -*))
+\title{((( resources.pj_metadata.title | escape_latex )))}
+((*- endblock title *))
+
+((* block date -*))
+((* if 'date' in resources.pj_metadata *))
+\date{((( resources.pj_metadata.date | escape_latex )))}
+((* endif *))
+((*- endblock date *))
+
+((* block author -*))
+((* if "author" in resources.pj_metadata *))
+\author{((( resources.pj_metadata.author | escape_latex )))}
+((* endif *))
+((*- endblock author *))
+
+((* block predoc -*))
+((( super() )))
+((* set pdf_metadata = resources.pj_metadata.output.pdf *))
+((* if pdf_metadata.toc *))
+\setcounter{tocdepth}{((( pdf_metadata.toc_depth )))}
+\tableofcontents
+((* endif *))
+((*- endblock predoc *))
+
+% this is the only way to permanently disable the output prompt
+((* block execute_result scoped *))
+    ((* block data_priority scoped *))
+    ((( super() )))
+    ((* endblock *))
+((* endblock execute_result *))
+
