@@ -3,7 +3,7 @@ import shutil
 import sys
 import click
 from traitlets.config import Config
-from nbconvert.exporters import HTMLExporter, LatexExporter
+from nbconvert.exporters import HTMLExporter, PDFExporter
 import pkg_resources
 from pathlib import Path
 
@@ -20,7 +20,7 @@ def quickstart(out_path):
 
 @click.command("nbconvert-dev")
 @click.argument("input", type=click.Path())
-@click.option("--to", default="html", type=click.Choice(["html", "pj-pdf"], case_sensitive=False))
+@click.option("--to", default="html", type=click.Choice(["html", "pdf"]))
 @click.option("--out", default=None, type=click.Path())
 @click.option("--include-input/--exclude-input", default=True)
 def nbconvert_dev(input, to, out, include_input):
@@ -29,12 +29,11 @@ def nbconvert_dev(input, to, out, include_input):
     Note that after installing you can also use jupyter nbconvert directly.
     """
     if out is None:
-        ext = to.replace("pj-", "")
-        out = os.path.join(os.path.dirname(input), f"{Path(input).stem}.{ext}")
+        out = os.path.join(os.path.dirname(input), f"{Path(input).stem}.{to}")
 
     template_map = {
         "html": "pj",
-        "pj-pdf": "pj_pdf"
+        "pdf": "pj-pdf"
     }
 
     config =  Config()
@@ -44,16 +43,21 @@ def nbconvert_dev(input, to, out, include_input):
 
     if to == "html":
         exporter = HTMLExporter(config)
-    elif to == "pj-pdf":
-        exporter = LatexExporter(config)
+    elif to == "pdf":
+        exporter = PDFExporter(config)
     else:
         raise ValueError()
 
     with open(input, "r", encoding="utf-8") as file:
         res = exporter.from_file(file)
-
-    with open(out, "w", encoding="utf-8") as file:
-        file.write(res[0])
+    output_data = res[0]
+    
+    # open file as bytes if the output data are bytes, otherwise opne it as a string
+    file = open(out, "wb") if isinstance(output_data, bytes) else open(out, "w", encoding="utf-8")
+    try:
+        file.write(output_data)
+    finally:
+        file.close()
 
 
 @click.command("install-dev")

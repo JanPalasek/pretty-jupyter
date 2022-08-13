@@ -41,7 +41,8 @@ class NbMetadataPreprocessor(Preprocessor):
             },
             "pdf": {
                 "toc": True,
-                "toc_depth": 3
+                "toc_depth": 3,
+                "language": "english"
             }
         },
     }

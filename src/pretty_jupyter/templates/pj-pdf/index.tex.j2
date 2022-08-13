@@ -2,6 +2,11 @@
 
 ((* extends "latex/index.tex.j2" *))
 
+((* block packages *))
+((( super() )))
+\usepackage[((( resources.pj_metadata.output.pdf.language | escape_latex)))]{babel}
+((* endblock packages *))
+
 ((* block definitions *))
 ((( super() )))
 % set internal link (TOC) as black instead of the default red
