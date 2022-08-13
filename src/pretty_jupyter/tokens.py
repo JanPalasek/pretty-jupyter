@@ -1,5 +1,6 @@
+import json
 import re
-from pretty_jupyter.constants import MARKDOWN_TOKEN_REGEX, HTML_TOKEN_FORMAT, TOKEN_SEP
+from pretty_jupyter.constants import CODE_METADATA_TOKEN_REGEX, MARKDOWN_METADATA_TOKEN_REGEX, MARKDOWN_TOKEN_REGEX, HTML_TOKEN_FORMAT, TOKEN_SEP
 
 
 def convert_markdown_tokens_to_html(input_str: str) -> str:
@@ -36,3 +37,39 @@ def convert_markdown_tokens_to_html(input_str: str) -> str:
     # output is still in md, but token
     output = "\n".join(all_lines)
     return output
+
+def read_code_metadata_token(input_str: str) -> dict:
+    lines = input_str.splitlines()
+    if len(lines) == 0:
+        return None
+
+    line = lines[0]
+
+    # parse token
+    result = re.search(CODE_METADATA_TOKEN_REGEX, line)
+
+    if not result:
+        return None
+
+    if len(result.groups()) == 0:
+        return None
+
+    return json.loads(result.groups()[0])
+
+def read_markdown_metadata_token(input_str: str):
+    lines = input_str.splitlines()
+    if len(lines) == 0:
+        return None
+
+    line = lines[0]
+
+    # parse token
+    result = re.search(MARKDOWN_METADATA_TOKEN_REGEX, line)
+
+    if not result:
+        return None
+
+    if len(result.groups()) == 0:
+        return None
+
+    return json.loads(result.groups()[0])

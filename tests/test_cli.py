@@ -3,17 +3,18 @@ import pytest
 from pretty_jupyter.console import cli
 import os
 from selenium.webdriver.common.by import By
+import time
 
 @pytest.fixture
 def input_path():
     return "tests/fixture/notebook.ipynb"
 
 
-def test_nbconvert(input_path, tmpdir, driver):
+def test_nbconvert_dev(input_path, tmpdir, driver):
     out_path = os.path.normpath(os.path.join(tmpdir, "actual.html"))
 
     runner = CliRunner()
-    result = runner.invoke(cli, ["nbconvert", input_path, "--out", out_path])
+    result = runner.invoke(cli, ["nbconvert-dev", input_path, "--out", out_path])
     
     assert result.exit_code == 0
 
@@ -28,16 +29,18 @@ def test_nbconvert(input_path, tmpdir, driver):
     title_xpath = "//h1[@class='title']"
     assert driver.find_element(By.XPATH, title_xpath).text == "Test Notebook"
 
-    # test whether there is expected number of headers of level 1
+    main_content = driver.find_element(By.XPATH, "//*[@id = 'main-content']")
+
+    # test whether there is expected number of headers of level 1 in the main content
     h1_xpath = "//div[contains(@class, 'level1') and contains(@class, 'section')]/h1"
-    assert len(driver.find_elements(By.XPATH, h1_xpath)) == 4
+    assert len(main_content.find_elements(By.XPATH, h1_xpath)) == 3
 
     ##########
     # TABSET #
     ##########
-    assert driver.find_elements(By.XPATH, h1_xpath)[2].text == "Chapter 1: Tabs"
+    assert main_content.find_elements(By.XPATH, h1_xpath)[1].text == "Chapter 1: Tabs"
 
-    tab_section = driver.find_elements(By.XPATH, "//div[contains(@class, 'section') and contains(@class, 'level1')]")[2]
+    tab_section = main_content.find_elements(By.XPATH, "//div[contains(@class, 'section') and contains(@class, 'level1')]")[1]
 
     # select tabs
     list_tabs = tab_section.find_elements(By.XPATH, "ul[contains(@class, 'nav') and contains(@class, 'nav-pills')]/li")
@@ -67,7 +70,7 @@ def test_nbconvert(input_path, tmpdir, driver):
     ################
     # CODE FOLDING #
     ################
-    jmd_section = driver.find_elements(By.XPATH, "//div[contains(@class, 'section') and contains(@class, 'level1')]")[3]
+    jmd_section = driver.find_elements(By.XPATH, "//div[contains(@class, 'section') and contains(@class, 'level1')]")[2]
 
     code_div = jmd_section.find_elements(By.XPATH, "div[contains(@class, 'py-code-collapse') and contains(@class, 'collapse')]")[0]
     assert len(code_div.find_elements(By.XPATH, "div[contains(@class, 'pj-input')]//pre/span")) > 0, "Code highlighting does not work."
@@ -94,9 +97,6 @@ def test_nbconvert(input_path, tmpdir, driver):
     assert len(toc_first_level) == 3, "There are 3 chapters."
 
     # click on the Chapter 2: Jinja Markdown
-    toc_first_level[2].find_element(By.XPATH, "li").click()
-    import time
-    time.sleep(2)
     toc_first_level[2].find_element(By.XPATH, "li").click()
     time.sleep(2)
 
