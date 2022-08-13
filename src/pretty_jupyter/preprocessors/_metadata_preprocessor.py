@@ -1,5 +1,6 @@
 import copy
 from datetime import date, datetime
+import json
 from nbconvert.preprocessors import Preprocessor
 from traitlets import Bool, Dict, CUnicode
 from pretty_jupyter.utils import merge_dict
@@ -7,6 +8,7 @@ import ast
 
 import jinja2
 
+from pretty_jupyter.tokens import read_code_metadata_token, read_markdown_metadata_token
 from pretty_jupyter.magics import is_jinja_cell
 
 
@@ -55,12 +57,36 @@ class NbMetadataPreprocessor(Preprocessor):
         self.env = jinja2.Environment(loader=jinja2.FileSystemLoader('.'))
 
     def preprocess(self, nb, resources):
+        resources["pj_metadata"] = self._get_notebook_metadata(nb.metadata.get("pj_metadata", {}).copy())
+
+        return super().preprocess(nb, resources)
+
+    def preprocess_cell(self, cell, resources, index):
+        """
+        Processes based on the metadata provided.
+
+        PRIORITIES: generally more specific > less specific
+
+        - e.g. cell-level > notebook level
+        - e.g. cell-level output_error > cell-level output because output_error is more specific than output generally
+        """
+        # if it is first cell and it is of type raw => we load notebook-level metadata from there
+        if cell.cell_type == "raw" and index == 0:
+            self._preprocess_raw_cell(cell, resources, index)
+        elif cell.cell_type == "markdown":
+            cell, resources = self._preprocess_markdown_cell(cell, resources, index)
+        if cell.cell_type == "code":
+            cell, resources = self._preprocess_code_cell(cell, resources, index)
+        
+        return cell, resources
+
+    def _get_notebook_metadata(self, pj_metadata):
         # merge specified in NbMetadataProcessor with notebook metadata
         # priority:
         # 1. Values specified by user in NbMetadataProcessor.overrides
         # 2. Values specified by user in notebook metadata
         # 3. Default values from NbMetadataProcessor.defaults
-        metadata = merge_dict(self.pj_metadata, nb.metadata.get("pj_metadata", {}).copy())
+        metadata = merge_dict(self.pj_metadata, pj_metadata)
         metadata = merge_dict(metadata, self.defaults)
 
         # run metadata rhgouth jinja templating
@@ -68,24 +94,39 @@ class NbMetadataPreprocessor(Preprocessor):
         for m_key, m_val in filter(lambda x: x[1] is not None and isinstance(x[1], str), metadata_copy.items()):
             metadata[m_key] = self.env.from_string(m_val).render(datetime=datetime, date=date, pj_metadata=metadata_copy)
 
-        resources["pj_metadata"] = metadata
+        return metadata
 
-        return super().preprocess(nb, resources)
+    def _preprocess_raw_cell(self, cell, resources, index):
+        cell.transient = {"remove_source": True}
 
-    def preprocess_cell(self, cell, resources, index):
-        """
-        Processes based on the metadata provided.
-        """
-        if cell.cell_type != "code":
-            return cell, resources
+        # load metadata
+        pj_metadata = json.loads(cell.source)
+        resources["pj_metadata"] = self._get_notebook_metadata(pj_metadata)
 
-        # PRIORITIES
-        # generally more specific > less specific
-        # e.g. cell-level > notebook level
-        # or even cell-level output_error > cell-level output, because output_error is more specific than output generally
+    def _get_code_cell_metadata(self, cell):
+        cell_metadata = None
 
+        source_lines = cell.source.splitlines()
+        if len(source_lines) > 0 and is_jinja_cell(cell.source):
+            # source without the first line (with %%jmd)
+            cell_metadata = read_markdown_metadata_token("\n".join(source_lines[1:]))
+        elif len(source_lines) > 0:
+            # compute cell metadata
+            cell_metadata = read_code_metadata_token(cell.source)
+
+        # if cell metadata hasn't been found in the code, try to take it from cell metadata
+        if cell_metadata is None:
+            cell_metadata = cell.metadata.get("pj_metadata", {})
+
+        return cell_metadata
+
+
+    def _preprocess_markdown_cell(self, cell, resources, index):
+        return cell, resources
+
+    def _preprocess_code_cell(self, cell, resources, index):
+        cell_metadata = self._get_code_cell_metadata(cell)
         general_metadata = resources["pj_metadata"]["output"]["general"]
-        cell_metadata = cell.metadata.get("pj_metadata", {})
 
         input_enabled = general_metadata["input"]
         # if this cell is jinja markdown and metadata specify to turn it off => set it as turn off
