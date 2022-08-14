@@ -1,0 +1,2 @@
+src/pretty_jupyter/templates/pj/static/libs/* -linguist-detectable
+*.ipynb -linguist-detectable
