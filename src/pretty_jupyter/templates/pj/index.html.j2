@@ -144,6 +144,13 @@
 
   {# js files for notebooks: extend this to provide custom javascript #}
   {% block notebook_js %}
+    <!-- hotfix to support interactive tables package  -->
+    <script type="text/javascript">
+      if ($(".output_subarea.output_javascript").length > 0) {
+        jQuery.noConflict(false);
+      }
+    </script>
+
     {{ resources.include_js("static/pj.js") }}
 
     <script type="text/javascript">

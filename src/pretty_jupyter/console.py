@@ -3,7 +3,7 @@ import shutil
 import sys
 import click
 from traitlets.config import Config
-from nbconvert.exporters import HTMLExporter, PDFExporter
+from nbconvert.exporters import HTMLExporter, PDFExporter, LatexExporter
 import pkg_resources
 from pathlib import Path
 
@@ -20,7 +20,7 @@ def quickstart(out_path):
 
 @click.command("nbconvert-dev")
 @click.argument("input", type=click.Path())
-@click.option("--to", default="html", type=click.Choice(["html", "pdf"]))
+@click.option("--to", default="html", type=click.Choice(["html", "pdf", "latex"]))
 @click.option("--out", default=None, type=click.Path())
 @click.option("--include-input/--exclude-input", default=True)
 def nbconvert_dev(input, to, out, include_input):
@@ -33,7 +33,8 @@ def nbconvert_dev(input, to, out, include_input):
 
     template_map = {
         "html": "pj",
-        "pdf": "pj-pdf"
+        "pdf": "pj-pdf",
+        "latex": "pj-pdf"
     }
 
     config =  Config()
@@ -45,6 +46,8 @@ def nbconvert_dev(input, to, out, include_input):
         exporter = HTMLExporter(config)
     elif to == "pdf":
         exporter = PDFExporter(config)
+    elif to == "latex":
+        exporter = LatexExporter(config)
     else:
         raise ValueError()
 
