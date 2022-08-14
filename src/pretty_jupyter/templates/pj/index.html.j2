@@ -25,7 +25,7 @@
   <title>{{ title | e }}</title>
 
   <!-- jquery -->
-  <script src="{{ resources.include_url('static/lib/jquery.min.js') }}"></script>
+  <script src="{{ resources.include_url('static/libs/jquery.min.js') }}"></script>
 
   <!-- notebook theme (bootstrap 3) -->
   {% block theme_css %}
@@ -38,21 +38,21 @@
     {% endif %}
   {% endblock theme_css %}
   <!-- bootstrap 3 -->
-  <script src="{{ resources.include_url('static/lib/bootstrap.min.js') }}"></script>
+  <script src="{{ resources.include_url('static/libs/bootstrap.min.js') }}"></script>
   <!-- jquery-ui -->
-  <script src="{{ resources.include_url('static/lib/jquery-ui.min.js') }}"></script>
+  <script src="{{ resources.include_url('static/libs/jquery-ui.min.js') }}"></script>
 
   <!-- jquery tocify -->
   {% if resources.pj_metadata.output.html.toc %}
-  <script src="{{ resources.include_url('static/lib/jquery.tocify.js') }}"></script>
-  <link href="{{ resources.include_url('static/lib/jquery.tocify.css') }}" rel="stylesheet" />
+  <script src="{{ resources.include_url('static/libs/jquery.tocify.js') }}"></script>
+  <link href="{{ resources.include_url('static/libs/jquery.tocify.css') }}" rel="stylesheet" />
   
   {{ resources.include_css("static/pj-toc.css") }}
   {% endif %}
 
   <!-- jQuery Plugin: Sticky Tabs -->
   {% if resources.pj_metadata.output.html.tabset %}
-  <script src="{{ resources.include_url('static/lib/jquery.stickytabs.js') }}" ></script>
+  <script src="{{ resources.include_url('static/libs/jquery.stickytabs.js') }}" ></script>
   {{ resources.include_css("static/pj-tabset.css") }}
   {% endif%}
 
@@ -61,7 +61,7 @@
   
   <!-- plotly -->
   {% if resources.pj_metadata.output.html.include_plotlyjs %}
-    <script src="{{ resources.include_url('static/lib/plotly.min.js') }}" ></script>
+    <script src="{{ resources.include_url('static/libs/plotly.min.js') }}" ></script>
   {% endif %}
   <!-- require -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" type="text/javascript"></script>
