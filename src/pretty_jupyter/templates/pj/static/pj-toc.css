@@ -1,0 +1,58 @@
+div.main-container {
+    max-width: 1200px;
+  }
+
+  /* TOC */
+  #TOC {
+    margin: 25px 0px 20px 0px;
+  }
+
+  .tocify .tocify-item a, .tocify .list-group-item {
+    padding: 5px;
+  }
+
+  @media (max-width: 768px) {
+    #TOC {
+      position: relative;
+      width: 100%;
+    }
+  }
+
+  @media print {
+    .toc-content {
+      /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+      float: right;
+    }
+  }
+
+  div.tocify {
+    width: 20%;
+    max-width: 260px;
+    max-height: 85%;
+  }
+
+  @media (min-width: 768px) and (max-width: 991px) {
+    div.tocify {
+      width: 25%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    div.tocify {
+      width: 100%;
+      max-width: none;
+    }
+  }
+
+  .tocify ul,
+  .tocify li {
+    line-height: 20px;
+  }
+
+  .tocify-subheader .tocify-item {
+    font-size: 0.90em;
+  }
+
+  .tocify .list-group-item {
+    border-radius: 0px;
+  }

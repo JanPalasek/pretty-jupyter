@@ -36,6 +36,7 @@ class NbMetadataPreprocessor(Preprocessor):
                 "toc_smooth_scroll": True,
                 "number_sections": False,
                 "code_folding": "hide",
+                "tabset": True,
                 "theme": "paper",
                 "include_plotlyjs": True
             },
@@ -63,7 +64,7 @@ class NbMetadataPreprocessor(Preprocessor):
 
     def preprocess(self, nb, resources):
         # temporarily store nb metadata to resources to be accessible in cell
-        resources["__pj_metadata"] = nb.metadata.get("pj_metadata")
+        resources["__pj_metadata"] = nb.metadata.get("pj_metadata", {})
 
         return super().preprocess(nb, resources)
 
@@ -78,11 +79,9 @@ class NbMetadataPreprocessor(Preprocessor):
         """
         self._synchronize_cell_metadata(cell)
 
-        if index == 0 and cell.cell_type == "raw":
-            pj_metadata = json.loads(cell.source)
-            self._synchronize_notebook_metadata(resources, pj_metadata)    
-        elif index == 0:
-            self._synchronize_notebook_metadata(resources, resources["__pj_metadata"])
+        if index == 0:
+            pj_metadata = json.loads(cell.source) if cell.cell_type == "raw" else resources["__pj_metadata"]
+            self._synchronize_notebook_metadata(resources, pj_metadata)
             del resources["__pj_metadata"]
         elif cell.cell_type == "markdown":
             cell, resources = self._preprocess_markdown_cell(cell, resources, index)

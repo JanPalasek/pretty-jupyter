@@ -23,23 +23,12 @@
 </div>
 {%- endblock input %}
 
-{% block output_area_prompt %}
-{% endblock output_area_prompt %}
 
 {% block output %}
-{% if resources.global_content_filter.include_output_prompt %}
-    {{ self.output_area_prompt() }}
-{% endif %}
 {{ super() }}
 {% endblock output %}
 
-{% block empty_in_prompt -%}
-{%- endblock empty_in_prompt %}
-
 {% block markdowncell scoped %}
-{%- if resources.global_content_filter.include_input_prompt-%}
-    {{ self.empty_in_prompt() }}
-{%- endif -%}
 {{ cell.source  | markdown2html | strip_files_prefix }}
 {%- endblock markdowncell %}
 
