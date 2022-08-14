@@ -5,7 +5,7 @@
   },
   "preprocessors": {
     "100-metadata": {
-      "type": "pretty_jupyter.NbMetadataPreprocessor",
+      "type": "pretty_jupyter.HtmlNbMetadataPreprocessor",
       "enabled": true
     },
     "200-pygments": {

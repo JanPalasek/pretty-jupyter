@@ -110,7 +110,7 @@ window.initializeCodeFolding = function (show) {
   var currentIndex = 1;
 
   // select all jupyter code blocks
-  var jupyterCodeBlocks = $('div.pj-input');
+  var jupyterCodeBlocks = $('div.pj-fold');
   jupyterCodeBlocks.each(function () {
 
     // create a collapsable div to wrap the code in

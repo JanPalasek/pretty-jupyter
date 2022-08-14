@@ -38,15 +38,9 @@ def convert_markdown_tokens_to_html(input_str: str) -> str:
     output = "\n".join(all_lines)
     return output
 
-def read_code_metadata_token(input_str: str) -> dict:
-    lines = input_str.splitlines()
-    if len(lines) == 0:
-        return None
-
-    line = lines[0]
-
+def read_code_metadata_token(input_line: str) -> dict:
     # parse token
-    result = re.search(CODE_METADATA_TOKEN_REGEX, line)
+    result = re.search(CODE_METADATA_TOKEN_REGEX, input_line)
 
     if not result:
         return None
@@ -56,15 +50,8 @@ def read_code_metadata_token(input_str: str) -> dict:
 
     return json.loads(result.groups()[0])
 
-def read_markdown_metadata_token(input_str: str):
-    lines = input_str.splitlines()
-    if len(lines) == 0:
-        return None
-
-    line = lines[0]
-
-    # parse token
-    result = re.search(MARKDOWN_METADATA_TOKEN_REGEX, line)
+def read_markdown_metadata_token(input_line: str):
+    result = re.search(MARKDOWN_METADATA_TOKEN_REGEX, input_line)
 
     if not result:
         return None
