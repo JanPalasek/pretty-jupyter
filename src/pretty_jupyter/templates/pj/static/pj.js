@@ -3,8 +3,8 @@
 // nextUntilWithTextNodes does the same as nextUntil but it doesn't ignore text nodes
 // credits: https://stackoverflow.com/questions/25873650/jquery-nextuntil-include-text-nodes
 $.fn.nextUntilWithTextNodes = function (until) {
-  let matched = $.map(this, function (elem, i, until) {
-    let matched = [];
+  var matched = $.map(this, function (elem, i, until) {
+    var matched = [];
 
     while ((elem = elem.nextSibling) && elem.nodeType !== 9) {
       if (elem.nodeType === 1 || elem.nodeType === 3) {
@@ -66,7 +66,6 @@ window.initializeSections = function() {
         untilNodes += `,.level${hPrev}`
       }
 
-      // check if input for this header exists
       $(this).nextUntilWithTextNodes(untilNodes).addBack().wrapAll(`<div id='${id_attr}' class='${class_attr}' />`);
 
       tabNumber += 1;
