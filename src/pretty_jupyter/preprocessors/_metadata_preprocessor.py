@@ -1,15 +1,23 @@
 import copy
+import os
+import warnings
+from pretty_jupyter.constants import DEPRECATED_METADATA_MSG_FORMAT, CONFIG_DIR, METADATA_ERROR_FORMAT
 from datetime import date, datetime
-import json
 from nbconvert.preprocessors import Preprocessor
-from traitlets import Bool, Dict, CUnicode
+from traitlets import Dict
 from pretty_jupyter.utils import merge_dict
-import ast
+from pathlib import Path
+from cerberus import Validator
+import yaml
+import pkg_resources
 
 import jinja2
 
 from pretty_jupyter.tokens import read_code_metadata_token, read_markdown_metadata_token
 from pretty_jupyter.magics import is_jinja_cell
+
+_DEPRECATED_ATTRIBUTES = ["title", "theme", "toc", "code_folding"]
+_DEPRECATED_ATTRIBUTES_VERSION = "2.0.0"
 
 
 class NbMetadataPreprocessor(Preprocessor):
@@ -20,34 +28,6 @@ class NbMetadataPreprocessor(Preprocessor):
     This dictionary is then used for further processing.
     """
 
-    defaults = {
-        "title": "Untitled",
-        "output": {
-            "general": {
-                "input": True,
-                "input_jmd": False,
-                "output": True,
-                "output_error": False,
-            },
-            "html": {
-                "toc": True,
-                "toc_depth": 3,
-                "toc_collapsed": True,
-                "toc_smooth_scroll": True,
-                "number_sections": False,
-                "code_folding": "hide",
-                "tabset": True,
-                "theme": "paper",
-                "include_plotlyjs": True
-            },
-            "pdf": {
-                "toc": True,
-                "toc_depth": 3,
-                "language": "english"
-            }
-        },
-    }
-
     pj_metadata = Dict(default_value={})
     """
     Dictionary with all values to override the defaults. Note that per_key_trait is not an exhaustive list, you can define your own new override.
@@ -56,16 +36,35 @@ class NbMetadataPreprocessor(Preprocessor):
     def __init__(self, **kw):
         if "pj_metadata" in kw and isinstance(kw["pj_metadata"], str):
             # convert to dictionary
-            kw["pj_metadata"] = ast.literal_eval(kw["pj_metadata"])
+            kw["pj_metadata"] = yaml.safe_load(kw["pj_metadata"])
 
         super().__init__(**kw)
 
         self.env = jinja2.Environment(loader=jinja2.FileSystemLoader('.'))
 
+        nb_spec_path = Path(CONFIG_DIR) / "metadata/nb_spec.yaml"
+        with open(nb_spec_path) as file:
+            nb_spec = yaml.safe_load(file.read())
+        self.nb_validator = Validator(nb_spec, allow_unknown=True)
+
+        cell_spec_path = Path(CONFIG_DIR) / "metadata/cell_spec.yaml"
+        with open(cell_spec_path) as file:
+            cell_spec = yaml.safe_load(file.read())
+        self.cell_validator = Validator(cell_spec)
+
+        nb_defaults_path = Path(CONFIG_DIR) / "metadata/nb_defaults.yaml"
+        with open(nb_defaults_path) as file:
+            nb_defaults = yaml.safe_load(file.read())
+        self.defaults = nb_defaults
+
     def preprocess(self, nb, resources):
+        # deprecation warnings to help users fix their error
+        deprecated_attrs = [a for a in _DEPRECATED_ATTRIBUTES if a in nb.metadata]
+        if len(deprecated_attrs) > 0:
+            warnings.warn(DEPRECATED_METADATA_MSG_FORMAT.format(attributes=", ".join(deprecated_attrs), version=_DEPRECATED_ATTRIBUTES_VERSION), category=DeprecationWarning)
+
         # temporarily store nb metadata to resources to be accessible in cell
         resources["__pj_metadata"] = nb.metadata.get("pj_metadata", {})
-
         return super().preprocess(nb, resources)
 
     def preprocess_cell(self, cell, resources, index):
@@ -77,26 +76,42 @@ class NbMetadataPreprocessor(Preprocessor):
         - e.g. cell-level > notebook level
         - e.g. cell-level output_error > cell-level output because output_error is more specific than output generally
         """
-        self._synchronize_cell_metadata(cell)
-
         if index == 0:
-            pj_metadata = json.loads(cell.source) if cell.cell_type == "raw" else resources["__pj_metadata"]
-            self._synchronize_notebook_metadata(resources, pj_metadata)
-            del resources["__pj_metadata"]
-        elif cell.cell_type == "markdown":
+            self._synchronize_notebook_metadata(cell, resources)
+
+        self._synchronize_cell_metadata(cell)
+        if cell.cell_type == "markdown":
             cell, resources = self._preprocess_markdown_cell(cell, resources, index)
         if cell.cell_type == "code":
             cell, resources = self._preprocess_code_cell(cell, resources, index)
         
         return cell, resources
 
-    def _synchronize_notebook_metadata(self, resources, pj_metadata):
+    def _synchronize_notebook_metadata(self, cell, resources):
+        nb_metadata = resources.get("__pj_metadata", {})
+        src_metadata = {}
+        if cell.cell_type == "raw":
+            try:
+                src_metadata = yaml.safe_load(cell.source)
+            except Exception as exc:
+                raise ValueError("An error happend when trying to parse first cell of the notebook with type raw.", exc)
+
+        if len(nb_metadata) > 0 and len(src_metadata) > 0:
+            warnings.warn("Notebook-level metadata are defined both in the source and in the notebook's metadata. Please remove one of them.")
+
+        metadata = src_metadata if len(src_metadata) > 0 else nb_metadata
+
+        # validate metadata
+        is_valid = self.nb_validator.validate(metadata)
+        if not is_valid:
+            raise ValueError(METADATA_ERROR_FORMAT.format(error=str(self.nb_validator.errors)))
+
         # merge specified in NbMetadataProcessor with notebook metadata
         # priority:
         # 1. Values specified by user in NbMetadataProcessor.overrides
         # 2. Values specified by user in notebook metadata
         # 3. Default values from NbMetadataProcessor.defaults
-        metadata = merge_dict(self.pj_metadata, pj_metadata)
+        metadata = merge_dict(self.pj_metadata, metadata)
         metadata = merge_dict(metadata, self.defaults)
 
         # run metadata through jinja templating
@@ -106,6 +121,8 @@ class NbMetadataPreprocessor(Preprocessor):
 
         resources["pj_metadata"] = metadata
 
+        del resources["__pj_metadata"]
+
     def _synchronize_cell_metadata(self, cell):
         """
         Synchronizes cell metadata from tokens and metadata into one dictionary and stores it into cell.metadata.
@@ -113,20 +130,32 @@ class NbMetadataPreprocessor(Preprocessor):
         Args:
             cell: Cell.
         """
-        cell_metadata = None
-
+        src_cell_metadata = None
         source_lines = cell.source.splitlines()
         is_empty = len(source_lines) == 0
         if not is_empty and cell.cell_type == "code" and is_jinja_cell(cell.source):
-            cell_metadata = read_markdown_metadata_token(source_lines[1])
+            src_cell_metadata = read_markdown_metadata_token(source_lines[1])
         elif not is_empty and cell.cell_type == "code":
-            cell_metadata = read_code_metadata_token(source_lines[0])
+            src_cell_metadata = read_code_metadata_token(source_lines[0])
         elif cell.cell_type == "markdown" and not is_empty:
-            cell_metadata = read_markdown_metadata_token(source_lines[0])
+            src_cell_metadata = read_markdown_metadata_token(source_lines[0])
 
-        # if cell metadata hasn't been found in the code, try to take it from cell metadata
-        if cell_metadata is None:
-            cell_metadata = cell.metadata.get("pj_metadata", {})
+        # if nothing was read, just assign blank
+        if src_cell_metadata is None:
+            src_cell_metadata = {}
+
+        # cell metadata from metadata
+        nb_cell_metadata = cell.metadata.get("pj_metadata", {})
+
+        if len(src_cell_metadata) > 0 and len(nb_cell_metadata) > 0:
+            msg = "Metadata for this cell were specified both in notebook's metadata and in the cell's code. Printing parts of cell's source code to help find the issue."
+            msg += f"\nFirst 30 characters: {cell.source[:30]}"
+            warnings.warn(msg)
+
+        cell_metadata = src_cell_metadata if len(src_cell_metadata) > 0 else nb_cell_metadata
+
+        if not self.cell_validator.validate(cell_metadata):
+            raise ValueError(METADATA_ERROR_FORMAT.format(error=str(self.cell_validator.errors)))
 
         # store it to the metadata
         cell.metadata["pj_metadata"] = cell_metadata
@@ -135,60 +164,78 @@ class NbMetadataPreprocessor(Preprocessor):
         return cell, resources
 
     def _preprocess_code_cell(self, cell, resources, index):
-        cell_metadata = cell.metadata["pj_metadata"]
-        general_metadata = resources["pj_metadata"]["output"]["general"]
-
-        #########
-        # INPUT #
-        #########
-        input_enabled = general_metadata["input"]
-        # if this cell is jinja markdown and metadata specify to turn it off => set it as turn off
-        if is_jinja_cell(cell.source):
-            input_enabled = general_metadata["input_jmd"]
-        # if value was specified in cell metadata => use that
-        if "input" in cell_metadata:
-            input_enabled = cell_metadata["input"]
-        # if input is not enabled => remove 
-        if not input_enabled:
+        # if metadata specify that input shouldnt be enabled => remove it
+        if not is_input_enabled(cell, resources):
             cell.transient = {"remove_source": True}
 
-        ##########
-        # OUTPUT #
-        ##########
-        output_enabled = general_metadata["output"]
-        # process stderr, stdout
-        if len(cell.outputs) > 0:
-            for i, output in enumerate(cell.outputs):
-                ith_output_enabled = output_enabled
-                # if this output is an error output => write out output is output error is true
-                if output.output_type == "stream" and output.name == "stderr":
-                    ith_output_enabled = general_metadata["output_error"]
-                # if value was specified in cell metadata => use that
-                if "output" in cell_metadata:
-                    ith_output_enabled = cell_metadata["output"]
-                if "output_error" in cell_metadata and output.output_type == "stream" and output.name == "stderr":
-                    ith_output_enabled = cell_metadata["output_error"]
-                # output not enabled => remove
-                if not ith_output_enabled:
-                    cell.outputs.pop(i)
+        for i, output in enumerate(cell.outputs):
+            if not is_output_enabled(cell, resources, output):
+                cell.outputs.pop(i)
         
         return cell, resources
 
 
 class HtmlNbMetadataPreprocessor(NbMetadataPreprocessor):
     def _preprocess_code_cell(self, cell, resources, index):
-        cell_metadata = cell.metadata["pj_metadata"]
-
-        ################
-        # CODE-FOLDING #
-        ################
-        html_metadata = resources["pj_metadata"]["output"]["html"]
-        code_folding = html_metadata["code_folding"]
-        if "input_fold" in cell_metadata:
-            code_folding = cell_metadata["input_fold"]
-        cell_metadata["input_fold"] = f"fold-{code_folding}"
-
-        # assign value to the cell metadata
-        cell.metadata["pj_metadata"] = cell_metadata
+        cell.metadata["pj_metadata"]["input_fold"] = get_code_folding_value(cell, resources)
 
         return super()._preprocess_code_cell(cell, resources, index)
+
+
+def is_output_enabled(cell, resources, output):
+    cell_metadata = cell.metadata["pj_metadata"]
+    nb_metadata = resources["pj_metadata"]["output"]["general"]
+
+    def is_stdout(output):
+        return output.output_type == "stream" and output.name == "stdout"
+    def is_stderr(output):
+        return output.output_type == "stream" and output.name == "stderr"
+
+    # PRIORITY
+    # cell > notebook-level, stdout > output (similarly stderr)
+    # we will set a default as the most general setting and then progressively overwrite it by more specific settings
+    # least specific: notebook-level output
+    # most specific: stdout/stderr cell output
+
+    is_enabled = nb_metadata["output"]
+    # NOTEBOOK-LEVEL
+    if is_stdout(output):
+        is_enabled = nb_metadata["output_stdout"]
+    if is_stderr(output):
+        is_enabled = nb_metadata["output_stderr"]
+
+    # CELL-LEVEL
+    if "output" in cell_metadata:
+        is_enabled = cell_metadata["output"]
+    if is_stdout(output) and "output_stdout" in cell_metadata:
+        is_enabled = cell_metadata["output_stdout"]
+    # STDERR
+    if is_stderr(output) and "output_stderr" in cell_metadata:
+        is_enabled = cell_metadata["output_stderr"]
+
+    return is_enabled
+
+def is_input_enabled(cell, resources):
+    cell_metadata = cell.metadata["pj_metadata"]
+    nb_metadata = resources["pj_metadata"]["output"]["general"]
+
+    is_enabled = nb_metadata["input"]
+    if is_jinja_cell(cell.source):
+        is_enabled = nb_metadata["input_jinja"]
+
+    # if value was specified in cell metadata => use that
+    if "input" in cell_metadata:
+        is_enabled = cell_metadata["input"]
+
+    return is_enabled
+
+
+def get_code_folding_value(cell, resources):
+    cell_metadata = cell.metadata["pj_metadata"]
+    nb_metadata = resources["pj_metadata"]["output"]["html"]
+
+    code_folding = nb_metadata["code_folding"]
+    if "input_fold" in cell_metadata:
+        code_folding = cell_metadata["input_fold"]
+    value = f"fold-{code_folding}"
+    return value

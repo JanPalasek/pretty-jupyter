@@ -32,7 +32,7 @@ def nbconvert_dev(input, to, out, include_input):
         out = os.path.join(os.path.dirname(input), f"{Path(input).stem}.{to}")
 
     template_map = {
-        "html": "pj",
+        "html": "pj-legacy",
         "pdf": "pj-pdf",
         "latex": "pj-pdf"
     }
@@ -68,7 +68,7 @@ def install_dev():
     """
     Installs this package and makes it callable by `jupyter nbconvert` without the need to specify extra_template_basedirs.
     """
-    src_templates = ["pj", "pj-pdf"]
+    src_templates = ["pj", "pj-pdf", "pj-legacy"]
 
     for src_template in src_templates:
         src_folder = os.path.join(pkg_resources.resource_filename("pretty_jupyter", "templates"), src_template)

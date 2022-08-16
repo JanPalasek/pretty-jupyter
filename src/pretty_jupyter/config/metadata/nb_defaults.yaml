@@ -1,0 +1,22 @@
+title: Untitled
+output:
+  general:
+    input: true
+    input_jinja: false
+    output: true
+    output_stdout: true
+    output_stderr: false
+  html:
+    toc: true
+    toc_depth: 3
+    toc_collapsed: true
+    toc_smooth_scroll: true
+    number_sections: false
+    code_folding: hide
+    tabset: true
+    theme: paper
+    include_plotlyjs: true
+  pdf:
+    toc: true
+    toc_depth: 3
+    language: english

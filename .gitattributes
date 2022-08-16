@@ -1,3 +1,4 @@
 src/pretty_jupyter/templates/pj/static/libs/* -linguist-detectable
 src/pretty_jupyter/templates/pj/static/themes/* -linguist-detectable
 *.ipynb -linguist-detectable
+
