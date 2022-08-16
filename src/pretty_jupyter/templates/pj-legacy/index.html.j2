@@ -1,0 +1,33 @@
+{%- extends "pj/index.html.j2" -%}
+
+{% block main_container_start %}
+<header id="pageHeader">
+    <hr />
+    {% set metadata = resources.pj_metadata %}
+    <h1 class="title">{{ metadata.title | e }}</h1>
+    {% if "author" in metadata %}
+    <h4>{{ metadata.author | e }}</h4>
+    {% endif %}
+    {% if "date" in metadata %}
+    <h4>{{ metadata.date | e }}</h4>
+    {% endif %}
+    <hr />
+</header>
+{% endblock main_container_start %}
+
+{% block page_header %}
+{% endblock page_header %}
+
+
+{% block notebook_css %}
+    {{ super() }}
+
+    <style>
+        header {
+            width: 100%;
+            text-align: center;
+            margin: 25px 10px 25px 10px;
+        }
+    </style>
+
+{% endblock notebook_css %}

@@ -43,7 +43,6 @@ output:
           allowed:
             - hide
             - show
-            - disabled
             - disable
         tabset:
           type: boolean

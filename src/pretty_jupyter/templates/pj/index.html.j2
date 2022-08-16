@@ -18,7 +18,7 @@
 
     {% set metadata = resources["pj_metadata"] %}
     {% for k, v in metadata.items() if k != "output" %}
-    <meta name="{{ k | e }}" content="{{ v | e}}" />
+    <meta property="{{ k | e }}" content="{{ v | e}}" />
     {% endfor %}
   {% endblock meta %}
 
@@ -28,27 +28,26 @@
   <script src="{{ resources.include_url('static/libs/jquery.min.js') }}"></script>
 
   <!-- notebook theme (bootstrap 3) -->
-  {% block theme_css %}
-    {% set html_metadata = resources["pj_metadata"]["output"]["html"] %}
-    {% set theme = html_metadata["theme"] %}
-    {% if theme in ["paper", "slate", "journal"] %}
-        <link href="{{ resources.include_url('static/themes/{}.css'.format(theme)) | e }}" rel="stylesheet" />
-    {% else %}
-        <link href="{{ theme | e }}" rel="stylesheet" />
-    {% endif %}
-  {% endblock theme_css %}
+  {%- block theme_css -%}
+  {% set html_metadata = resources["pj_metadata"]["output"]["html"] %}
+  {% set theme = html_metadata["theme"] %}
+  {%- if theme in ["paper", "slate", "journal"] -%}
+  <link href="{{ resources.include_url('static/themes/{}.css'.format(theme)) | e }}" rel="stylesheet" />
+  {%- else -%}
+  <link href="{{ theme | e }}" rel="stylesheet" />
+  {%- endif -%}
+  {%- endblock theme_css %}
   <!-- bootstrap 3 -->
   <script src="{{ resources.include_url('static/libs/bootstrap.min.js') }}"></script>
   <!-- jquery-ui -->
   <script src="{{ resources.include_url('static/libs/jquery-ui.min.js') }}"></script>
 
   <!-- jquery tocify -->
-  {% if resources.pj_metadata.output.html.toc %}
+  {% if resources.pj_metadata.output.html.toc -%}
   <script src="{{ resources.include_url('static/libs/jquery.tocify.js') }}"></script>
   <link href="{{ resources.include_url('static/libs/jquery.tocify.css') }}" rel="stylesheet" />
-  
   {{ resources.include_css("static/pj-toc.css") }}
-  {% endif %}
+  {%- endif %}
 
   <!-- jQuery Plugin: Sticky Tabs -->
   {% if resources.pj_metadata.output.html.tabset %}
@@ -83,6 +82,7 @@
 {%- block body_header -%}
 <body>
   <div class="container-fluid main-container">
+    {% block main_container_start %}{% endblock main_container_start %}
 {%- endblock body_header -%}
 
 
@@ -118,28 +118,32 @@
 
       {% set container_layout = "col-xs-12 col-sm-8 col-md-9" if toc else "col-xs-12 col-sm-12 col-md-12" %}
       <div class="{{ container_layout }}">
-          {% block page_header %}
-          <header id="pageHeader">
-            {% set metadata = resources["pj_metadata"] %}
-            <h1 class="title">{{ metadata["title"] | e }}</h1>
-            {% if "author" in metadata %}
-            <h4>{{ metadata["author"] | e }}</h4>
-            {% endif %}
-            {% if "date" in metadata %}
-            <h4>{{ metadata["date"] | e }}</h4>
-            {% endif %}
-          </header>
-          {% endblock page_header %}
+        {% block page_header %}
+        <header id="pageHeader">
+          {% set metadata = resources["pj_metadata"] %}
+          <h1 class="title">{{ metadata["title"] | e }}</h1>
+          {% if "author" in metadata %}
+          <h4>{{ metadata["author"] | e }}</h4>
+          {% endif %}
+          {% if "date" in metadata %}
+          <h4>{{ metadata["date"] | e }}</h4>
+          {% endif %}
+        </header>
+        {% endblock page_header %}
+        {% block main_content_before %}{% endblock main_content_before %}
         <div id="main-content" class="toc-content">
+          {% block main_content_start %}{% endblock main_content_start %}
           {{ code_all_s }}
           {{ super() }}
+          {% block main_content_end %}{% endblock main_content_end %}
         </div>
+        {% block main_content_after %}{% endblock main_content_after %}
       </div>
     </div>
 {%- endblock body_loop -%}
 
 {%- block body_footer -%}
-    </div>
+    {% block main_container_end %}{% endblock main_container_end %}
   </div>
 
   {# js files for notebooks: extend this to provide custom javascript #}

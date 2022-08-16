@@ -202,7 +202,7 @@ def is_output_enabled(cell, resources, output):
     if is_stdout(output):
         is_enabled = nb_metadata["output_stdout"]
     if is_stderr(output):
-        is_enabled = nb_metadata["output_is_stderr"]
+        is_enabled = nb_metadata["output_stderr"]
 
     # CELL-LEVEL
     if "output" in cell_metadata:

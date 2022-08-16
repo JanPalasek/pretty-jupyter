@@ -14,7 +14,7 @@
 {% block input %}
 {% set cell_metadata = cell.metadata.pj_metadata %}
 {% set input_cls = ["pj-input"] %}
-{% if "input_fold" in cell_metadata %}
+{% if "input_fold" in cell_metadata and cell_metadata.input_fold in ["fold-show", "fold-hide"] %}
 {% set input_cls = input_cls + ["pj-fold", cell_metadata.input_fold] %}
 {% endif %}
 <div class="{{ input_cls | join(' ') }}">
