@@ -1,0 +1,13 @@
+input:
+  type: boolean
+input_fold:
+  type: string
+  allowed:
+    - show
+    - hide
+output:
+  type: boolean
+output_stdout:
+  type: boolean
+output_stderr:
+  type: boolean

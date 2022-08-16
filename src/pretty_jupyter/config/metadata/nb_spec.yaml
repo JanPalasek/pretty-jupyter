@@ -1,0 +1,63 @@
+title:
+  type: string
+author:
+  type: string
+date:
+  type:
+    - string
+    - date
+    - datetime
+output:
+  type: dict
+  allow_unknown: false
+  schema:
+    general:
+      type: dict
+      schema:
+        input:
+          type: boolean
+        input_jinja:
+          type: boolean
+        output:
+          type: boolean
+        output_stderr:
+          type: boolean
+        output_stdout:
+          type: boolean
+    html:
+      type: dict
+      schema:
+        toc:
+          type: boolean
+        toc_depth:
+          type: integer
+          min: 1
+        toc_collapsed:
+          type: boolean
+        toc_smooth_scroll:
+          type: boolean
+        number_sections:
+          type: boolean
+        code_folding:
+          type: string
+          allowed:
+            - hide
+            - show
+            - disabled
+            - disable
+        tabset:
+          type: boolean
+        theme:
+          type: string
+        include_plotlyjs:
+          type: boolean
+    pdf:
+      type: dict
+      schema:
+        toc:
+          type: boolean
+        toc_depth:
+          type: integer
+          min: 1
+        language:
+          type: string

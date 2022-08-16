@@ -1,4 +1,4 @@
-import json
+import yaml
 import re
 from pretty_jupyter.constants import CODE_METADATA_TOKEN_REGEX, MARKDOWN_METADATA_TOKEN_REGEX, MARKDOWN_TOKEN_REGEX, HTML_TOKEN_FORMAT, TOKEN_SEP
 
@@ -48,7 +48,7 @@ def read_code_metadata_token(input_line: str) -> dict:
     if len(result.groups()) == 0:
         return None
 
-    return json.loads(result.groups()[0])
+    return yaml.safe_load(result.groups()[0])
 
 def read_markdown_metadata_token(input_line: str):
     result = re.search(MARKDOWN_METADATA_TOKEN_REGEX, input_line)
@@ -59,4 +59,4 @@ def read_markdown_metadata_token(input_line: str):
     if len(result.groups()) == 0:
         return None
 
-    return json.loads(result.groups()[0])
+    return yaml.safe_load(result.groups()[0])

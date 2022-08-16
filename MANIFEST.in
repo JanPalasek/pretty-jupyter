@@ -1,2 +1,2 @@
 recursive-include src/pretty_jupyter/templates *
-recursive-include src/pretty_jupyter/files *
+recursive-include src/pretty_jupyter/config *
