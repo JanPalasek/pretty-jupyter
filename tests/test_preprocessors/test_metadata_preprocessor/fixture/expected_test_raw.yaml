@@ -12,5 +12,5 @@ output:
     tabset: false
     toc: false
     toc_depth: 1
-    code_folding: hide
+    code_folding: show
                   
