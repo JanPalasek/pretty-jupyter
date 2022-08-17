@@ -12,7 +12,8 @@ def expected_raw_cell(fixture_dir):
 
 def test_preprocess_raw_cell(raw_cell, nb_defaults_path, expected_raw_cell):
     NbMetadataPreprocessor.nb_defaults_path = nb_defaults_path
-    preprocessor = NbMetadataPreprocessor()
+    override_config = "{ output: { general: { input: false } } }"
+    preprocessor = NbMetadataPreprocessor(pj_metadata=override_config)
 
     nb = MagicMock(name="nb")
     nb.metadata = {}
