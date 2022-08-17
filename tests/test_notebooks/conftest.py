@@ -12,7 +12,7 @@ def driver():
 
     chrome_options = Options()
     options = [
-        "--headless",
+        # "--headless",
         "--disable-gpu",
         "--window-size=1920,1080",
         "--ignore-certificate-errors",
