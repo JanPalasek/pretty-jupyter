@@ -5,12 +5,13 @@ import os
 from selenium.webdriver.common.by import By
 import time
 
+
 @pytest.fixture
-def input_path():
-    return "tests/fixture/notebook.ipynb"
+def input_path(fixture_dir):
+    return os.path.join(fixture_dir, "basic.ipynb")
 
 
-def test_nbconvert_dev(input_path, tmpdir, driver):
+def test_basic(input_path, tmpdir, driver):
     out_path = os.path.normpath(os.path.join(tmpdir, "actual.html"))
 
     runner = CliRunner()

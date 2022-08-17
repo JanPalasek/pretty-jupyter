@@ -28,3 +28,7 @@ def driver():
     yield driver
 
     driver.close()
+
+@pytest.fixture
+def fixture_dir():
+    return "tests/test_notebooks/fixture"
