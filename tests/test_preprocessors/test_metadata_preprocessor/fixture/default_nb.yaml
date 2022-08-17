@@ -1,0 +1,13 @@
+title: No Title
+output:
+    general:
+        input: true
+        input_jinja: true
+        output: true
+        output_error: true
+        output_stdout: false
+    html:
+        tabset: true
+        toc: true
+        toc_depth: 3
+        code_folding: show

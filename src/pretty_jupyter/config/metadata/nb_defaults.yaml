@@ -4,8 +4,8 @@ output:
     input: true
     input_jinja: false
     output: true
+    output_error: false
     output_stdout: true
-    output_stderr: false
   html:
     toc: true
     toc_depth: 3

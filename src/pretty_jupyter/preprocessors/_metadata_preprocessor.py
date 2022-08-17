@@ -33,6 +33,10 @@ class NbMetadataPreprocessor(Preprocessor):
     Dictionary with all values to override the defaults. Note that per_key_trait is not an exhaustive list, you can define your own new override.
     """
 
+    nb_spec_path = Path(CONFIG_DIR) / "metadata/nb_spec.yaml"
+    cell_spec_path = Path(CONFIG_DIR) / "metadata/cell_spec.yaml"
+    nb_defaults_path = Path(CONFIG_DIR) / "metadata/nb_defaults.yaml"
+
     def __init__(self, **kw):
         if "pj_metadata" in kw and isinstance(kw["pj_metadata"], str):
             # convert to dictionary
@@ -42,18 +46,15 @@ class NbMetadataPreprocessor(Preprocessor):
 
         self.env = jinja2.Environment(loader=jinja2.FileSystemLoader('.'))
 
-        nb_spec_path = Path(CONFIG_DIR) / "metadata/nb_spec.yaml"
-        with open(nb_spec_path) as file:
+        with open(self.nb_spec_path) as file:
             nb_spec = yaml.safe_load(file.read())
         self.nb_validator = Validator(nb_spec, allow_unknown=True)
 
-        cell_spec_path = Path(CONFIG_DIR) / "metadata/cell_spec.yaml"
-        with open(cell_spec_path) as file:
+        with open(self.cell_spec_path) as file:
             cell_spec = yaml.safe_load(file.read())
         self.cell_validator = Validator(cell_spec)
 
-        nb_defaults_path = Path(CONFIG_DIR) / "metadata/nb_defaults.yaml"
-        with open(nb_defaults_path) as file:
+        with open(self.nb_defaults_path) as file:
             nb_defaults = yaml.safe_load(file.read())
         self.defaults = nb_defaults
 
@@ -168,7 +169,7 @@ class NbMetadataPreprocessor(Preprocessor):
         if not is_input_enabled(cell, resources):
             cell.transient = {"remove_source": True}
 
-        for i, output in enumerate(cell.outputs):
+        for i, output in reversed(list(enumerate(cell.outputs))):
             if not is_output_enabled(cell, resources, output):
                 cell.outputs.pop(i)
         
@@ -188,8 +189,8 @@ def is_output_enabled(cell, resources, output):
 
     def is_stdout(output):
         return output.output_type == "stream" and output.name == "stdout"
-    def is_stderr(output):
-        return output.output_type == "stream" and output.name == "stderr"
+    def is_error(output):
+        return output.output_type == "error" or (output.output_type == "stream" and output.name == "stderr")
 
     # PRIORITY
     # cell > notebook-level, stdout > output (similarly stderr)
@@ -201,8 +202,8 @@ def is_output_enabled(cell, resources, output):
     # NOTEBOOK-LEVEL
     if is_stdout(output):
         is_enabled = nb_metadata["output_stdout"]
-    if is_stderr(output):
-        is_enabled = nb_metadata["output_stderr"]
+    if is_error(output):
+        is_enabled = nb_metadata["output_error"]
 
     # CELL-LEVEL
     if "output" in cell_metadata:
@@ -210,8 +211,8 @@ def is_output_enabled(cell, resources, output):
     if is_stdout(output) and "output_stdout" in cell_metadata:
         is_enabled = cell_metadata["output_stdout"]
     # STDERR
-    if is_stderr(output) and "output_stderr" in cell_metadata:
-        is_enabled = cell_metadata["output_stderr"]
+    if is_error(output) and "output_error" in cell_metadata:
+        is_enabled = cell_metadata["output_error"]
 
     return is_enabled
 

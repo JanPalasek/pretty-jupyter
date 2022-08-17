@@ -1,0 +1,16 @@
+title: New Title
+author: Jan Palasek
+date: '2020-01-01'
+output:
+  general:
+    input: false
+    input_jinja: true
+    output: true
+    output_error: false
+    output_stdout: false
+  html:
+    tabset: false
+    toc: false
+    toc_depth: 1
+    code_folding: show
+                  

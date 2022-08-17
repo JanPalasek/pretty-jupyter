@@ -7,7 +7,7 @@ input_fold:
     - hide
 output:
   type: boolean
-output_stdout:
+output_error:
   type: boolean
-output_stderr:
+output_stdout:
   type: boolean

@@ -1,0 +1,13 @@
+---
+title: New Title
+author: Jan Palasek
+date: "{{ datetime(2020, 1, 1).strftime('%Y-%m-%d') }}"
+output:
+    general:
+        input: true
+        output: true
+        output_error: false
+    html:
+        tabset: false
+        toc: false
+        toc_depth: 1

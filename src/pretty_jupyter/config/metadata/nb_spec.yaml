@@ -20,7 +20,7 @@ output:
           type: boolean
         output:
           type: boolean
-        output_stderr:
+        output_error:
           type: boolean
         output_stdout:
           type: boolean

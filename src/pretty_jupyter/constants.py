@@ -1,15 +1,20 @@
 import pkg_resources
 
-MARKDOWN_TOKEN_REGEX = r"\s*\[.+\]:\s*<>\s*\(-\.-\s+(.*)\)"
+MARKDOWN_TOKEN_REGEX = r"\s*\[.+\]:\s*(?:(?:<>)|#)\s*\(-\.-\s+(.*)\)"
 """
 Regex to match markdown tokens. The tokens are special sequences in markdown that invoke special behaviour, e.g. tabsets. Example of some tokens:
 
-```
+```markdown
 [//]: <> (-.- token1 token2 token3)
+[//]: # (-.- token1 token2 token3)
 ```
 """
 
+
 HTML_TOKEN_REGEX = "<span class='pj-token' style='display: none;'>.*<\/span>"
+"""
+Regex to match html tokens.
+"""
 
 HTML_TOKEN_FORMAT = "<span class='pj-token' style='display: none;'>{tokens}</span>"
 """
@@ -23,17 +28,18 @@ CODE_METADATA_TOKEN_REGEX = r"^\s*#\s+-\.-\|meta\s+(.*)$"
 """
 Regex to match markdown metadata tokens.
 
-```
+```python
 # -.-|meta { "input": false, "output": true }
 ```
 """
 
-MARKDOWN_METADATA_TOKEN_REGEX = r"^\s*\[.+\]:\s*<>\s*\(-\.-\|meta\s+(.*)\)$"
+MARKDOWN_METADATA_TOKEN_REGEX = r"^\s*\[.+\]:\s*(?:(?:<>)|#)\s*\(-\.-\|meta\s+(.*)\)\s*$"
 """
 Regex to match markdown metadata tokens.
 
-```
-[//]: (-.-|meta { "input": true, "output": false })
+```markdown
+[//]: # (-.-|meta { "input": true, "output": false })
+[//]: <> (-.-|meta { "input": true, "output": false })
 ```
 """
 
