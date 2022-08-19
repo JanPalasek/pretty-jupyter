@@ -1,43 +1,62 @@
-from click.testing import CliRunner
+import time
 import pytest
-from pretty_jupyter.console import cli
 import os
 from selenium.webdriver.common.by import By
 from pathlib import Path
 import sys
 import subprocess
-import pkg_resources
+
+from pretty_jupyter.testing import is_visible
 
 
 @pytest.fixture
 def input_path(fixture_dir):
-    return os.path.join(fixture_dir, "toc.ipynb")
-
-@pytest.fixture
-def out_dir(tmpdir):
-    return tmpdir
-
-@pytest.fixture
-def out_path(input_path):
-    return str((Path(out_dir) / f"{Path(input_path).stem}.html").absolute())
+    path = os.path.join(fixture_dir, "toc.ipynb")
+    return str(Path(path).resolve().as_posix())
 
 
-def test_toc(input_path, out_dir, out_path, driver):
-    templates_path = str(Path(pkg_resources.resource_filename("pretty_jupyter", "templates")).as_posix())
-    input_path = str(Path(input_path).resolve().as_posix())
-
+def test_toc(templates_path, input_path, out_path, page_url, driver):
+    out_dir = os.path.dirname(out_path)
     python_path = sys.executable
     retval = subprocess.run(f"{python_path} -m jupyter nbconvert --to html --template pj {input_path} --TemplateExporter.extra_template_basedirs {templates_path} --execute --output-dir {out_dir}", check=True, shell=True)
     assert retval.returncode == 0, "jupyter nbconvert command ended up with a failure"
-    
-    out_path = str((Path(out_dir) / f"{Path(input_path).stem}.html").absolute())
-    url = os.path.normpath(f"file:/{out_path}")
-    # # go to page
-    driver.get(url)
+    driver.get(page_url)
 
-    # # check the title
-    # title_xpath = "//h1[@class='title']"
-    # assert driver.find_element(By.XPATH, title_xpath).text == "Test Notebook"
+    main_content = driver.find_element(By.XPATH, "//*[@id = 'main-content']")
 
-    # main_content = driver.find_element(By.XPATH, "//*[@id = 'main-content']")
-    print(url)
+    toc = driver.find_elements(By.XPATH, "//div[@id='TOC']")[0]
+
+    # check that there are two chapter
+    toc_first_level = toc.find_elements(By.XPATH, "ul")
+    assert len(toc_first_level) == 2, "There are 2 chapters."
+
+    # check that first section is visible
+    toc_first_level[0].find_element(By.XPATH, "li").click()
+    time.sleep(2)
+    first_chapter = main_content.find_elements(By.XPATH, "//div[contains(@class, 'section') and contains(@class, 'level1')]")[0]
+    first_header = first_chapter.find_element(By.XPATH, "h1")
+    assert is_visible(element=first_header, driver=driver), "First chapter should be visible at the beginning."
+
+    # go to second chapter and check that it is visible and the first section is not (should be scrolled away)
+    toc_first_level[1].find_element(By.XPATH, "li").click()
+    time.sleep(2)
+    toc_first_level[1].find_element(By.XPATH, "li").click()
+    time.sleep(2)
+    second_chapter = main_content.find_elements(By.XPATH, "//div[contains(@class, 'section') and contains(@class, 'level1')]")[1]
+    second_header = second_chapter.find_element(By.XPATH, "h1")
+    assert is_visible(element=second_header, driver=driver), "Second chapter should be visible after scrolling to it."
+    assert not is_visible(element=first_header, driver=driver), "First chapter shouldn't be visible because we scrolled to the second one."
+
+
+# YAML config is one-line because windows cmd probably doesn't support multiline
+NOT_GENERATED_METADATA = "{ output: { html: { toc: false } } }"
+
+def test_toc_not_generated(templates_path, input_path, out_path, page_url, driver):
+    out_dir = os.path.dirname(out_path)
+    python_path = sys.executable
+    retval = subprocess.run(f"{python_path} -m jupyter nbconvert --to html --template pj {input_path} --TemplateExporter.extra_template_basedirs {templates_path} --execute --output-dir {out_dir} --HtmlNbMetadataPreprocessor.pj_metadata=\"{NOT_GENERATED_METADATA}\"", check=True, shell=True)
+    assert retval.returncode == 0, "jupyter nbconvert command ended up with a failure"
+    driver.get(page_url)
+
+    toc = driver.find_elements(By.XPATH, "//div[@id='TOC']")
+    assert len(toc) == 0, "TOC shouldnt've been generated"
