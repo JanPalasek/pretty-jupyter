@@ -18,7 +18,7 @@ def input_path(fixture_dir):
 def test_toc(templates_path, input_path, out_path, page_url, driver):
     out_dir = os.path.dirname(out_path)
     python_path = sys.executable
-    retval = subprocess.run(f"{python_path} -m jupyter nbconvert --to html --template pj {input_path} --TemplateExporter.extra_template_basedirs=\"{templates_path}\" --execute --output-dir=\"{out_dir}\"", check=True, shell=True)
+    retval = subprocess.run(f"{python_path} -m jupyter nbconvert --to html --template pj {input_path} --TemplateExporter.extra_template_basedirs={templates_path} --execute --output-dir=\"{out_dir}\"", check=True, shell=True)
     assert retval.returncode == 0, "jupyter nbconvert command ended up with a failure"
     driver.get(page_url)
 
