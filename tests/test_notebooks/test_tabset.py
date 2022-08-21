@@ -105,6 +105,20 @@ def test_tabset(templates_path, input_path, out_path, page_url, driver):
     assert continuation2.is_displayed(), "Text in the end should be visible all the time."
 
 
+NO_TABSET_METADATA = "{ output: { html: { tabset: false }} }"
+
+def test_no_tabset(templates_path, input_path, out_path, page_url, driver):
+    out_dir = os.path.dirname(out_path)
+    python_path = sys.executable
+    retval = subprocess.run(f"{python_path} -m jupyter nbconvert --to html --template pj {input_path} --TemplateExporter.extra_template_basedirs={templates_path} --execute --output-dir=\"{out_dir}\" --HtmlNbMetadataPreprocessor.pj_metadata=\"{NO_TABSET_METADATA}\"", check=True, shell=True)
+    assert retval.returncode == 0, "jupyter nbconvert command ended up with a failure"
+    driver.get(page_url)
+
+    all_tabs = driver.find_elements(By.XPATH, "ul[contains(@class, 'nav') and contains(@class, 'nav-pills')]/li")
+
+    assert len(all_tabs) == 0, "Tabset is turned off but the tabs have been generated."
+
+
 
 
 
