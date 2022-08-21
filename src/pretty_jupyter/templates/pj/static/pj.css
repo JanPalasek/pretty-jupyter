@@ -151,3 +151,7 @@ th {
 #jup-show-hide-all-menu {
   margin-right: 15px;
 }
+
+.table-fit {
+  width: 1px;
+}
