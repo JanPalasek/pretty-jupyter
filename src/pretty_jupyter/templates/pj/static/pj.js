@@ -89,7 +89,8 @@ window.processTokens = function (tokenSep) {
 }
 
 window.processHeaders = function () {
-  let idDict = {};
+  let customSep = "-O_O-";
+  let counterDict = {};
   $("#main-content :header").each(function (idx, e) {
     // get id and class and add it to the wrapping section element
     let sectionElement = $(e).closest("div.section");
@@ -97,20 +98,22 @@ window.processHeaders = function () {
     // get id - either from tab number, or from header, if it has one
     let id = $(e).attr("id");
     if (id != null) {
+      // initialize id dict
+      if (!(id in counterDict)) {
+        counterDict[id] = 1;
+      }
       $(e).removeAttr("id");
-      // sectionElement.attr("id", id);
 
-      // if has id already in => use the last stored increment
-      if (id in idDict) {
-        sectionElement.attr("id", id + `${idDict[id]}`);
-      }
-      // otherwise use without the increment
-      else {
-        sectionElement.attr("id", id);
-        idDict[id] = 0;
-      }
+      let newId = id;
 
-      idDict[id]++;;
+      // if has duplicate => modify the ID with counter
+      // duplicate can be if counterDict for this id has entry larger than 1 (it has been incremented before)
+      // or it found another element with same ID after deleting this elements ID
+      let isDuplicate = $(`#${id}`).length > 0 || counterDict[id] > 1
+      if (isDuplicate) {
+        newId = newId + `${customSep}${counterDict[id]++}`;
+      }
+      sectionElement.attr("id", newId);
     }
 
     // get classes from header
