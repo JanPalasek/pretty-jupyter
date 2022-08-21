@@ -166,6 +166,7 @@
 
         window.initializeSections();
         window.processTokens(tokenSep={{ resources["token_sep"] | tojson }});
+        window.processHeaders(tokenSep={{ resources["token_sep"] | tojson }});
       });
 
       {% if html_metadata.tabset %}

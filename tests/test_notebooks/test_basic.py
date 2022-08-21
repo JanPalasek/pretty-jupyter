@@ -5,14 +5,14 @@ import os
 from selenium.webdriver.common.by import By
 import time
 
+
 @pytest.fixture
-def input_path():
-    return "tests/fixture/notebook.ipynb"
+def input_path(fixture_dir):
+    # NOTE: this input must not be cleared
+    return os.path.join(fixture_dir, "basic.ipynb")
 
 
-def test_nbconvert_dev(input_path, tmpdir, driver):
-    out_path = os.path.normpath(os.path.join(tmpdir, "actual.html"))
-
+def test_basic(input_path, out_path, page_url, driver):
     runner = CliRunner()
     result = runner.invoke(cli, ["nbconvert-dev", input_path, "--out", out_path, "--to", "html"])
     
@@ -20,10 +20,8 @@ def test_nbconvert_dev(input_path, tmpdir, driver):
 
     assert os.path.exists(out_path), "The expected file does not exist."
 
-    url = os.path.normpath(f"file:/{os.path.abspath(out_path)}")
-
     # go to page
-    driver.get(url)
+    driver.get(page_url)
 
     # check the title
     title_xpath = "//h1[@class='title']"

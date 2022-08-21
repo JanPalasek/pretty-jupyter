@@ -1,5 +1,7 @@
 /* a lot of this code was taken from rmd styles directly included in the output html page, license was not present there but it is GPL3 */
 
+MAX_HEADERS = 10;
+
 // nextUntilWithTextNodes does the same as nextUntil but it doesn't ignore text nodes
 // credits: https://stackoverflow.com/questions/25873650/jquery-nextuntil-include-text-nodes
 $.fn.nextUntilWithTextNodes = function (until) {
@@ -39,7 +41,7 @@ function processToken(tokenElement, targetElement, tokenSep) {
   });
 }
 
-window.initializeSections = function() {
+window.initializeSections = function () {
   let tabNumber = 1;
 
   // create nested structure:
@@ -48,12 +50,12 @@ window.initializeSections = function() {
   // note that this assumes linear structure - the h2, h3 etc must be on the
   // same level and not hidden in the nested divs
 
-  for (let h = 1; h <= 8; h++) {
+  for (let h = 1; h <= MAX_HEADERS; h++) {
     $(`#main-content h${h}`).each(function (i, e) {
       let x = h;
 
       d = {
-        "id": tabNumber + "",
+        "id": tabNumber++ + "",
         "class": ["section", `level${x}`],
       };
 
@@ -67,15 +69,13 @@ window.initializeSections = function() {
       }
 
       $(this).nextUntilWithTextNodes(untilNodes).addBack().wrapAll(`<div id='${id_attr}' class='${class_attr}' />`);
-
-      tabNumber += 1;
     });
   }
 }
 
-window.processTokens = function(tokenSep) {
+window.processTokens = function (tokenSep) {
   // process all pj-token elements
-  $(".pj-token").each(function (i, e) {
+  $("#main-content .pj-token").each(function (i, e) {
     prevSibling = $(this).prev()
 
     // if we don't have a previous sibling => the element is probably wrapped in paragraph due to markdown compiler
@@ -84,15 +84,47 @@ window.processTokens = function(tokenSep) {
     }
 
     // if previous sibling is header => apply tokens to the wrapping section
-    if (prevSibling.is(':header')) {
-      sectionElement = $(this).parent().closest(".section");
-
-      processToken(tokenElement=$(this), targetElement=sectionElement, tokenSep=tokenSep);
-    }
-    else {
-      processToken(tokenElement=$(this), targetElement=prevSibling, tokenSep=tokenSep)
-    }
+    processToken(tokenElement = $(this), targetElement = prevSibling, tokenSep = tokenSep)
   });
+}
+
+window.processHeaders = function () {
+  let customSep = "-O_O-";
+  let counterDict = {};
+  $("#main-content :header").each(function (idx, e) {
+    // get id and class and add it to the wrapping section element
+    let sectionElement = $(e).closest("div.section");
+
+    // get id - either from tab number, or from header, if it has one
+    let id = $(e).attr("id");
+    if (id != null) {
+      // initialize id dict
+      if (!(id in counterDict)) {
+        counterDict[id] = 1;
+      }
+      $(e).removeAttr("id");
+
+      let newId = id;
+
+      // if has duplicate => modify the ID with counter
+      // duplicate can be if counterDict for this id has entry larger than 1 (it has been incremented before)
+      // or it found another element with same ID after deleting this elements ID
+      let isDuplicate = $(`#${id}`).length > 0 || counterDict[id] > 1
+      if (isDuplicate) {
+        newId = newId + `${customSep}${counterDict[id]++}`;
+      }
+      sectionElement.attr("id", newId);
+    }
+
+    // get classes from header
+    if ($(e).attr("class") != null) {
+      $.each($(e).attr('class').split(/\s+/), function (idx, el) {
+        sectionElement.addClass(el);
+      });
+
+      $(e).attr("class", null);
+    }
+  })
 }
 
 window.initializeCodeFolding = function (show) {
@@ -152,22 +184,14 @@ window.initializeCodeFolding = function (show) {
 }
 
 
-window.numberSections = function() {
+window.numberSections = function () {
   let headerSelector = "#main-content div.section:not(.unnumbered)>:header"
 
   let firstLevel = 1;
 
-  // $(headerSelector).each(function (idx, el) {
-  //   let level = parseInt(el.nodeName.substring(1));
-
-  //   if (level < firstLevel) {
-  //     firstLevel = level;
-  //   }
-  // });
-
   // holds current index for each header
   let levels = []
-  $(headerSelector).each(function(idx, el) {
+  $(headerSelector).each(function (idx, el) {
     // get current level
     let level = parseInt(this.nodeName.substring(1));
 
@@ -181,7 +205,7 @@ window.numberSections = function() {
     // e.g.
     // we have h2 and we discovered next new is h4
     // we need to fill in levels for h3 and h4, and then increment h4
-    else if (level > levels.length ) {
+    else if (level > levels.length) {
       let levelsLength = levels.length
       for (let i = 0; i < (level - levelsLength); i++) {
         levels.push(0);
@@ -204,10 +228,17 @@ window.initializeTOC = function (tocDepth, tocCollapsed, tocSmoothScroll) {
   // consistency with pandoc
   $('.unlisted.unnumbered').addClass('toc-ignore')
 
+  // get allowed headers str
+  let headers = []
+  for (let i = 1; i <= MAX_HEADERS; i++) {
+    headers.push(`h${i}`)
+  }
+  headers = headers.join(",")
+
   // move toc-ignore selectors from section div to header
   $('div.section.toc-ignore')
     .removeClass('toc-ignore')
-    .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+    .children(headers).addClass('toc-ignore');
 
   selectors = []
   for (var i = 0; i < tocDepth; i++) {
@@ -226,14 +257,19 @@ window.initializeTOC = function (tocDepth, tocCollapsed, tocSmoothScroll) {
     ignoreSelector: ".toc-ignore",
     scrollTo: 0
   };
-  options.showAndHide = tocCollapsed;
+
   options.smoothScroll = tocSmoothScroll;
 
   // tocify
   var toc = $("#TOC").tocify(options).data("toc-tocify");
+
+  if (!tocCollapsed) {
+    toc.setOptions({ "showAndHideOnScroll": false, "showAndHide": false });
+    $(".tocify-subheader").show();
+  }
 }
 
-window.initializeTabsets = function() {
+window.initializeTabsets = function () {
   window.buildTabsets("TOC");
 
   // open tabset-dropdown

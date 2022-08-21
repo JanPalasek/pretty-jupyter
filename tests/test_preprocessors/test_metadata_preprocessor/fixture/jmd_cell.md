@@ -1,5 +1,5 @@
 %%jmd
-[//]: # (-.-|meta { input: false, output: false, output_error: true })
+[//]: # (-.-|m { input: false, output: false, output_error: true })
 
 ## Header
 [//]: # (-.- tabset tabset-pills tabset-fade)

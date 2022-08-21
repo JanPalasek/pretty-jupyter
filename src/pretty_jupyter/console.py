@@ -32,7 +32,7 @@ def nbconvert_dev(input, to, out, include_input):
         out = os.path.join(os.path.dirname(input), f"{Path(input).stem}.{to}")
 
     template_map = {
-        "html": "pj-legacy",
+        "html": "pj",
         "pdf": "pj-pdf",
         "latex": "pj-pdf"
     }

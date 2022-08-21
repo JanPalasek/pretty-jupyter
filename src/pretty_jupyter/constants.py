@@ -24,22 +24,22 @@ What markdown tokens get translated to.
 TOKEN_SEP = "|O_O|"
 """Separator for multiple tokens"""
 
-CODE_METADATA_TOKEN_REGEX = r"^\s*#\s+-\.-\|meta\s+(.*)$"
+CODE_METADATA_TOKEN_REGEX = r"^\s*#\s+-\.-\|m\s+(.*)$"
 """
 Regex to match markdown metadata tokens.
 
 ```python
-# -.-|meta { "input": false, "output": true }
+# -.-|m { "input": false, "output": true }
 ```
 """
 
-MARKDOWN_METADATA_TOKEN_REGEX = r"^\s*\[.+\]:\s*(?:(?:<>)|#)\s*\(-\.-\|meta\s+(.*)\)\s*$"
+MARKDOWN_METADATA_TOKEN_REGEX = r"^\s*\[.+\]:\s*(?:(?:<>)|#)\s*\(-\.-\|m\s+(.*)\)\s*$"
 """
 Regex to match markdown metadata tokens.
 
 ```markdown
-[//]: # (-.-|meta { "input": true, "output": false })
-[//]: <> (-.-|meta { "input": true, "output": false })
+[//]: # (-.-|m { "input": true, "output": false })
+[//]: <> (-.-|m { "input": true, "output": false })
 ```
 """
 
