@@ -16,12 +16,32 @@ Creating Our First Pretty Notebook
 
 Using Pretty Jupyter is pretty much identical to using normal Jupyter. We will work through a simple example to demonstrate this.
 
-To start, create an empty Jupyter Notebook file and start filling it with the following content. For purposes of this tutorial, name it "my-first-notebook.ipynb".
+To start, we can create a new notebook it "my-first-notebook.ipynb". To simplify the start, Pretty Jupyter provides a custom command for this purpose.
 
 .. code-block:: bash
 
-    # load Pretty Jupyter features
+    pretty-jupyter quickstart "my-first-notebook.ipynb"
+
+The initial notebook contains two cells: YAML header and a code cell. YAML header specifies notebook's metadata. The code cell loads Pretty Jupyter magics into the notebook and allows us to use its features.
+
+We can edit the values in the YAML header and provide e.g. a custom title for the page.
+
+.. code-block:: yaml
+
+    title: Custom Title
+    author: Developer
+    date: "Generated: {{ datetime.now().strftime('%Y-%m-%d %H:%M:%S') }}"
+
+.. code-block:: python
+
+    # load pretty jupyter's magics
     %load_ext pretty_jupyter
+
+We can edit the values in the YAML header and provide e.g. our custom title for the page.
+
+Next we can fill in the next Jupyter's code cells as following.
+
+.. code-block:: python
 
     # import packages
     import pandas as pd
@@ -50,7 +70,7 @@ To start, create an empty Jupyter Notebook file and start filling it with the fo
     %%jmd
 
     ## Tabset Root
-    [//]: <> (-.- tabset tabset-pills)
+    [//]: # (-.- .tabset .tabset-pills)
 
     The content of this section will be shown as tabs. This will help us avoid potential scrolling and improve the HTML UI.
 
@@ -65,13 +85,6 @@ To start, create an empty Jupyter Notebook file and start filling it with the fo
     ## Not a Tabset
     This section will not be tabbed because it has the same level (or higher) as the Tabset Root.
 
-At last, we will set our page title. It is by default set to the name of the file, which is not what we want. To override this behavior, we specify ``"title"`` attribute in the notebook's metadata.
-
-.. note::
-    Some environments, such as JupyterLab and Jupyter, support specifying notebook metadata in their UI.
-    
-    In others, we need to open the notebook file as a text, locate "metadata" attribute in its json and write the title there directly.
-
 
 Exporting the Notebook
 --------------------------
@@ -85,7 +98,7 @@ Now we can use Pretty Jupyter to generate the result HTML report. To do this, us
 .. seealso::
     Pretty Jupyter uses nbconvert's underhood including its command line interface. Check out `its documentation <https://nbconvert.readthedocs.io/>`_.
 
-It generates the output HTML file to the same directory as was the input file.
+It generates the output HTML file to the same directory as the input file.
 
 Next Steps
 ---------------
