@@ -98,6 +98,8 @@ window.processHeaders = function () {
     // get id - either from tab number, or from header, if it has one
     let id = $(e).attr("id");
     if (id != null) {
+      let encodedId = id;
+      id = decodeURI(id);
       // initialize id dict
       if (!(id in counterDict)) {
         counterDict[id] = 1;
@@ -109,7 +111,7 @@ window.processHeaders = function () {
       // if has duplicate => modify the ID with counter
       // duplicate can be if counterDict for this id has entry larger than 1 (it has been incremented before)
       // or it found another element with same ID after deleting this elements ID
-      let isDuplicate = $(`#${id}`).length > 0 || counterDict[id] > 1
+      let isDuplicate = $(`[id='${encodedId}']`).length > 0 || counterDict[id] > 1
       if (isDuplicate) {
         newId = newId + `${customSep}${counterDict[id]++}`;
       }
