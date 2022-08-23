@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from pathlib import Path
 import sys
 import subprocess
+import nbconvert
+from packaging import version
 
 
 @pytest.fixture
@@ -39,8 +41,10 @@ def test_tokens(templates_path, input_path, out_path, page_url, driver):
     ##################
     # MARKDOWN TABLE #
     ##################
-    table = main_content.find_element(By.XPATH, "//table[@id = 'table-id']")
-    assert "table-fit" in table.get_attribute("class")
+    # TODO: nbconvert==7.0.0 has a bug - generating of markdown table doesn't work, issue #1848
+    if version.parse(nbconvert.__version__) < version.parse("7.0.0"):
+        table = main_content.find_element(By.XPATH, "//table[@id = 'table-id']")
+        assert "table-fit" in table.get_attribute("class")
 
     ################
     # PANDAS TABLE #
