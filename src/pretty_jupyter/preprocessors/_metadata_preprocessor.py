@@ -9,7 +9,8 @@ from pretty_jupyter.utils import merge_dict
 from pathlib import Path
 from cerberus import Validator
 import yaml
-import pkg_resources
+import nbconvert
+from packaging import version
 
 import jinja2
 
@@ -167,7 +168,11 @@ class NbMetadataPreprocessor(Preprocessor):
     def _preprocess_code_cell(self, cell, resources, index):
         # if metadata specify that input shouldnt be enabled => remove it
         if not is_input_enabled(cell, resources):
-            cell.transient = {"remove_source": True}
+            # keep compatibility for version < 7
+            if version.parse(nbconvert.__version__) >= version.parse("7.0.0"):
+                cell.metadata["transient"] = {"remove_source": True}
+            else:
+                cell.transient = {"remove_source": True}
 
         for i, output in reversed(list(enumerate(cell.outputs))):
             if not is_output_enabled(cell, resources, output):

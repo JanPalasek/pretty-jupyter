@@ -3,6 +3,8 @@ import yaml
 import pytest
 from unittest.mock import MagicMock
 from pretty_jupyter.preprocessors import NbMetadataPreprocessor, HtmlNbMetadataPreprocessor
+import nbconvert
+from packaging import version
 
 
 @pytest.fixture
@@ -40,7 +42,10 @@ def test_preprocess_jmd_cell(jmd_cell, nb_defaults_path):
         cell, resources = preprocessor.preprocess_cell(jmd_cell, resources, index=3)
 
     assert cell.metadata["pj_metadata"] == {'input': False, 'output': False, 'input_fold': 'fold-show', 'output_error': True}
-    assert cell.transient == {"remove_source": True}
+    if version.parse(nbconvert.__version__) >= version.parse("7.0.0"):
+        assert cell.metadata["transient"] == {"remove_source": True}
+    else:
+        assert cell.transient == {"remove_source": True}
     assert len(cell.outputs) == 0
 
 

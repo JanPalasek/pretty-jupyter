@@ -73,9 +73,7 @@ docutils==0.17.1
     #   sphinx
     #   sphinx-rtd-theme
 entrypoints==0.4
-    # via
-    #   jupyter-client
-    #   nbconvert
+    # via jupyter-client
 executing==0.8.3
     # via stack-data
 fastjsonschema==2.15.3
@@ -96,7 +94,9 @@ idna==3.3
 imagesize==1.4.1
     # via sphinx
 importlib-metadata==4.12.0
-    # via sphinx
+    # via
+    #   nbconvert
+    #   sphinx
 iniconfig==1.1.1
     # via pytest
 ipykernel==6.15.0
@@ -153,6 +153,8 @@ jupyterlab-widgets==1.1.0
     # via ipywidgets
 kiwisolver==1.4.3
     # via matplotlib
+lxml==4.9.1
+    # via nbconvert
 markupsafe==2.1.1
     # via
     #   jinja2
@@ -165,11 +167,11 @@ matplotlib-inline==0.1.3
     # via
     #   ipykernel
     #   ipython
-mistune==0.8.4
+mistune==2.0.4
     # via nbconvert
 nbclient==0.6.4
     # via nbconvert
-nbconvert==6.5.0
+nbconvert==7.0.0
     # via
     #   -r requirements.in
     #   jupyter
