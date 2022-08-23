@@ -4,14 +4,19 @@ Tabset
 Pretty Jupyter allows us to generate tabset from the specified sections.
 It allows readers to view the content of different sections by clicking the tab header instead of scrolling back and forth on the page.
 
-We can generate a tabset by adding the following line under a header that we want to be a tabset root: ``[//]: <> (-.- tabset)``. We call this line a tabset specifier.
+We can generate a tabset by adding the following line under a header that we want to be a tabset root: ``[//]: # (-.- .tabset)``. We call this line a tabset specifier.
+
+.. note::
+    We can also specify tabset without dots, e.g. ``[//]: # (-.- tabset)``. **This is only for backward compatibility with previous versions.**
+    It is recommended to use the dots, e.g. ``[//]: # (-.- .tabset)``.
+
 
 .. _simple-tabset-code:
 .. code-block:: markdown
     :caption: Code: Tabset input
 
     ## Tabset
-    [//]: <> (-.- .tabset)
+    [//]: # (-.- .tabset)
 
     ### First Tab
     Content of this first section will be generated into the first tab content.
@@ -38,7 +43,7 @@ The output of the tabset is demonstrated in the figure below.
     Tabset is also supported in Jinja Markdown cells.
 
 
-We can also provide an alternative look to the tabset. We can specify ``[//]: <> (-.- tabset tabset-pills)``, which causes Pretty Jupyter to output tabset below.
+We can also provide an alternative look to the tabset. We can specify ``[//]: # (-.- .tabset .tabset-pills)``, which causes Pretty Jupyter to output tabset below.
 
 .. _tabset-pills-figure:
 .. figure:: _static/tabset-pills.png
@@ -48,6 +53,10 @@ We can also provide an alternative look to the tabset. We can specify ``[//]: <>
 
     Figure: Tabset-pills output
 
+.. note::
+    Internally, the tabset specifier adds each token (.tabset, .tabset-pills,...) as a class to the wrapping section.
+    We can use this to add custom classes to the section. We can also specify the section's ID, if we add a token
+    that starts with #. E.g. ``[//]: # (-.- #custom-id .custom-class)``.
 
 **In general, the tabs are generated from the child sections of a section that has a tabset specifier under it**. We call such a section a tabset root.
 The tabset ends if we specify a section that has same or higher level as the tabset root.
@@ -59,7 +68,7 @@ We can use this behavior to our advantage and use an empty header element just t
     :caption: Code: Tabset trick
 
     ## Tabset
-    [//]: <> (-.- .tabset)
+    [//]: # (-.- .tabset)
 
     ### First Tab
     Content of this first section will be generated into the first tab content.

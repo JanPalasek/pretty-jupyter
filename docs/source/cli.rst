@@ -42,3 +42,6 @@ Other notable switches:
 * ``--no-input``: Doesn't generate the input (at all). Ignores all metadata configuration.
 
 Check out `nbconvert's documentation <https://nbconvert.readthedocs.io/en/latest/config_options.html>`_ for more switches. Ignore those that are irrelevant for HTML.
+
+Templates
+------------

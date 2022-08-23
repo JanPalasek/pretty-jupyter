@@ -98,6 +98,8 @@ class NbMetadataPreprocessor(Preprocessor):
             except Exception as exc:
                 raise ValueError("An error happend when trying to parse first cell of the notebook with type raw.", exc)
 
+            remove_cell_input(cell)
+
         if len(nb_metadata) > 0 and len(src_metadata) > 0:
             warnings.warn("Notebook-level metadata are defined both in the source and in the notebook's metadata. Please remove one of them.")
 
@@ -168,11 +170,7 @@ class NbMetadataPreprocessor(Preprocessor):
     def _preprocess_code_cell(self, cell, resources, index):
         # if metadata specify that input shouldnt be enabled => remove it
         if not is_input_enabled(cell, resources):
-            # keep compatibility for version < 7
-            if version.parse(nbconvert.__version__) >= version.parse("7.0.0"):
-                cell.metadata["transient"] = {"remove_source": True}
-            else:
-                cell.transient = {"remove_source": True}
+            remove_cell_input(cell)
 
         for i, output in reversed(list(enumerate(cell.outputs))):
             if not is_output_enabled(cell, resources, output):
@@ -186,6 +184,14 @@ class HtmlNbMetadataPreprocessor(NbMetadataPreprocessor):
         cell.metadata["pj_metadata"]["input_fold"] = get_code_folding_value(cell, resources)
 
         return super()._preprocess_code_cell(cell, resources, index)
+
+
+def remove_cell_input(cell):
+    # keep compatibility for version < 7
+    if version.parse(nbconvert.__version__) >= version.parse("7.0.0"):
+        cell.metadata["transient"] = {"remove_source": True}
+    else:
+        cell.transient = {"remove_source": True}
 
 
 def is_output_enabled(cell, resources, output):
