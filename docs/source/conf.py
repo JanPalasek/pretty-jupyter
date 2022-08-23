@@ -12,7 +12,7 @@ project = 'Pretty Jupyter'
 year = date.today().year
 copyright = "2022-%s, Jan Palasek" % year
 author = 'Jan Palasek'
-version = '1.2.5'
+version = '2.0.0'
 release = version
 
 # -- General configuration ---------------------------------------------------
