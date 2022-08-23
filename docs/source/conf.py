@@ -12,16 +12,20 @@ project = 'Pretty Jupyter'
 year = date.today().year
 copyright = "2022-%s, Jan Palasek" % year
 author = 'Jan Palasek'
-version = '1.2.5'
+version = '2.0.0-rc0'
 release = version
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = [
+    "sphinx.ext.autosectionlabel"
+]
+autosectionlabel_prefix_document = True
 
 templates_path = ['_templates']
 exclude_patterns = []
+
 
 
 

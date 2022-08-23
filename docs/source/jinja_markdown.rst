@@ -63,6 +63,7 @@ An example below demonstrates this capabilities for tables:
 
 .. code-block:: markdown
 
+    %%jmd
     <details>
     <summary>Table</summary>
 
@@ -70,9 +71,27 @@ An example below demonstrates this capabilities for tables:
 
     </details>
 
-The similar thing can be done with plots. We just need to transform them from bytes to HTML.
+The similar thing can be done with plots. We just need to transform them from objects to HTML.
+
+.. code-block:: python
+    
+    %load_ext pretty_jupyter
+
+    import matplotlib.pyplot as plt
+    from pretty_jupyter.helpers import matplotlib_fig_to_html
+
+.. code-block:: markdown
+    
+    %%jmd
+
+    {{ matplotlib_fig_to_html(plt.plot([1, 2], [3, 4])[0].figure) }}
+
+
+Examples
+--------------------
 
 Check out our `example repository <https://github.com/JanPalasek/pretty-jupyter-examples>`_ for this and more examples. Specifically:
 
-* main-features-demo: Has a section on Jinja Markdown. It demonstrates how to use it with matplotlib and plotly.
-* dynamic-tabsets: Demonstrates how to dynamically create tabsets using Jinja Markdown.
+* **main-features-demo**: Has a section on Jinja Markdown. It demonstrates how to use it with matplotlib and plotly.
+* **dynamic-tabsets**: Demonstrates, how to dynamically create tabsets using Jinja Markdown.
+* **interactive-components**: Demonstrates, how to use interactive components with Pretty Jupyter, such as plotly or itables (interactive tables). In short, it works as with normal Jupyter.

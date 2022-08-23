@@ -10,19 +10,38 @@ The basic use of Pretty Jupyter is the following:
 
     jupyter nbconvert --to html --template pj /path/to/ipynb/file
 
-This exports the notebook file in the html located in the same directory, but with a different extension.
+This exports the notebook file into the html located in the same directory.
 
-Notable switches
+Switches
 ---------------------
 
-The most notable switches are the following:
+We can override notebook-level metadata (see :ref:`Metadata:Notebook-level Metadata`) with specifying `--HtmlNbMetadataPreprocessor.pj_metadata`. We specify 
+our desired notebook-level metadata configuration in YAML, for example:
 
-* ``--no-input``: Doesn't generate the input (at all).
+.. code-block:: bash
+    :caption: Notebook-level metadata override
+
+    jupyter nbconvert --to html --template pj /path/to/ipynb/file --HtmlNbMetadataPreprocessor.pj_metadata "{ output: { html: { toc: false } } }"
+
+This will override the default value and prevent Table of Contents from being generated.
+
+We can also use multi-line yaml.
+
+.. code-block:: bash
+    :caption: Notebook-level metadata override
+
+    jupyter nbconvert --to html --template pj /path/to/ipynb/file --HtmlNbMetadataPreprocessor.pj_metadata "
+    output:
+        html:
+            toc: false
+    "
+
+Other notable switches:
+
 * ``--embed-images``: All image links are embedded directly to the html page. This is good for a standalone report.
-
-Furthermore, we can override default behavior with the following commands:
-
-* ``--RemoveOutputPreprocessor.stream_stderr=0`` together with ``--RemoveOutputPreprocessor.output_error=0``: By default, all error stream outputs are removed (standard output errors are left in). This makes for a nicer reports. However, these settings cause that the error outputs will be left in.
-* ``--RemoveInputPreprocessor.jinja=1``: Jinja Markdown inputs are by default removed from the html. This will also export them. This is sometimes useful for demonstration purposes.
+* ``--no-input``: Doesn't generate the input (at all). Ignores all metadata configuration.
 
 Check out `nbconvert's documentation <https://nbconvert.readthedocs.io/en/latest/config_options.html>`_ for more switches. Ignore those that are irrelevant for HTML.
+
+Templates
+------------

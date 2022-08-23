@@ -70,11 +70,13 @@ Some of the most interesting that we can overide are:
 
 * ``notebook_css``: Specify styling for your pages here. It is highly recommended to call ``super`` in this block to apply default styles as well.
 * ``notebook_js``: Specify JavaScript for the pages here. It is highly recommended to call ``super``, otherwise the page might break.
-* ``page_header``: If we override this block, we can change the page's header and for example provide our logo to each report etc.
+* ``page_header``: We can provide a custom page header by overriding this block.
+* ``main_container_start``: Start of the main container. Can be added to provide notebook-level logo etc.
+* ``main_container_end``: End of the main container. Can be used for a footer.
 
 Examples
 ----------
 
 Check out Pretty Jupyter's `example repository <https://github.com/JanPalasek/pretty-jupyter-examples>`_, specifically:
 
-* **extending-template**: This example shows how to customize the template. It overrides ``page_header`` to provide custom header with current date-time and name of the author. It also changes default styling of the page.
+* **extending-template**: This example shows how to customize the template. It overrides ``page_header`` and removes it and specifies the header inside ``main_container_start``. It also specifies a custom footer in ``main_container_end``.
