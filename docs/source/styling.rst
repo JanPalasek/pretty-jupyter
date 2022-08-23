@@ -57,17 +57,21 @@ Currently, there are three themes supported, all thanks to  `bootswatch project 
 
 For example, to use journal theme, write this in your notebooks metadata:
 
-.. code-block:: json
+.. code-block:: yaml
 
-    "theme": "journal"
+    output:
+        html:
+            theme: journal
 
 This will include embed your theme directly in the output.
 
 You can also use any bootstrap 3 theme (for example the ones from `bootswatch <https://bootswatch.com/3/>`_). For example:
 
-.. code-block:: json
+.. code-block:: yaml
 
-    "theme": "https://bootswatch.com/3/sandstone/bootstrap.min.css"
+    output:
+        html:
+            theme: https://bootswatch.com/3/sandstone/bootstrap.min.css
 
 Examples
 --------------------

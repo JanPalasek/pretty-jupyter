@@ -38,6 +38,7 @@ Contents
    styling
    custom_template
    metadata
+   pdf
    cli
 
 Credits

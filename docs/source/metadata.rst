@@ -34,7 +34,7 @@ We define it by writing a **YAML header in the first raw cell of the notebook.**
 
 .. note::
 
-    Attributes `title`, `author` and `date` are processed by Jinja (TODO) templating engine. This allows us to insert more complex expressions than a simple text, such as generate current date.
+    Attributes `title`, `author` and `date` are processed by `Jinja templating engine <https://jinja.palletsprojects.com/>`_. This allows us to insert more complex expressions than a simple text, such as generate current date.
 
     For security reasons, the number of available available variable names in Jinja is restricted to `datetime` and notebook-level metadata available under `resources`.
 
