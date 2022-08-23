@@ -31,13 +31,13 @@ Contents
    :caption: User Documentation
 
    getting_started
-   metadata
    jinja_markdown
    tabset
    toc
    code_folding
    styling
    custom_template
+   metadata
    cli
 
 Credits

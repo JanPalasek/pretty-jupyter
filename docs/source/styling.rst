@@ -69,5 +69,8 @@ You can also use any bootstrap 3 theme (for example the ones from `bootswatch <h
 
     "theme": "https://bootswatch.com/3/sandstone/bootstrap.min.css"
 
+Examples
+--------------------
+
 Check out more examples in our `example repository <https://github.com/JanPalasek/pretty-jupyter-examples>`_.
 Themes are specifically demonstrated in **themes** example, where we apply dark theme on a simple notebook.

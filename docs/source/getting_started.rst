@@ -28,7 +28,7 @@ We can edit the values in the YAML header and provide e.g. a custom title for th
 
 .. code-block:: yaml
 
-    title: Custom Title
+    title: Our Notebook Title
     author: Developer
     date: "Generated: {{ datetime.now().strftime('%Y-%m-%d %H:%M:%S') }}"
 
@@ -103,4 +103,7 @@ It generates the output HTML file to the same directory as the input file.
 Next Steps
 ---------------
 
-For a more in-depth tutorials, check out our `example repository <https://github.com/JanPalasek/pretty-jupyter-examples>`_. You might even find your use-case there. Also, check out the other sections of the User Documentation.
+For a more in-depth tutorials, check out our `example repository <https://github.com/JanPalasek/pretty-jupyter-examples>`_. It contains a lot of use-cases and 
+demonstrations, how to use Pretty Jupyter.
+
+Also, check out the other sections of the User Documentation.

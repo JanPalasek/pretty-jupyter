@@ -19,3 +19,10 @@ Pretty Jupyter automatically generates Table of Contents for the page. The table
     For example: ``<h2 class='toc-ignore'>Header that is not in TOC</h2>``
 
 To turn off Table of Contents functionality completely, we need to add the following property to the notebook metadata: ``"toc": false``.
+
+Examples
+--------------------
+
+Check out more examples in our `example repository <https://github.com/JanPalasek/pretty-jupyter-examples>`_. Specifically, the TOC are demonstrated in the following example:
+
+* **main-features-demo**: Practical example for a tabset feature.
