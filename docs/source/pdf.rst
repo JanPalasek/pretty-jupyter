@@ -32,6 +32,9 @@ The next code block demonstrates, which settings we should focus on.
 PDF via Latex
 ---------------
 
+.. warning::
+    Generating PDF via Latex is experimental.
+
 We can also export PDF via Latex. This can be done by the following command:
 
 .. code-block:: bash
@@ -51,3 +54,10 @@ On other platforms, you can get pandoc from `their website <https://pandoc.org/i
     To provide custom overrides for metadata, instead of ``--HtmlNbMetadataPreprocessor``, we need to use ``--NbMetadataPreprocessor``.
 
 The export can be customized by overriding values in pdf section of the metadata configuration. Check out :ref:`Metadata:Metadata Options` for more information.
+
+Examples
+----------
+
+Check out our `example repository <https://github.com/JanPalasek/pretty-jupyter-examples>`_ for this and more examples. Specifically:
+
+- **pdf**: Shows, how pdf looks when generated directly (via pandoc) or indirectly via html.
