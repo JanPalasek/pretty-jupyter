@@ -137,11 +137,14 @@ class NbMetadataPreprocessor(Preprocessor):
         src_cell_metadata = None
         source_lines = cell.source.splitlines()
         is_empty = len(source_lines) == 0
+        # if cell is jinja markdown
         if not is_empty and cell.cell_type == "code" and is_jinja_cell(cell.source):
-            src_cell_metadata = read_markdown_metadata_token(source_lines[1])
+            # read src_cell_metadata from the second line (after jmd), if the file has two lines
+            if len(source_lines) >= 2:
+                src_cell_metadata = read_markdown_metadata_token(source_lines[1])
         elif not is_empty and cell.cell_type == "code":
             src_cell_metadata = read_code_metadata_token(source_lines[0])
-        elif cell.cell_type == "markdown" and not is_empty:
+        elif not is_empty and cell.cell_type == "markdown":
             src_cell_metadata = read_markdown_metadata_token(source_lines[0])
 
         # if nothing was read, just assign blank
