@@ -45,3 +45,15 @@ Check out `nbconvert's documentation <https://nbconvert.readthedocs.io/en/latest
 
 Templates
 ------------
+
+The templates are specified in the command right after ``--template`` keyword.
+
+Pretty Jupyter has currently two templates implemented for HTML (must be used with ``--to html`` switch):
+
+- ``pj``: Implements a default Pretty Jupyter template for HTML.
+- ``pj-legacy``: Template that was used before 2.0. It has the new functionality implemented, but it uses the old design.
+
+There is a one template implemented also for the pdf. We can use it by specifying template as ``pj-pdf``.
+
+.. warning::
+    PDF template is experimental.

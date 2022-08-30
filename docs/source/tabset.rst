@@ -7,8 +7,8 @@ It allows readers to view the content of different sections by clicking the tab 
 We can generate a tabset by adding the following line under a header that we want to be a tabset root: ``[//]: # (-.- .tabset)``. We call this line a tabset specifier.
 
 .. note::
-    We can also specify tabset without dots, e.g. ``[//]: # (-.- tabset)``. **This is only for backward compatibility with previous versions.**
-    It is recommended to use the dots, e.g. ``[//]: # (-.- .tabset)``.
+    We can also specify tabset without dots, e.g. ``[//]: # (-.- tabset)``. This is only for backward compatibility with previous versions.
+    **It is recommended to use the dots**, e.g. ``[//]: # (-.- .tabset)``.
 
 
 .. _simple-tabset-code:

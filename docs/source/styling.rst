@@ -1,6 +1,9 @@
 Styling
 ===============
 
+Basics
+--------
+
 We can apply custom styles to modify the page to our needs.
 
 The simplest way to do this is by using ``<style>`` tags and use standard CSS to do the job. We can use those tags e.g. in Markdown or Jinja Markdown cells.
@@ -42,6 +45,67 @@ For example:
     :alt: Styling example output.
 
     Figure: Styling example output
+
+
+Targeting Elements
+-------------------------
+
+Pretty Jupyter allows us to add classes and IDs to elements. Usually we do this with markdown elements because basic Markdown doesn't support adding custom classes to them.
+
+The following block demonstrates this as an example. The line below the table adds two classes and specifies the id to the table. Therefore, the output table will have classes custom-class-1 and custom-class-2 and it will have id my-table-id.
+
+.. code-block:: markdown
+    :caption: Example: Targeting table.
+
+    | col1 | col2 |
+    |------|------|
+    | val1 | val2 |
+
+    [//]: # (-.- .custom-class1 custom-class2 #my-table-id)
+
+We call the line under the table a **token specifier**.
+
+This functionality is not limited for tables. It can be applied to **any** markdown or html element. Even to a paragraph:
+
+.. code-block:: markdown
+    :caption: Example: Targeting paragraph.
+
+    This paragraph will be a warning alert.
+
+    [//]: # (-.- .alert .alert-warning)
+
+.. note::
+
+    Markdown automatically creates paragraph elements from the text separated by newlines.
+
+.. important::
+
+    **Placing token specifier under the header will modify the section, not the header.** This behavior is used to specify tabsets or headers that are ignored by Table of Contents.
+
+
+There are a lot of already existing classes from Boostrap 3 or Pretty Jupyter that can be used to make the report prettier. We list the main ones in the following subsections.
+
+
+Header (Section)
+~~~~~~~~~~~~~~~~~~
+
+- `tabset`: Transforms the section from linear structure into a tabset.
+- `tabset-pills`: Changes the visual design of the tabs.
+- `tabset-fade`: Adds fluent animation when switching the tabs.
+- `toc-ignore`: Is ignored by Table of Contents.
+- `unlisted`: The section is not listed in the Table of Contents.
+- `unnumbered`: If section numbering is turned on, this section is not numbered.
+
+Table
+~~~~~~~~~~~~~~~~~~
+- `pj-table-ignore`: All tables have basic table styling added by Pretty Jupyter. This class makes it so default styling is not applied to them.
+- `pj-table-fit`: The table is shrunk around its content.
+- `table`: Basic bootstrap styling.
+
+Paragraph
+~~~~~~~~~~~~~~~~~~
+- `bg-info`: Changes background of the paragraph to "info" color from bootstrap. Other options: `bg-warning`, `bg-danger`.
+- `alert`: Makes paragraph into an alert. Should be used together with `alert-info`, `alert-warning`,...
 
 
 Themes

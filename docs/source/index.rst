@@ -41,6 +41,12 @@ Contents
    cli
    pdf
 
+.. toctree::
+   :maxdepth: 2
+   :caption: About
+
+   changelog
+
 Credits
 ==========
 

@@ -298,3 +298,7 @@ We will demonstrate this on a couple of examples:
 
 Examples
 ----------
+
+Check out our `example repository <https://github.com/JanPalasek/pretty-jupyter-examples>`_ for this and more examples. Specifically:
+
+- **metadata**: Demonstrates basic examples that show how to use metadata in your project.
