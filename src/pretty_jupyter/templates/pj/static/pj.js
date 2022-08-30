@@ -41,6 +41,19 @@ function processToken(tokenElement, targetElement, tokenSep) {
   });
 }
 
+window.fixElementIds = function() {
+  // escape all ids
+  $("[id]").attr("id", function (idx, id) {
+    // uri decode
+    id = decodeURI(id);
+
+    // escape characters
+    id = id.replace(/['`~!@#$%^&*()|+=?;:'",.<>\{\}\[\]\\\/]/gi, "")
+
+    return id
+  });
+};
+
 window.initializeSections = function () {
   let tabNumber = 1;
 
@@ -98,8 +111,6 @@ window.processHeaders = function () {
     // get id - either from tab number, or from header, if it has one
     let id = $(e).attr("id");
     if (id != null) {
-      let encodedId = id;
-      id = decodeURI(id);
       // initialize id dict
       if (!(id in counterDict)) {
         counterDict[id] = 1;
@@ -111,7 +122,7 @@ window.processHeaders = function () {
       // if has duplicate => modify the ID with counter
       // duplicate can be if counterDict for this id has entry larger than 1 (it has been incremented before)
       // or it found another element with same ID after deleting this elements ID
-      let isDuplicate = $(`[id='${encodedId}']`).length > 0 || counterDict[id] > 1
+      let isDuplicate = $(`[id='${id}']`).length > 0 || counterDict[id] > 1
       if (isDuplicate) {
         newId = newId + `${customSep}${counterDict[id]++}`;
       }
@@ -254,7 +265,7 @@ window.initializeTOC = function (tocDepth, tocCollapsed, tocSmoothScroll) {
     theme: "bootstrap3",
     context: '.toc-content',
     hashGenerator: function (text) {
-      return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      return text.replace(/[.\\/?&!#<>"']/g, '').replace(/\s/g, '_');
     },
     ignoreSelector: ".toc-ignore",
     scrollTo: 0

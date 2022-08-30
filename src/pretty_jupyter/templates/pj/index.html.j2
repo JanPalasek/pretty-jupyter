@@ -161,23 +161,19 @@
       {% set html_metadata = resources.pj_metadata.output.html %}
 
       $(document).ready(function() {
+        window.fixElementIds();
+
         // remove useless anchor from Jupyter
         $("a.anchor-link").remove();
-
         window.initializeSections();
         window.processTokens(tokenSep={{ resources["token_sep"] | tojson }});
         window.processHeaders(tokenSep={{ resources["token_sep"] | tojson }});
-      });
 
-      {% if html_metadata.tabset %}
-      // tabsets 
-      $(document).ready(function () {
+        {% if html_metadata.tabset %}
+        // tabsets 
         window.initializeTabsets();
-      });
-      {% endif %}
+        {% endif %}
 
-      // toc and section numbering
-      $(document).ready(function() {
         {% if html_metadata.number_sections %}
         // number sections
         window.numberSections();
@@ -190,17 +186,12 @@
         let tocSmoothScroll = {{ html_metadata['toc_smooth_scroll'] | tojson }};
         window.initializeTOC(tocDepth=tocDepth, tocCollapsed=tocCollapsed, tocSmoothScroll=tocSmoothScroll);
         {% endif %}
-      });
 
-      // code folding
-      {% if html_metadata["code_folding"] in ["show", "hide"] and resources.global_content_filter.include_input %}
-      $(document).ready(function () {
+        {% if html_metadata["code_folding"] in ["show", "hide"] and resources.global_content_filter.include_input %}
+        // code folding
         window.initializeCodeFolding({{ html_metadata['code_folding'] | tojson }} === "show");
-      });
-      {% endif %}
+        {% endif %}
 
-      // custom post-processing: remove some ugly styles etc 
-      $(document).ready(function () {
         // prettify tables (that aren't ignored)
         $("table:not(.pj-table-ignore)").addClass("table").addClass("table-striped").addClass("table-hover");
         $("table.dataframe:not(.pj-table-ignore)").removeAttr("border");

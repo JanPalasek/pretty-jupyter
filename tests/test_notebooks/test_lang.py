@@ -32,8 +32,9 @@ def test_lang(templates_path, input_path, out_path, page_url, driver):
     header = main_content.find_element(By.XPATH, "//div[@id = 'Hlavička-s-českými-znaky-O_O-2']")
     assert header.find_element(By.XPATH, "h2").get_attribute("innerHTML") == "Hlavička s českými znaky"
 
-    tab = main_content.find_element(By.XPATH, "//a[@href = '#Český-Tab-O_O-2']/..")
-    tab_sec = main_content.find_element(By.XPATH, "//div[@id = 'Český-Tab-O_O-2']")
+    # note: 23 is encoded hash character
+    tab = main_content.find_element(By.XPATH, "//a[@href = '#Český-Tab-s-divnými-znaky--_23-O_O-2']/..")
+    tab_sec = main_content.find_element(By.XPATH, "//div[@id = 'Český-Tab-s-divnými-znaky--_23-O_O-2']")
     assert "active" not in main_content.get_attribute("class")
     tab.click()
     time.sleep(0.5)
