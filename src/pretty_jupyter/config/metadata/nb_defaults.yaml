@@ -13,6 +13,7 @@ output:
     toc_smooth_scroll: true
     number_sections: false
     code_folding: hide
+    code_tools: false
     tabset: true
     theme: paper
     include_plotlyjs: true

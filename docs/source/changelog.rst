@@ -1,6 +1,14 @@
 Changelog
 ============================
 
+
+2.0.0-rc1
+-----------
+- Lighter code folding buttons so reader's concentration is focused on the content rather than the buttons.
+- Fixed an issue with weird characters ruining tabset and toc (characters like parentheses, braces, square brackets, #, ", ', etc)
+- Fixed an issue where empty jinja markdown cell would lead to an error when running pretty jupyter
+- Added ``code_tools`` to html output options to provide an option to enable / disable code tools. Default value is false.
+
 2.0.0-rc0
 ------------
 

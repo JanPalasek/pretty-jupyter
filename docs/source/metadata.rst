@@ -203,6 +203,12 @@ Metadata Options
           | show: Code is shown at the start.
           | disable: Code folding is disabled.
     *
+        - output.html.code_tools
+        - boolean, default: false
+        - | If true, then a button
+          | is added which can show 
+          | or hide code all at once.
+    *
         - output.html.tabset
         - boolean, default: true
         - | If **false**, then tabsets

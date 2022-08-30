@@ -44,6 +44,8 @@ output:
             - hide
             - show
             - disable
+        code_tools:
+          type: boolean
         tabset:
           type: boolean
         theme:
