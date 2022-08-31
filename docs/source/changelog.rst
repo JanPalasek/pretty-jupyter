@@ -2,16 +2,13 @@ Changelog
 ============================
 
 
-2.0.0-rc1
+2.0.0
 -----------
 
+- Added other themes and required.js directly to the report.
 - Fixed an issue with weird characters ruining tabset and toc (characters like parentheses, braces, square brackets, #, ", ', etc)
 - Fixed an issue where empty jinja markdown cell would lead to an error when running pretty jupyter
 - Added ``code_tools`` to html output options to provide an option to enable / disable code tools. Default value is false.
-
-2.0.0-rc0
-------------
-
 - Implemented cell and notebook-level metadata.
 - Changed design, added the old one to pj-legacy template.
     - This required changing of the structure of jinja template a bit.
