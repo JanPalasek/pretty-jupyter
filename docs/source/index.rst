@@ -28,18 +28,31 @@ Contents
 
 .. toctree::
    :maxdepth: 2
-   :caption: User Documentation
+   :caption: Getting Started
 
-   getting_started
+   quickstart
    jinja_markdown
    tabset
    toc
    code_folding
-   styling
-   custom_template
-   metadata
    cli
    pdf
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Customizing Output
+
+   metadata
+   styling
+   custom_template
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Settings
+
+   cli_settings
+   metadata_settings
+   styling_settings
 
 .. toctree::
    :maxdepth: 2
@@ -50,6 +63,6 @@ Contents
 Credits
 ==========
 
+* **RMarkdown**: RMarkdown served as a great inspiration when making this package. Most of the functionality is inspired by it.
 * **nbconvert**: Pretty Jupyter uses nbconvert underhood. Its great extendability allowed this project to be created.
-* **RMarkdown**: RMarkdown served as a great inspiration when making this package.
 * **ReadTheDocs**: This awesome project that allows you to host your documentation for free, improving the repo quality worldwide.

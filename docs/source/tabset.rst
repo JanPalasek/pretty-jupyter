@@ -55,8 +55,8 @@ We can also provide an alternative look to the tabset. We can specify ``[//]: # 
 
 .. note::
     Internally, the tabset specifier adds each token (.tabset, .tabset-pills,...) as a class to the wrapping section.
-    We can use this to add custom classes to the section. We can also specify the section's ID, if we add a token
-    that starts with #. E.g. ``[//]: # (-.- #custom-id .custom-class)``.
+
+    This is a specific part of a general mechanism to add classes and id to the elements. It is described in :ref:`styling:Targeting Elements` section.
 
 **In general, the tabs are generated from the child sections of a section that has a tabset specifier under it**. We call such a section a tabset root.
 The tabset ends if we specify a section that has same or higher level as the tabset root.

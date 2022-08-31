@@ -53,7 +53,7 @@ On other platforms, you can get pandoc from `their website <https://pandoc.org/i
 
     To provide custom overrides for metadata, instead of ``--HtmlNbMetadataPreprocessor``, we need to use ``--NbMetadataPreprocessor``.
 
-The export can be customized by overriding values in pdf section of the metadata configuration. Check out :ref:`Metadata:Metadata Options` for more information.
+The export can be customized by overriding values in pdf section of the metadata configuration. Check out :ref:`Metadata:Notebook-Level Metadata` for more information.
 
 Examples
 ----------

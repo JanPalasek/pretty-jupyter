@@ -30,8 +30,9 @@
   <!-- notebook theme (bootstrap 3) -->
   {%- block theme_css -%}
   {% set html_metadata = resources["pj_metadata"]["output"]["html"] %}
+  {% set available_themes = resources.pj_available_themes %}
   {% set theme = html_metadata["theme"] %}
-  {%- if theme in ["paper", "slate", "journal"] -%}
+  {%- if theme in available_themes -%}
   <link href="{{ resources.include_url('static/themes/{}.css'.format(theme)) | e }}" rel="stylesheet" />
   {%- else -%}
   <link href="{{ theme | e }}" rel="stylesheet" />
@@ -63,8 +64,8 @@
     <script src="{{ resources.include_url('static/libs/plotly.min.js') }}" ></script>
   {% endif %}
   <!-- require -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" type="text/javascript"></script>
-  
+  <script src="{{ resources.include_url('static/libs/require.min.js') }}"></script>
+
   {# css files for notebooks: extend this to provide custom styles #}
   {% block notebook_css %}
     {{ resources.include_css("static/pj.css") }}

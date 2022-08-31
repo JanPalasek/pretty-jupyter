@@ -1,7 +1,7 @@
 import copy
 import os
 import warnings
-from pretty_jupyter.constants import DEPRECATED_METADATA_MSG_FORMAT, CONFIG_DIR, METADATA_ERROR_FORMAT
+from pretty_jupyter.constants import DEPRECATED_METADATA_MSG_FORMAT, CONFIG_DIR, AVAILABLE_THEMES, METADATA_ERROR_FORMAT
 from datetime import date, datetime
 from nbconvert.preprocessors import Preprocessor
 from traitlets import Dict
@@ -11,6 +11,7 @@ from cerberus import Validator
 import yaml
 import nbconvert
 from packaging import version
+import pkg_resources
 
 import jinja2
 
@@ -183,6 +184,10 @@ class NbMetadataPreprocessor(Preprocessor):
 
 
 class HtmlNbMetadataPreprocessor(NbMetadataPreprocessor):
+    def preprocess(self, nb, resources):
+        resources["pj_available_themes"] = AVAILABLE_THEMES
+        return super().preprocess(nb, resources)
+
     def _preprocess_code_cell(self, cell, resources, index):
         cell.metadata["pj_metadata"]["input_fold"] = get_code_folding_value(cell, resources)
 

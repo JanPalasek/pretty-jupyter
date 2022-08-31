@@ -11,7 +11,7 @@ Code Folding is a functionality that allows us to show or hide input of the code
 
     Figure: Code Folding
 
-By pressing Hide (Show resp.) the code disappears (appears resp.). We can also hide or show all codes thanks to the option in the right upper corner.
+By pressing Hide (Show resp.) the code disappears (appears resp.).
 
 Code Folding can be set up by specifying the following attributes in the metadata (see :ref:`Metadata:Notebook-level Metadata` page). The available settings are:
 
@@ -23,3 +23,5 @@ The settings can be also overriden on the cell-level with ``input_fold`` attribu
 
 * ``input_fold: hide``: The source code of the cell is hidden at the beginning.
 * ``input_fold: show``: The source code of the cell is shown at the beginning.
+
+We can also hide or show all codes using notebook-level metadata ``code_tools``.

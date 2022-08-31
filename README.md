@@ -24,11 +24,13 @@ Check out the **[demo](http://janpalasek.com/pretty-jupyter-example.html)** and 
 
 ## Main Features
 
-- :point_right: Visually appealing styles.
-- :point_right: Automatic Table of Contents generation.
-- :point_right: Using Python variables in Markdown.
-- :point_right: Tabsets: Tabs that hold section content inside them.
-- :point_right: Code Folding: Show/Hide code to filter out unnecessary content.
+- :point_right: **Visually appealing styles**.
+- :point_right: **Table of Contents** can be automatically generated.
+- :point_right: Using **Python variables in Markdown**.
+- :point_right: **Tabsets** for hiding section content behind clickable tabs.
+- :point_right: **Code Folding**: Show/Hide code to filter out unnecessary content.
+- :point_right: **Themes**: Selection from a wide variaty of available themes.
+- :point_right: **Wide range of configuration options** with sensible defaults. 
 
 All these features are integrated directly in the output html page. Therefore there is no need for an interpreter running in the backend.
 
@@ -44,12 +46,12 @@ python -m pip install pretty-jupyter
 jupyter nbconvert --to html --template pj ${PATH_TO_IPYNB}
 ```
 
-## Documentation
+## Resources
 
-- [Documentation](https://pretty-jupyter.readthedocs.io/)
-- [Examples](https://github.com/JanPalasek/pretty-jupyter-examples)
+- **[Documentation](https://pretty-jupyter.readthedocs.io/)**
+- **[Examples](https://github.com/JanPalasek/pretty-jupyter-examples)**
 
 ## Credits
 
-* **nbconvert**: Pretty Jupyter uses nbconvert underhood. Its great extendability allowed this project to be created.
 * **RMarkdown**: RMarkdown served as a great inspiration when making this package.
+* **nbconvert**: Pretty Jupyter uses nbconvert underhood. Its great extendability allowed this project to be created.

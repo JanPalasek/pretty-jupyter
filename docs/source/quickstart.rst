@@ -1,4 +1,4 @@
-Getting Started
+Quick Start
 =========================
 
 Installation
@@ -103,7 +103,5 @@ It generates the output HTML file to the same directory as the input file.
 Next Steps
 ---------------
 
-For a more in-depth tutorials, check out our `example repository <https://github.com/JanPalasek/pretty-jupyter-examples>`_. It contains a lot of use-cases and 
-demonstrations, how to use Pretty Jupyter.
-
-Also, check out the other sections of the User Documentation.
+Check out other pages from Getting Started section in this documentation.
+Also check out our `example repository <https://github.com/JanPalasek/pretty-jupyter-examples>`_. It contains a lot of use-cases and demonstrations, how to use Pretty Jupyter.
