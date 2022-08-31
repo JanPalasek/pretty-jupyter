@@ -47,7 +47,7 @@ def matplotlib_fig_to_html(fig, fmt="png", autoclose: bool = True, bbox_inches: 
     """
     return convert_mpl(fig, fmt, _HTML_IMG_FORMAT, _HTML_SUPPORTED_FMT_MAP, autoclose, bbox_inches)
 
-def convert_mpl(fig, fmt, output_fmt_string, supported_fmt_map, autoclose: bool = True, bbox_inches: str = "tight", ):
+def convert_mpl(fig, fmt, output_fmt_string, supported_fmt_map, autoclose: bool = True, bbox_inches: str = "tight"):
     """
     Converts matplotlib figure into embedded inline string.
 
