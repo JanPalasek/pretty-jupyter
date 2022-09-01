@@ -30,7 +30,8 @@ Check out the **[demo](http://janpalasek.com/pretty-jupyter-example.html)** and 
 - :point_right: **Tabsets** for hiding section content behind clickable tabs.
 - :point_right: **Code Folding**: Show/Hide code to filter out unnecessary content.
 - :point_right: **Themes**: Selection from a wide variaty of available themes.
-- :point_right: **Wide range of configuration options** with sensible defaults. 
+- :point_right: **Wide range of configuration options** with sensible defaults.
+- :point_right: **Unobtrusive syntax** that works well in notebook environments.
 
 All these features are integrated directly in the output html page. Therefore there is no need for an interpreter running in the backend.
 
