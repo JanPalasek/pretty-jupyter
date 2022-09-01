@@ -31,6 +31,7 @@ Contents
    :caption: Getting Started
 
    quickstart
+   page_header
    jinja_markdown
    tabset
    toc

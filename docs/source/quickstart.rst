@@ -22,15 +22,15 @@ To start, we can create a new notebook it "my-first-notebook.ipynb". To simplify
 
     pretty-jupyter quickstart "my-first-notebook.ipynb"
 
-The initial notebook contains two cells: YAML header and a code cell. YAML header specifies notebook's metadata. The code cell loads Pretty Jupyter magics into the notebook and allows us to use its features.
+The initial notebook contains two cells: raw cell and a code cell. Raw cell contains YAML header that specifies notebook's metadata. The code cell loads Pretty Jupyter magics into the notebook and allows us to use its features.
 
-We can edit the values in the YAML header and provide e.g. a custom title for the page.
+We can edit the values of the YAML header and provide e.g. a custom title for the page.
 
 .. code-block:: yaml
 
     title: Our Notebook Title
     author: Developer
-    date: "Generated: {{ datetime.now().strftime('%Y-%m-%d %H:%M:%S') }}"
+    date: "{{ datetime.now().strftime('%Y-%m-%d %H:%M:%S') }}"
 
 .. code-block:: python
 
