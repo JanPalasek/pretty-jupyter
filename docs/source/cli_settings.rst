@@ -1,5 +1,5 @@
-Command-Line Interface
-================================
+CLI Options
+===================================
 
 This page provides a list of important settings that can be used from command-line to alter the appearance or behavior of the output.
 

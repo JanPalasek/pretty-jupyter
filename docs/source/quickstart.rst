@@ -16,15 +16,13 @@ Creating Our First Pretty Notebook
 
 Using Pretty Jupyter is pretty much identical to using normal Jupyter. We will work through a simple example to demonstrate this.
 
-To start, we can create a new notebook it "my-first-notebook.ipynb". To simplify the start, Pretty Jupyter provides a custom command for this purpose.
+To start, we can create a new notebook in the current directory and name it ``my-first-notebook.ipynb``. To simplify the start, Pretty Jupyter provides a custom command for that.
 
 .. code-block:: bash
 
-    pretty-jupyter quickstart "my-first-notebook.ipynb"
+    pretty-jupyter quickstart my-first-notebook.ipynb
 
-The initial notebook contains two cells: raw cell and a code cell. Raw cell contains YAML header that specifies notebook's metadata. The code cell loads Pretty Jupyter magics into the notebook and allows us to use its features.
-
-We can edit the values of the YAML header and provide e.g. a custom title for the page.
+The initial notebook consists of two cells: raw cell and a code cell. Raw cell contains a YAML header that specifies notebook's metadata. The code cell loads Pretty Jupyter magics into the notebook and allows us to use its features (such as :doc:`jinja_markdown`).
 
 .. code-block:: yaml
 
@@ -37,9 +35,9 @@ We can edit the values of the YAML header and provide e.g. a custom title for th
     # load pretty jupyter's magics
     %load_ext pretty_jupyter
 
-We can edit the values in the YAML header and provide e.g. our custom title for the page.
+We can edit the values of the YAML header and for example provide a custom title for the page.
 
-Next we can fill in the next Jupyter's code cells as following.
+Now we can create new cells in our notebook. For example the following two cells import pandas package and print its version together with its accompanying text. This is achieved by :doc:`jinja_markdown` functionality.
 
 .. code-block:: python
 
@@ -57,6 +55,8 @@ Next we can fill in the next Jupyter's code cells as following.
     for a more dynamic report.
 
     We can for example print pandas version such as this: {{ pd.__version__ }}.
+
+In the next two cells, we use :doc:`tabset` to hide our section content behind clickable tabs.
 
 .. code-block:: python
 
@@ -95,13 +95,11 @@ Now we can use Pretty Jupyter to generate the result HTML report. To do this, us
 
     jupyter nbconvert --to html --template pj /path/to/ipynb/file
 
-.. seealso::
-    Pretty Jupyter uses nbconvert's underhood including its command line interface. Check out `its documentation <https://nbconvert.readthedocs.io/>`_.
-
 It generates the output HTML file to the same directory as the input file.
 
 Next Steps
 ---------------
 
-Check out other pages from Getting Started section in this documentation.
-Also check out our `example repository <https://github.com/JanPalasek/pretty-jupyter-examples>`_. It contains a lot of use-cases and demonstrations, how to use Pretty Jupyter.
+Check out other pages from Basics category in this documentation. They describe the main functionality of Pretty Jupyter.
+
+Also, check out practical examples in our `example repository <https://github.com/JanPalasek/pretty-jupyter-examples>`_. You can view every notebook's code and also its rendered HTML output with a link located in the directory's README.

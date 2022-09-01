@@ -1,5 +1,5 @@
-Command-Line Interface
-==========================
+Command-Line Interface (CLI)
+=============================
 
 This page describes the basics of using Pretty Jupyter from command-line.
 

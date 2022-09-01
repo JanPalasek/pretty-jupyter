@@ -76,9 +76,9 @@ This functionality is not limited for tables. It can be applied to **any** markd
 
 .. note::
 
-    Markdown automatically creates paragraph elements from the text separated by newlines.
+    Markdown automatically creates paragraph elements from the text separated by newlines. Therefore if styling a paragraph, we need to have an empty-line between the text and the token specifier.
 
-.. important::
+.. note::
 
     **Placing token specifier under the header will modify the section, not the header.** This behavior is used to specify tabsets or headers that are ignored by Table of Contents.
 

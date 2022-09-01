@@ -12,13 +12,13 @@ Pretty Jupyter automatically generates Table of Contents for the page. The table
 
 
 Each header from the notebook is automatically added to the Table of Contents.
-We can prevent a header from being added to the Table of Contents by adding class ``toc-ignore``.
+We can prevent a header from being added to the Table of Contents by adding classes ``unlisted`` and ``unnumbered``.
 We can do it like this in Markdown:
 
 .. code-block:: markdown
     
     ## 
-    [//]: # (-.- .toc-ignore)
+    [//]: # (-.- .unlisted .unnumbered)
 
 .. note::
     In the code-block above, there is a space after the last #. If we didn't add it, the name wouldn't be empty.

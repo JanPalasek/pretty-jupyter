@@ -77,13 +77,13 @@ We can use this behavior to our advantage and use an empty header element just t
     Same goes for the second section.
 
     ## 
-    [//]: # (-.- .toc-ignore)
+    [//]: # (-.- .unlisted .unnumbered)
 
     Text that will not appear in the tabs but below them instead.
 
 .. note::
 
-    The header with .toc-ignore must have an empty space as the last character on that line. Otherwise
+    The header with .unlisted and .unnumbered must have an empty space as the last character on that line. Otherwise
     Markdown to HTML translator will interpret the last # as the header text.
 
 Examples

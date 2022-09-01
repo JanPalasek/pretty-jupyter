@@ -1,5 +1,5 @@
-Metadata
-============
+Metadata Options
+====================
 
 This page is a definite list of all notebook-level and cell-level metadata options with their description.
 

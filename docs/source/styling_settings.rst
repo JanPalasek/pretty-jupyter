@@ -1,10 +1,10 @@
-Styling
-============
+Styling Options
+==================
 
 This page contains list of styling settings.
 
 Header (Section)
------------------------
+-------------------------------
 
 This section specifies classes that can be used to modify the header (its section respectively). Check out :ref:`styling:Targeting Elements` for more information about this functionality.
 
@@ -15,9 +15,8 @@ This section specifies classes that can be used to modify the header (its sectio
 - ``.tabset``: Transforms the section from linear structure into a tabset.
 - ``.tabset-pills``: Changes the visual design of the tabs.
 - ``.tabset-fade``: Adds transition animation when switching the tabs.
-- ``.toc-ignore``: Is ignored by Table of Contents. Note that it is not ignored when numbering sections.
-- ``.unlisted``: The section is not listed in the Table of Contents.
 - ``.unnumbered``: If section numbering is turned on, this section is not numbered.
+- ``.unlisted``: If used together with ``.unnumbered``, then hte section is omitted from the table of contents.
 
 Others
 -----------
