@@ -25,3 +25,8 @@ Changelog
 - Changed tokens output representation: Solution is to re-execute the notebook with the new version of Pretty Jupyter.
 - Implemented notebook-level metadata: Previous title, theme etc. needs to be moved to the new places. Check out :doc:`metadata` page.
 - Change of html template structure: This is problem only if you have a custom template. In such a case, check out :doc:`custom_template`. Changing your inheriting template should require minimum changes.
+
+2.0.1
+~~~~~~~
+- Fixed ``pretty-jupyter quickstart``
+- Improved documentation
