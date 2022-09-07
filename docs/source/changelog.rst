@@ -30,3 +30,7 @@ Changelog
 ~~~~~~~
 - Fixed ``pretty-jupyter quickstart``
 - Improved documentation
+
+2.0.2
+~~~~~~~
+- Improved styles for small screens.
