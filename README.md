@@ -44,7 +44,7 @@ python -m pip install pretty-jupyter
 ## Usage
 
 ```sh
-jupyter nbconvert --to html --template pj ${PATH_TO_IPYNB}
+jupyter nbconvert --to html --template pj /path/to/ipynb/file
 ```
 
 ## Resources
