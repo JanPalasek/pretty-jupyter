@@ -85,7 +85,7 @@ frame=single
 
 \section{Notebook-Level Metadata}
 
-\textbf{YAML header method} First cell of type \textbf{raw}.
+First cell of type \textbf{raw}.
 \begin{lstlisting}
 title: My title
 author: My name
@@ -129,22 +129,32 @@ a = 10
 b = 5
 \end{lstlisting}
 
+
 \begin{lstlisting}
 %%jmd
 
-We can combine variables like
+We can use variables like
 this: {{ (a / b) | round(2) }}.
 \end{lstlisting}
 
+\textbf{Matplotlib example}
 \begin{lstlisting}
-We can also use advanced Jinja
-syntax like this:
+import matplotlib.pyplot as plt
+from pretty_jupyter.helpers \
+    import matplotlib_fig_to_html
+\end{lstlisting}
 
-{% if a > 20 %}
-{{ a }}
-{% else %}
-{{ b }}
-{% endif %}
+\begin{lstlisting}
+%%jmd
+
+<details>
+<summary>Hideable matplotlib fig</summary>
+
+{% set ax = plt.plot([0, 1], [1, 1])[0] %}
+{% set _ = ax.set(title="Example figure") %}
+{{ matplotlib_fig_to_html(ax.figure) }}
+
+</details>
 \end{lstlisting}
 
 \section{Table of Contents}
@@ -167,12 +177,14 @@ This section will not appear in TOC.
 \begin{lstlisting}
 %%jmd
 
-# Tabset Root
+# Tabset
 [//]: # (-.- .tabset .tabset-pills)
 
 ## Tab 1
 
 ## Tab 2
+
+# Not A Tabset
 \end{lstlisting}
 
 \section{Code Folding}
@@ -189,11 +201,11 @@ a = 10
 |------|------|
 | val1 | val2 |
 
-[//]: # (-.- #table-id)
+[//]: # (-.- #table-id .bg-danger)
 
 <style>
     #table-id {
-        background-color: red;
+        font-weight: bold;
     }
 </style>
 \end{lstlisting}
@@ -216,6 +228,13 @@ pretty-jupyter quickstart /path/to/ipynb
 jupyter nbconvert --to html --template pj
 /path/to/ipynb/file
 \end{lstlisting}
+
+\textbf{Options}
+\begin{itemize}
+    \item \texttt{--HtmlNbMetadataPreprocessor.pj\_metadata}
+    \item \texttt{--execute}
+    \item \texttt{--embed-images}
+\end{itemize}
 
 
 
