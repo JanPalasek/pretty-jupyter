@@ -51,6 +51,7 @@ jupyter nbconvert --to html --template pj /path/to/ipynb/file
 
 - **[Documentation](https://pretty-jupyter.readthedocs.io/)**
 - **[Examples](https://github.com/JanPalasek/pretty-jupyter-examples)**
+- **[Cheat Sheet](docs/cheatsheet/cheatsheet.pdf)**
 
 ## Credits
 
