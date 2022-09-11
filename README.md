@@ -38,7 +38,7 @@ All these features are integrated directly in the output html page. Therefore th
 ## Installation
 
 ```sh
-python -m pip install pretty-jupyter
+pip install pretty-jupyter
 ```
 
 ## Usage
