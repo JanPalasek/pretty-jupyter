@@ -48,7 +48,7 @@ Now we can create new cells in our notebook. For example the following two cells
 
     %%jmd
 
-    ## First Section
+    # First Section
 
     This is our first section. We use so called **Jinja Markdown** here.
     It allows us to combine Markdown with Python variables and makes
@@ -69,17 +69,17 @@ In the next two cells, we use :doc:`tabset` to hide our section content behind c
 
     %%jmd
 
-    ## Tabset Root
+    # Tabset Root
     [//]: # (-.- .tabset .tabset-pills)
 
     The content of this section will be shown as tabs. This will help us avoid potential scrolling and improve the HTML UI.
 
-    ### First Tab
+    ## First Tab
     In the first tab, we can show some graphs or tables. We can output the table like this:
 
     {{ data.head().to_html() }}
 
-    ### Second Tab
+    ## Second Tab
     In the second tab, we can do the same. Btw maths also works in the tabs.
 
     ## Not a Tabset
