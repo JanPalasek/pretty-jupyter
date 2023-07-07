@@ -237,7 +237,7 @@ window.numberSections = function () {
   })
 }
 
-window.initializeTOC = function (tocDepth, tocCollapsed, tocSmoothScroll) {
+window.initializeTOC = function (tocDepth, tocCollapsed, tocSmoothScroll, tocExtendPage) {
   // consistency with pandoc
   $('.unlisted.unnumbered').addClass('toc-ignore')
 
@@ -277,7 +277,7 @@ window.initializeTOC = function (tocDepth, tocCollapsed, tocSmoothScroll) {
   var toc = $("#TOC").tocify(options).data("toc-tocify");
 
   if (!tocCollapsed) {
-    toc.setOptions({ "showAndHideOnScroll": false, "showAndHide": false });
+    toc.setOptions({ "showAndHideOnScroll": false, "showAndHide": false, "extendPage": tocExtendPage });
     $(".tocify-subheader").show();
   }
 }

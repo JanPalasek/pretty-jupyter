@@ -36,6 +36,8 @@ output:
           type: boolean
         toc_smooth_scroll:
           type: boolean
+        toc_extend_page:
+          type: boolean
         number_sections:
           type: boolean
         code_folding:

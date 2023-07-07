@@ -11,6 +11,7 @@ output:
     toc_depth: 3
     toc_collapsed: true
     toc_smooth_scroll: true
+    toc_extend_page: true
     number_sections: false
     code_folding: hide
     code_tools: false

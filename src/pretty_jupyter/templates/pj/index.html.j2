@@ -185,7 +185,8 @@
         let tocDepth = {{ html_metadata["toc_depth"] | tojson }};
         let tocCollapsed = {{ html_metadata['toc_collapsed'] | tojson }};
         let tocSmoothScroll = {{ html_metadata['toc_smooth_scroll'] | tojson }};
-        window.initializeTOC(tocDepth=tocDepth, tocCollapsed=tocCollapsed, tocSmoothScroll=tocSmoothScroll);
+        let tocExtendPage = {{ html_metadata['toc_extend_page'] | tojson }};
+        window.initializeTOC(tocDepth=tocDepth, tocCollapsed=tocCollapsed, tocSmoothScroll=tocSmoothScroll, tocExtendPage=tocExtendPage);
         {% endif %}
 
         {% if html_metadata["code_folding"] in ["show", "hide"] and resources.global_content_filter.include_input %}

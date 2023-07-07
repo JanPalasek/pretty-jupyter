@@ -76,6 +76,12 @@ Notebook-Level
         - | If true, then scrolling is smooth
           | on clicking on TOC section.
     *
+        - output.html.toc_extend_page
+        - boolean, default: true
+        - | If true, then page is slightly
+          | extended to make TOC work
+          | better.
+    *
         - output.html.number_sections
         - boolean, default: false
         - | If true, then automatic section
