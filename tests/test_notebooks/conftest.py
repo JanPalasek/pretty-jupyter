@@ -26,7 +26,7 @@ def driver():
     for option in options:
         chrome_options.add_argument(option)
 
-    driver = selenium.webdriver.Chrome(executable_path=chrome_service.path, options=chrome_options)
+    driver = selenium.webdriver.Chrome(service=chrome_service, options=chrome_options)
 
     yield driver
 

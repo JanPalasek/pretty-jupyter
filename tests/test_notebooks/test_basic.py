@@ -61,10 +61,10 @@ def test_basic(input_path, out_path, page_url, driver):
     # check that the maths rendered properly
     # math needs time to render
     time.sleep(2)
-    assert len(tab_contents[1].find_elements(By.XPATH, "span[contains(@class, 'MJXc-display')]")) > 0, "Math didn't render."
+    assert len(tab_contents[1].find_elements(By.XPATH, ".//span[contains(@class, 'MJXc-display')]")) > 0, "Math didn't render."
 
     # check that the maths rendered properly
-    math_text = tab_contents[1].find_element(By.XPATH, "script[contains(@type, 'math/tex')]").get_attribute("innerHTML")
+    math_text = tab_contents[1].find_elements(By.XPATH, ".//script[contains(@type, 'math/tex')]")[1].get_attribute("innerHTML")
     assert math_text == r"a \cdot a^2 = \frac{a^5}{a^2} = a^3 = 125"
     
     ################
