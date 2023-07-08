@@ -1,0 +1,29 @@
+repos:
+  - repo: local
+    hooks:
+      - id: isort
+        name: isort
+        entry: isort
+        language: system
+        args: [--settings-path, pyproject.toml]
+        require_serial: true
+        files: ^(src/pretty_jupyter|tests)
+        types: [python]
+ 
+      - id: black
+        name: black
+        entry: black
+        language: system
+        args: [--config, pyproject.toml]
+        require_serial: true
+        files: ^(src/pretty_jupyter|tests)
+        types: [python]
+
+      - id: autoflake
+        name: autoflake
+        entry: autoflake
+        language: system
+        files: ^(src/pretty_jupyter|tests)
+        args: [--in-place]
+        require_serial: true
+        types: [python]
