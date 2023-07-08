@@ -6,7 +6,9 @@ ipynb look more pretty.
 
 
 import re
+
 from nbconvert.preprocessors import Preprocessor
+
 from pretty_jupyter.constants import HTML_TOKEN_REGEX, TOKEN_SEP
 from pretty_jupyter.tokens import convert_markdown_tokens_to_html
 
@@ -33,6 +35,7 @@ class TokenPreprocessor(Preprocessor):
     <span class='pj-token token1 token2' style='display: none;'></span>
     ```
     """
+
     def preprocess(self, nb, resources):
         resources["token_sep"] = TOKEN_SEP
 
@@ -50,6 +53,7 @@ class TokenCleaningPreprocessor(Preprocessor):
     """
 
     formats = ["text/markdown", "text/html"]
+
     def preprocess_cell(self, cell, resources, index):
         if cell.cell_type == "code":
             for i, output in enumerate(cell.outputs):

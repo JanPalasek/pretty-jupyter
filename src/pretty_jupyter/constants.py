@@ -62,7 +62,7 @@ AVAILABLE_THEMES = [
     "spacelab",
     "superhero",
     "united",
-    "yeti"
+    "yeti",
 ]
 """
 List of all available local themes that can be specified in the `theme` html metadata.

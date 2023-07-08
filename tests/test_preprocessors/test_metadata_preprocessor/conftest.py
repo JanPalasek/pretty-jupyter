@@ -1,7 +1,9 @@
 from pathlib import Path
 from unittest.mock import MagicMock, PropertyMock
+
 import pytest
 import yaml
+
 
 @pytest.fixture
 def fixture_dir():
@@ -18,13 +20,12 @@ def raw_cell(fixture_dir):
 
     return cell
 
+
 @pytest.fixture
 def jmd_cell(fixture_dir):
     cell = MagicMock(name="jmd_cell")
     cell.metadata = {}
-    cell.metadata["pj_metadata"] = {
-        "input_fold": "disable"
-    }
+    cell.metadata["pj_metadata"] = {"input_fold": "disable"}
     with open(Path(fixture_dir) / "jmd_cell.md") as file:
         type(cell).source = PropertyMock(return_value=file.read())
     type(cell).cell_type = PropertyMock(return_value="code")
@@ -33,12 +34,11 @@ def jmd_cell(fixture_dir):
     output = MagicMock(name="output")
     output.metadata = {}
     type(output).output_type = PropertyMock(return_value="execute_result")
-    type(output).data = {
-        "text/markdown": []
-    }
+    type(output).data = {"text/markdown": []}
     type(cell).outputs = PropertyMock(return_value=[output])
 
     return cell
+
 
 @pytest.fixture
 def code_cell(fixture_dir):
@@ -85,9 +85,11 @@ def code_cell(fixture_dir):
 
     return cell
 
+
 @pytest.fixture
 def nb_defaults_path(fixture_dir):
     return Path(fixture_dir) / "default_nb.yaml"
+
 
 @pytest.fixture
 def nb_defaults(nb_defaults_path):
