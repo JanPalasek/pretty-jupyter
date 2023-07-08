@@ -28,7 +28,7 @@ switch ($command) {
         Activate-Venv -venv $venv
         python -m pip install -r requirements-win.txt
         python -m pip install -e .
-        # python -m pre_commit install
+        python -m pre_commit install
         break
     }
     "compile" {
