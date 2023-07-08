@@ -268,7 +268,8 @@ window.initializeTOC = function (tocDepth, tocCollapsed, tocSmoothScroll, tocExt
       return text.replace(/[.\\/?&!#<>"']/g, '').replace(/\s/g, '_');
     },
     ignoreSelector: ".toc-ignore",
-    scrollTo: 0
+    scrollTo: 0,
+    extendPage: tocExtendPage
   };
 
   options.smoothScroll = tocSmoothScroll;
@@ -277,7 +278,7 @@ window.initializeTOC = function (tocDepth, tocCollapsed, tocSmoothScroll, tocExt
   var toc = $("#TOC").tocify(options).data("toc-tocify");
 
   if (!tocCollapsed) {
-    toc.setOptions({ "showAndHideOnScroll": false, "showAndHide": false, "extendPage": tocExtendPage });
+    toc.setOptions({ "showAndHideOnScroll": false, "showAndHide": false });
     $(".tocify-subheader").show();
   }
 }
