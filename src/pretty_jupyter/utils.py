@@ -16,6 +16,7 @@ def merge_dict(main_dict: dict, other_dict: dict):
 
     return other_dict
 
+
 def _update_dict(dict_, override_dict):
     for key, val in override_dict.items():
         if isinstance(val, dict):

@@ -1,22 +1,26 @@
 import copy
-import os
 import warnings
-from pretty_jupyter.constants import DEPRECATED_METADATA_MSG_FORMAT, CONFIG_DIR, AVAILABLE_THEMES, METADATA_ERROR_FORMAT
 from datetime import date, datetime
-from nbconvert.preprocessors import Preprocessor
-from traitlets import Dict
-from pretty_jupyter.utils import merge_dict
 from pathlib import Path
-from cerberus import Validator
-import yaml
-import nbconvert
-from packaging import version
-import pkg_resources
 
 import jinja2
+import nbconvert
+import pkg_resources
+import yaml
+from cerberus import Validator
+from nbconvert.preprocessors import Preprocessor
+from packaging import version
+from traitlets import Dict
 
-from pretty_jupyter.tokens import read_code_metadata_token, read_markdown_metadata_token
+from pretty_jupyter.constants import (
+    AVAILABLE_THEMES,
+    CONFIG_DIR,
+    DEPRECATED_METADATA_MSG_FORMAT,
+    METADATA_ERROR_FORMAT,
+)
 from pretty_jupyter.magics import is_jinja_cell
+from pretty_jupyter.tokens import read_code_metadata_token, read_markdown_metadata_token
+from pretty_jupyter.utils import merge_dict
 
 _DEPRECATED_ATTRIBUTES = ["title", "theme", "toc", "code_folding"]
 _DEPRECATED_ATTRIBUTES_VERSION = "2.0.0"
@@ -46,7 +50,7 @@ class NbMetadataPreprocessor(Preprocessor):
 
         super().__init__(**kw)
 
-        self.env = jinja2.Environment(loader=jinja2.FileSystemLoader('.'))
+        self.env = jinja2.Environment(loader=jinja2.FileSystemLoader("."))
 
         with open(self.nb_spec_path) as file:
             nb_spec = yaml.safe_load(file.read())
@@ -64,7 +68,12 @@ class NbMetadataPreprocessor(Preprocessor):
         # deprecation warnings to help users fix their error
         deprecated_attrs = [a for a in _DEPRECATED_ATTRIBUTES if a in nb.metadata]
         if len(deprecated_attrs) > 0:
-            warnings.warn(DEPRECATED_METADATA_MSG_FORMAT.format(attributes=", ".join(deprecated_attrs), version=_DEPRECATED_ATTRIBUTES_VERSION), category=DeprecationWarning)
+            warnings.warn(
+                DEPRECATED_METADATA_MSG_FORMAT.format(
+                    attributes=", ".join(deprecated_attrs), version=_DEPRECATED_ATTRIBUTES_VERSION
+                ),
+                category=DeprecationWarning,
+            )
 
         # temporarily store nb metadata to resources to be accessible in cell
         resources["__pj_metadata"] = nb.metadata.get("pj_metadata", {})
@@ -87,7 +96,7 @@ class NbMetadataPreprocessor(Preprocessor):
             cell, resources = self._preprocess_markdown_cell(cell, resources, index)
         if cell.cell_type == "code":
             cell, resources = self._preprocess_code_cell(cell, resources, index)
-        
+
         return cell, resources
 
     def _synchronize_notebook_metadata(self, cell, resources):
@@ -97,12 +106,17 @@ class NbMetadataPreprocessor(Preprocessor):
             try:
                 src_metadata = yaml.safe_load(cell.source)
             except Exception as exc:
-                raise ValueError("An error happend when trying to parse first cell of the notebook with type raw.", exc)
+                raise ValueError(
+                    "An error happend when trying to parse first cell of the notebook with type raw.",
+                    exc,
+                )
 
             remove_cell_input(cell)
 
         if len(nb_metadata) > 0 and len(src_metadata) > 0:
-            warnings.warn("Notebook-level metadata are defined both in the source and in the notebook's metadata. Please remove one of them.")
+            warnings.warn(
+                "Notebook-level metadata are defined both in the source and in the notebook's metadata. Please remove one of them."
+            )
 
         metadata = src_metadata if len(src_metadata) > 0 else nb_metadata
 
@@ -121,8 +135,12 @@ class NbMetadataPreprocessor(Preprocessor):
 
         # run metadata through jinja templating
         metadata_copy = copy.deepcopy(metadata)
-        for m_key, m_val in filter(lambda x: x[1] is not None and isinstance(x[1], str), metadata_copy.items()):
-            metadata[m_key] = self.env.from_string(m_val).render(datetime=datetime, date=date, pj_metadata=metadata_copy)
+        for m_key, m_val in filter(
+            lambda x: x[1] is not None and isinstance(x[1], str), metadata_copy.items()
+        ):
+            metadata[m_key] = self.env.from_string(m_val).render(
+                datetime=datetime, date=date, pj_metadata=metadata_copy
+            )
 
         resources["pj_metadata"] = metadata
 
@@ -179,7 +197,7 @@ class NbMetadataPreprocessor(Preprocessor):
         for i, output in reversed(list(enumerate(cell.outputs))):
             if not is_output_enabled(cell, resources, output):
                 cell.outputs.pop(i)
-        
+
         return cell, resources
 
 
@@ -208,8 +226,11 @@ def is_output_enabled(cell, resources, output):
 
     def is_stdout(output):
         return output.output_type == "stream" and output.name == "stdout"
+
     def is_error(output):
-        return output.output_type == "error" or (output.output_type == "stream" and output.name == "stderr")
+        return output.output_type == "error" or (
+            output.output_type == "stream" and output.name == "stderr"
+        )
 
     # PRIORITY
     # cell > notebook-level, stdout > output (similarly stderr)
@@ -234,6 +255,7 @@ def is_output_enabled(cell, resources, output):
         is_enabled = cell_metadata["output_error"]
 
     return is_enabled
+
 
 def is_input_enabled(cell, resources):
     cell_metadata = cell.metadata["pj_metadata"]

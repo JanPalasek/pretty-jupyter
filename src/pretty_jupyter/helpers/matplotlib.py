@@ -1,19 +1,10 @@
-from io import BytesIO
 import base64
+from io import BytesIO
 
-_MARKDOWN_SUPPORTED_FMT_MAP = {
-    "png": "png",
-    "jpeg": "jpeg",
-    "jpg": "jpeg"
-}
+_MARKDOWN_SUPPORTED_FMT_MAP = {"png": "png", "jpeg": "jpeg", "jpg": "jpeg"}
 _MARKDOWN_IMG_FORMAT = r"![image](data:image/{format};base64,{encoded})"
 
-_HTML_SUPPORTED_FMT_MAP = {
-    "svg": "svg+xml", 
-    "png": "png",
-    "jpeg": "jpeg",
-    "jpg": "jpeg"
-}
+_HTML_SUPPORTED_FMT_MAP = {"svg": "svg+xml", "png": "png", "jpeg": "jpeg", "jpg": "jpeg"}
 _HTML_IMG_FORMAT = r"<img src='data:image/{format};base64,{encoded}' />"
 
 
@@ -30,7 +21,15 @@ def matplotlib_fig_to_markdown(fig, fmt="png", autoclose: bool = True, bbox_inch
     Returns:
         str: Markdown string embedded representation of the figure.
     """
-    return convert_mpl(fig, fmt=fmt, output_fmt_string=_MARKDOWN_IMG_FORMAT, supported_fmt_map=_MARKDOWN_SUPPORTED_FMT_MAP, autoclose=autoclose, bbox_inches=bbox_inches)
+    return convert_mpl(
+        fig,
+        fmt=fmt,
+        output_fmt_string=_MARKDOWN_IMG_FORMAT,
+        supported_fmt_map=_MARKDOWN_SUPPORTED_FMT_MAP,
+        autoclose=autoclose,
+        bbox_inches=bbox_inches,
+    )
+
 
 def matplotlib_fig_to_html(fig, fmt="png", autoclose: bool = True, bbox_inches: str = "tight"):
     """
@@ -47,7 +46,15 @@ def matplotlib_fig_to_html(fig, fmt="png", autoclose: bool = True, bbox_inches: 
     """
     return convert_mpl(fig, fmt, _HTML_IMG_FORMAT, _HTML_SUPPORTED_FMT_MAP, autoclose, bbox_inches)
 
-def convert_mpl(fig, fmt, output_fmt_string, supported_fmt_map, autoclose: bool = True, bbox_inches: str = "tight"):
+
+def convert_mpl(
+    fig,
+    fmt,
+    output_fmt_string,
+    supported_fmt_map,
+    autoclose: bool = True,
+    bbox_inches: str = "tight",
+):
     """
     Converts matplotlib figure into embedded inline string.
 
@@ -68,9 +75,12 @@ def convert_mpl(fig, fmt, output_fmt_string, supported_fmt_map, autoclose: bool 
     tmpfile = BytesIO()
     fig.savefig(tmpfile, format=fmt, bbox_inches=bbox_inches)
 
-    markdown = output_fmt_string.format(format=supported_fmt_map[fmt], encoded=base64.b64encode(tmpfile.getvalue()).decode('utf-8'))
+    markdown = output_fmt_string.format(
+        format=supported_fmt_map[fmt], encoded=base64.b64encode(tmpfile.getvalue()).decode("utf-8")
+    )
 
     if autoclose:
         import matplotlib.pyplot as plt
+
         plt.close()
     return markdown

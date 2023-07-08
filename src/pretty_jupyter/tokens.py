@@ -1,6 +1,14 @@
-import yaml
 import re
-from pretty_jupyter.constants import CODE_METADATA_TOKEN_REGEX, MARKDOWN_METADATA_TOKEN_REGEX, MARKDOWN_TOKEN_REGEX, HTML_TOKEN_FORMAT, TOKEN_SEP
+
+import yaml
+
+from pretty_jupyter.constants import (
+    CODE_METADATA_TOKEN_REGEX,
+    HTML_TOKEN_FORMAT,
+    MARKDOWN_METADATA_TOKEN_REGEX,
+    MARKDOWN_TOKEN_REGEX,
+    TOKEN_SEP,
+)
 
 
 def convert_markdown_tokens_to_html(input_str: str) -> str:
@@ -30,13 +38,14 @@ def convert_markdown_tokens_to_html(input_str: str) -> str:
             html = HTML_TOKEN_FORMAT.format(tokens=token_str)
 
             # replace the md tokens by html tokens
-            markdown = line[result.span()[0]:result.span()[1]]
+            markdown = line[result.span()[0] : result.span()[1]]
             line = line.replace(markdown, html)
         all_lines.append(line)
 
     # output is still in md, but token
     output = "\n".join(all_lines)
     return output
+
 
 def read_code_metadata_token(input_line: str) -> dict:
     # parse token
@@ -49,6 +58,7 @@ def read_code_metadata_token(input_line: str) -> dict:
         return None
 
     return yaml.safe_load(result.groups()[0])
+
 
 def read_markdown_metadata_token(input_line: str):
     result = re.search(MARKDOWN_METADATA_TOKEN_REGEX, input_line)

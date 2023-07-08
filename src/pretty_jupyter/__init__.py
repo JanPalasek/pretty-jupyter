@@ -1,7 +1,13 @@
 from pretty_jupyter.magics import JinjaMagics
 
 # these imports are here for conf.json to work
-from pretty_jupyter.preprocessors import TokenPreprocessor, TokenCleaningPreprocessor, NbMetadataPreprocessor, HtmlNbMetadataPreprocessor
+from pretty_jupyter.preprocessors import (
+    HtmlNbMetadataPreprocessor,
+    NbMetadataPreprocessor,
+    TokenCleaningPreprocessor,
+    TokenPreprocessor,
+)
+
 
 def load_ipython_extension(ipython):
     # The `ipython` argument is the currently active `InteractiveShell`
