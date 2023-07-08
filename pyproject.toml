@@ -1,3 +1,91 @@
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
+requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "pretty-jupyter"
+authors = [{name = "Jan Palasek"}]
+description = "Exports Jupyter notebook into beautiful and dynamic HTML report."
+license = {file = "LICENSE.md"}
+version = "2.0.5"
+readme = "README.md"
+dependencies = [
+    "click",
+    "ipython>=7.1",
+    "nbconvert>=6.0",
+    "jinja2>=3.0",
+    "ipython-genutils>=0.1",
+    "pyyaml>=5",
+    "cerberus>=1.1"
+]
+requires-python = ">=3.7"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Framework :: Jupyter",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Education",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+pretty-jupyter = "pretty_jupyter.__main__:cli"
+
+[project.optional-dependencies]
+docs = [
+    "sphinx==5.1.1",
+    "sphinx_rtd_theme==1.0.0"  
+]
+test = [
+    "pytest",
+    "tox",
+    "webdriver-manager",
+    "selenium",
+    "pandas",
+    "ipykernel"
+]
+dev = [
+    "jupyter",
+    "ipykernel",
+    "pandas",
+    "matplotlib",
+    "seaborn",
+    "pip-tools",
+    "black",
+    "isort",
+    "pylint",
+    "autoflake",
+    "pre-commit",
+    "pretty-jupyter[docs]",
+    "pretty-jupyter[test]"
+]
+all = [
+    "pretty-jupyter[dev]"
+]
+
+[project.urls]
+Source = "https://github.com/JanPalasek/pretty-jupyter"
+"Bug Tracker" = "https://github.com/JanPalasek/pretty-jupyter/issues"
+CI = "https://github.com/JanPalasek/pretty-jupyter/actions"
+
+[tool.pylint.format]
+max-line-length = 100
+
+[tool.black]
+line-length = 100 # override black's default line-length
+
+[tool.isort]
+# make it compatible with black
+profile = "black"
+line_length = 100
