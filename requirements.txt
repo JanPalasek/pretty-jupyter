@@ -334,8 +334,6 @@ pluggy==1.2.0
     #   tox
 pre-commit==3.3.3
     # via pretty-jupyter (pyproject.toml)
-pretty-jupyter @ file:///C:/Users/janpa/Documents/projects/pretty-jupyter
-    # via pretty-jupyter (pyproject.toml)
 prometheus-client==0.17.0
     # via
     #   jupyter-server
