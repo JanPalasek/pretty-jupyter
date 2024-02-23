@@ -7,7 +7,7 @@ name = "pretty-jupyter"
 authors = [{name = "Jan Palasek"}]
 description = "Exports Jupyter notebook into beautiful and dynamic HTML report."
 license = {file = "LICENSE.md"}
-version = "2.0.5"
+version = "2.0.6"
 readme = "README.md"
 dependencies = [
     "click",
