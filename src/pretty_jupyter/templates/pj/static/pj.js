@@ -274,18 +274,8 @@ window.initializeTOC = function (tocDepth, tocCollapsed, tocSmoothScroll, tocExt
 
   options.smoothScroll = tocSmoothScroll;
 
-  // invoke tocify.. if it fails with an error, solve jquery and run again
-  for (let i = 0; i < 5; i++) {
-    try {
-      // invoke tocify, if successful, break
-      $("#TOC").tocify(options).data("toc-tocify");
-      break;
-    }
-    catch {
-      // if tocify fails, try again
-      jQuery.noConflict(false);
-    }
-  }
+  // tocify
+  var toc = $("#TOC").tocify(options).data("toc-tocify");
 
   if (!tocCollapsed) {
     toc.setOptions({ "showAndHideOnScroll": false, "showAndHide": false });
