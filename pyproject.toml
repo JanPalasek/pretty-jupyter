@@ -16,7 +16,8 @@ dependencies = [
     "jinja2>=3.0",
     "ipython-genutils>=0.1",
     "pyyaml>=5",
-    "cerberus>=1.1"
+    "cerberus>=1.1",
+    "lxml_html_clean"
 ]
 requires-python = ">=3.7"
 classifiers = [
