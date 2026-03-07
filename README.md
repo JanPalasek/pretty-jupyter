@@ -12,6 +12,8 @@
 </a>
 </p>
 
+<b>Archived in favor of <a href="https://quarto.org/">Quarto</a>.</b>
+
 <p align="center">
   <img src="docs/demo.gif" alt="demo preview" />
 </p>
